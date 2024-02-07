@@ -15,7 +15,7 @@ public class TestController {
 
     @GetMapping("/test")
     public String apiTest(){
-        System.out.println("이거보임aaaasdsddasdassdaa?");
+        System.out.println("이거보임a?");
         return "이거보임?";
     }
 

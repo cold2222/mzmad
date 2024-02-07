@@ -1,0 +1,37 @@
+.post-detail-container {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.post-detail-content{
+}
+.post-detail-container h3 {
+  margin-bottom: 10px;
+}
+
+.post-detail-container p {
+    line-height: 1.5;
+  }
+
+  
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid #333;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #333;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #6c6868;
+  color: #fff;
+}

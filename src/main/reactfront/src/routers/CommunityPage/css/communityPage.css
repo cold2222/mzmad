@@ -1,0 +1,27 @@
+  .community-head-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .community-head{
+    font-size: 30px;
+    margin-bottom: 50px;
+  }
+  
+  .community-container {
+    padding: 20px;
+    background-color: #f5f5f5;
+  }
+  
+  .community-content {
+    display: flex;
+  }
+  .community-contentBox{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .community-details{
+    width: 100%;
+    padding: 10px;
+ }
