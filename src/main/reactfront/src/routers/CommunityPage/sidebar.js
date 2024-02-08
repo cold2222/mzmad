@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink  } from 'react-router-dom';
 import './css/sidebar.css';
 
 const Sidebar = ({ onSelectMenu, onBackToList }) => {
@@ -11,24 +11,24 @@ const Sidebar = ({ onSelectMenu, onBackToList }) => {
       </div>
       <ul className="sidebar-links">
         <li>
-          <Link to="/community/home" onClick={() => { onSelectMenu('#Home'); }}>
+          <NavLink  to="/community" activeClassName="active" onClick={() => { onSelectMenu('#Home'); }}>
             #Home
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/community/free" onClick={() => { onSelectMenu('#자유게시판'); }}>
+          <NavLink  to="/community/free" activeClassName="active" onClick={() => { onSelectMenu('#자유게시판'); }}>
             #자유게시판
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/community/tip" onClick={() => { onSelectMenu('#글쓰기Tip공유게시판'); }}>
+          <NavLink  to="/community/tip" activeClassName="active" onClick={() => { onSelectMenu('#글쓰기Tip공유게시판'); }}>
             #글쓰기 Tip 공유게시판
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/community/assignment" onClick={() => { onSelectMenu('#과제게시판'); }}>
+          <NavLink  to="/community/assignment" activeClassName="active" onClick={() => { onSelectMenu('#과제게시판'); }}>
             #과제게시판
-          </Link>
+          </NavLink>
         </li>
       </ul>
     </div>

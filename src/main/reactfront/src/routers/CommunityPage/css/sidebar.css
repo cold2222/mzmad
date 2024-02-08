@@ -37,3 +37,7 @@
   .sidebar-links a:hover {
     color: #ffd700;
   }
+
+  .active{
+    color : blue;
+  }

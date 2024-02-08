@@ -6,7 +6,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   const moveHome = () => {
-    navigate('/home');
+    navigate('/');
   };
   const moveCommunity = () => {
     navigate('/community');

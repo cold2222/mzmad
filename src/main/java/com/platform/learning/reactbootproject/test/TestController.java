@@ -1,5 +1,4 @@
 package com.platform.learning.reactbootproject.test;
-
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +14,8 @@ public class TestController {
 
     @GetMapping("/test")
     public String apiTest(){
-        System.out.println("이거보임a?");
-        return "이거보임?";
+        System.out.println("이거보임?");
+        return "보임?";
     }
 
     @GetMapping("/api/bbsApi")
@@ -25,5 +24,6 @@ public class TestController {
         List<TestDTO> testList = testService.getAllTest();
 
         return testList;
+
     }
 }
