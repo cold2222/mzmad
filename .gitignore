@@ -65,3 +65,4 @@ src/main/reactfront/node_modules/.cache/
 src/main/reactfront/node_modules/
 *.png
 *.svg
+.env
