@@ -8,6 +8,7 @@ const Header = () => {
   const moveHome = () => {
     navigate('/');
   };
+
   const moveCommunity = () => {
     navigate('/community/home');
   };
@@ -15,9 +16,14 @@ const Header = () => {
     navigate('/course');
   };
 
+  const moveLogin = () => {
+    navigate('/login');
+  };
+
   return (
     <header className={styles['header-container']}>
         <div onClick={moveHome}>Home</div>
+        <div onClick={moveLogin}>Login</div>
         <div onClick={moveCourse}>course</div>
         <div onClick={moveCommunity}>community</div>
     </header>
