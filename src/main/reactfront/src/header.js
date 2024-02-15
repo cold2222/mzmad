@@ -11,11 +11,15 @@ const Header = () => {
   const moveCommunity = () => {
     navigate('/community/home');
   };
+  const moveCourse = () => {
+    navigate('/course');
+  };
 
   return (
     <header className={styles['header-container']}>
         <div onClick={moveHome}>Home</div>
-        <div onClick={moveCommunity}>Community</div>
+        <div onClick={moveCourse}>course</div>
+        <div onClick={moveCommunity}>community</div>
     </header>
   );
 }
