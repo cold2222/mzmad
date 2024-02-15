@@ -1,0 +1,22 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.platform.learning.reactbootproject.dy.login.kakao.KakaoMapper">
+
+    <!-- SelUser 메서드에 대한 SQL 쿼리 매핑 -->
+    <select id="SelUser" resultType="com.platform.learning.reactbootproject.dy.login.kakao.KakaoUserDTO">
+        SELECT * FROM users WHERE user_pk = #{id}
+    </select>
+
+    <!-- RegUser 메서드에 대한 SQL 쿼리 매핑 -->
+    <insert id="RegUser" parameterType="com.platform.learning.reactbootproject.dy.login.kakao.KakaoUserDTO">
+        INSERT INTO users VALUES (#{id},#{nickname}, #{email},#{platform},'0',0)
+    </insert>
+
+    <!-- selectUserTableInfo 메서드에 대한 SQL 쿼리 매핑 -->
+    <select id="selectUserTableInfo" resultType="com.platform.learning.reactbootproject.dy.login.kakao.KakaoUserDTO">
+        SELECT * FROM users WHERE user_email = #{email}
+    </select>
+
+</mapper>
