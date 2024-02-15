@@ -1,5 +1,5 @@
 import React from 'react';
-import './css/header.css';
+import styles from './css/header.module.css';
 import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
@@ -9,14 +9,14 @@ const Header = () => {
     navigate('/');
   };
   const moveCommunity = () => {
-    navigate('/community');
+    navigate('/community/home');
   };
   const moveCourse = () => {
     navigate('/course');
   };
 
   return (
-    <header className="header-container">
+    <header className={styles['header-container']}>
         <div onClick={moveHome}>Home</div>
         <div onClick={moveCourse}>course</div>
         <div onClick={moveCommunity}>community</div>

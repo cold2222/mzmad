@@ -1,10 +1,10 @@
 import React from 'react';
-import './css/footer.css'; // CSS 파일 import
+import styles from './css/footer.module.css';
 
 const Footer = () => {
   return (
-    <footer className="footer-container">
-      <p className="footer-text">© 2024 My Simple React App</p>
+    <footer className={styles['footer-container']}>
+      <p className={styles['footer-text']}>© 2024 My Simple React App</p>
     </footer>
   );
 }
