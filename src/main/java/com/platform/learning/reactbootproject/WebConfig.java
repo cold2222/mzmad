@@ -22,5 +22,5 @@ public class WebConfig implements WebMvcConfigurer {
                     System.out.println("콘피그 실행!!");
 
         }
-        
-}
+
+} 

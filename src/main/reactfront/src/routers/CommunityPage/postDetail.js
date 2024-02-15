@@ -1,14 +1,12 @@
 import React from 'react';
-import './css/postDetail.css';
-
-const PostDetail = ({ postId }) => {
-  const post = { id: postId, title: `포스트 ${postId}`, content: '포스트 내용입니다.나중에 여기다가 db값 넣어야됨' };
-
+import styles from './css/postDetail.module.css';
+const PostDetail = ({ selectedPost }) => {
   return (
-    <div className="post-detail-container">
-      <div className='post-detail-content'>
-        <h3>{post.title}</h3>
-        <p>{post.content}</p>
+    <div className={styles['post-detail-container']}>
+      <div className={styles['post-detail-contents']}>
+        <input name="title" id="title" value={selectedPost.title} type="text" />
+        <input name="title" className={styles.title} value={selectedPost.category} type="text" />
+        <div className={styles['post-detail-content']} dangerouslySetInnerHTML={{ __html: selectedPost.content }}/>
       </div>
     </div>
   );
