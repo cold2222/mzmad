@@ -1,20 +1,37 @@
-import React from 'react';
-import './css/postList.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import styles from './css/postList.module.css';
 
 const PostList = ({ selectedMenu, onPostClick }) => {
-  const posts = [
-    { id: 1, title: '첫 번째 포스트' },
-    { id: 2, title: '두 번째 포스트' },
-    { id: 3, title: '세 번째 포스트' },
-  ];
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    // 서버 요청 수행
+    axios.get('http://localhost:8080/community/selectAll')
+      .then(response => {
+        setPosts(response.data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching posts:', error);
+        setLoading(false);
+      });
+    }, []);
+    console.log(posts);
+  
+  if(loading){
+    return <div>Loading...</div>;
+  }
   return (
-    <div className="post-list-container">
+    <div className={styles['post-list-container']}>
       <h2>{`${selectedMenu}`}</h2>
-      <ul className="post-list">
+      <ul className={styles['post-list']}>
         {posts.map(post => (
-          <li key={post.id} onClick={() => onPostClick(post.id)}>
-            {post.title}
+          <li key={post.title}>
+            <div onClick={() => onPostClick(post)}>
+              {post.title}
+            </div>
           </li>
         ))}
       </ul>

@@ -17,6 +17,10 @@
     margin-bottom: 10px;
   }
   
+  .write-page a{
+    text-decoration: none;
+    color: white;
+  }
   .sidebar-links {
     list-style-type: none;
     padding: 0;
@@ -38,6 +42,4 @@
     color: #ffd700;
   }
 
-  .active{
-    color : blue;
-  }
+ 
