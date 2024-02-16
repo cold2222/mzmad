@@ -10,6 +10,7 @@ import CoursePage from './routers/CoursePage/coursePage';
 import Editor from './routers/Editor/Editor';
 import LoginPage from './routers/dy/Login/LoginPage';
 import KakaoRedirectPage from "./routers/dy/Login/KakaoRedirectPage";
+import AdminRegistration from './routers/CoursePage/adminRegistration';
 import "./css/index.module.css"
 
 
@@ -25,6 +26,7 @@ root.render(
       <Route path="/course/*" element={<CoursePage/>}/>
       <Route path="/write" element={<Editor />} />
       <Route path="/login" element={<LoginPage/>}></Route>
+      <Route path="/admin-registration" element={<AdminRegistration/>}></Route>
       <Route path="/login/oauth2/callback/kakao" element={<KakaoRedirectPage />}></Route>
     </Routes>
     <Footer />
