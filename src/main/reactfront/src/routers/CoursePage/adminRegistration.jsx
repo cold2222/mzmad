@@ -1,9 +1,12 @@
 // AdminRegistration.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import styles from './AdminRegistration.module.css';
 
 const AdminRegistration = () => {
+  const navigate = useNavigate(); 
+
   const [selectedCategory, setSelectedCategory] = useState('');
   const [insertCategory, setInsertCategory] = useState('');
   const [lectureName, setLectureName] = useState('');
@@ -45,6 +48,18 @@ const AdminRegistration = () => {
     }
   };
 
+  /*const fetchCategoryList = () => {
+    axios.get('/get-category-list')
+      .then(response => {
+        // 응답 데이터가 category_name 키를 가진 객체들의 배열로 가정합니다.
+        const categories = response.data.map(category => category.category_name);
+        setCategoryList(categories);
+      })
+      .catch(error => {
+        console.error('카테고리 목록을 가져오는 중 오류 발생:', error);
+      });
+  };*/
+
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
   };
@@ -61,6 +76,7 @@ const AdminRegistration = () => {
       setInsertCategory('');
 
       console.log('카테고리가 성공적으로 등록되었습니다!');
+      alert('카테고리가 성공적으로 등록되었습니다!')
 
       //목록 갱신
       fetchCategoryList();
@@ -79,12 +95,12 @@ const AdminRegistration = () => {
 
   const handleLectureRegistration = async () => {
     const formData = new FormData();
-    formData.append('category', selectedCategory);
-    formData.append('lectureName', lectureName);
-    formData.append('videoFile', videoFile);
+    formData.append('courses_category', selectedCategory);
+    formData.append('courses_name', lectureName);
+    formData.append('courses_video', videoFile);
 
     try {
-      await axios.post('/admin-registration', formData, {
+      await axios.post('/lecture-registration', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -96,6 +112,9 @@ const AdminRegistration = () => {
       setVideoFile(null);
 
       console.log('강의가 성공적으로 등록되었습니다!');
+
+      navigate('/course');
+
     } catch (error) {
       console.error('강의 등록 중 오류 발생:', error);
     }
