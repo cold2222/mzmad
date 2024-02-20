@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.platform.learning.reactbootproject.lecture.insert_lecture.InsertLectureMapper">
+	<insert id="saveLecture">
+		INSERT INTO courses (courses_name, courses_category, courses_video, courses_date) VALUES (#{lectureName}, #{category}, #{filename}, #{currentTime})
+	</insert>
+</mapper>

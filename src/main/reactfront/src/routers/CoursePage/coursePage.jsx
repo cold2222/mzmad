@@ -2,12 +2,18 @@
 import React, { useState } from 'react';
 // eslint-disable-next-line
 import styles from './LecturePage.module.css';
+import { useNavigate } from 'react-router-dom';  // Navigation을 위해 useHistory를 import
 
 const LecturePage = () => {
   const [category, setCategory] = useState('전체');
+  const navigate = useNavigate();  // Navigation을 위한 history 객체 생성
 
   const handleCategoryChange = (newCategory) => {
     setCategory(newCategory);
+  };
+
+  const handleAdminRegistration = () => {
+    navigate('/admin-registration');  // AdminRegistration 컴포넌트로 이동
   };
 
   const lectureData = [
@@ -26,28 +32,32 @@ const LecturePage = () => {
     ? lectureData
     : lectureData.filter(lecture => lecture.category === category);
 
-  return (
-    <div className={styles.container}>
-      <div>
-        <label className={styles.label}>카테고리 선택:</label>
-        <select className={styles.select} value={category} onChange={(e) => handleCategoryChange(e.target.value)}>
-          <option value="전체">전체</option>
-          <option value="교양">교양</option>
-          <option value="철학">철학</option>
-          <option value="정치">정치</option>
-        </select>
+    return (
+      <div className={styles.container}>
+        <div>
+          <button className={styles.adminButton} onClick={handleAdminRegistration}>
+            관리자 등록
+          </button>
+  
+          <label className={styles.label}>카테고리 선택:</label>
+          <select className={styles.select} value={category} onChange={(e) => handleCategoryChange(e.target.value)}>
+            <option value="전체">전체</option>
+            <option value="교양">교양</option>
+            <option value="철학">철학</option>
+            <option value="정치">정치</option>
+          </select>
+        </div>
+  
+        <div>
+          <h2 className={styles.title}>{category} 카테고리의 강의 목록</h2>
+          <ul className={styles.list}>
+            {filteredLectures.map(lecture => (
+              <li key={lecture.id} className={styles.item}>{lecture.title}</li>
+            ))}
+          </ul>
+        </div>
       </div>
-
-      <div>
-        <h2 className={styles.title}>{category} 카테고리의 강의 목록</h2>
-        <ul className={styles.list}>
-          {filteredLectures.map(lecture => (
-            <li key={lecture.id} className={styles.item}>{lecture.title}</li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-};
-
-export default LecturePage;
+    );
+  };
+  
+  export default LecturePage;
