@@ -2,23 +2,25 @@
     display: flex;
     flex-direction: column;
     height: 1050px;
-    justify-content: center;
-    align-items: center;
 }
 
 .editor-content {
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 .editor-header{
     font-size: 40px;
     font-weight: 800;
     margin-bottom: 50px;
+    text-align: center;
+    margin-top: 30px;
 }
-#editor-form{
+.editor-form{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
 }
 .title {
     width: 778px;
@@ -72,7 +74,7 @@
     padding: 10px 20px;
     margin-top: 60px;
     margin-left: 8px;
-    width: 100%;
+    width: 47.5%;
     margin-right: 10px;
     background-color: #666;
     /* 회색 배경 */

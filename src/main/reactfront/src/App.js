@@ -1,24 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter , Routes, Route } from 'react-router-dom';
+import Header from './header';
+import Footer from './footer';
+import Home from './routers/home/home';
+import CommunityPage from './routers/CommunityPage/communityPage';
+import Test from './routers/Test/test'
+import CoursePage from './routers/CoursePage/coursePage';
+import Editor from './routers/Editor/Editor';
+import LoginPage from './routers/dy/Login/LoginPage';
+import KakaoRedirectPage from "./routers/dy/Login/KakaoRedirectPage";
+import "./css/index.module.css"
+import useScrollRestoration from './useScrollRestoration';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <ScrollRestorationWrapper />
+    </BrowserRouter>
+  );
+}
+
+const ScrollRestorationWrapper = () => {
+  useScrollRestoration();
+  
+  return (
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} exact={true}/>
+        <Route path="/community/write" element={<Editor />} />
+        <Route path="/community/*" element={<CommunityPage />} />
+        <Route path="/test" element={<Test />} />
+        <Route path="/course/*" element={<CoursePage/>}/>
+        <Route path="/write" element={<Editor />} />
+        <Route path="/login" element={<LoginPage/>}></Route>
+        <Route path="/login/oauth2/callback/kakao" element={<KakaoRedirectPage />}></Route>
+      </Routes>
+      <Footer />
+    </>
   );
 }
 
