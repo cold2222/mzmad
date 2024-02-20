@@ -1,5 +1,5 @@
 .post-list-container {
-    width: 80%;
+    width: 60%;
     padding: 20px;
   }
 .post-list-container h2{
@@ -21,4 +21,8 @@
   
   .post-list li:hover {
     background-color: #ccc;
+  }
+  .post-list-link{
+    text-decoration: none;
+    color: inherit;
   }

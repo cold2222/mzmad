@@ -12,4 +12,8 @@ public interface CommunityMapper {
     void communityInsert(CommunityBBSDTO bbsDTO);
 
     List<CommunityBBSDTO> selectAllCommunity();
+
+    List<CommunityBBSDTO> SelectMenuCommunity(String category);
+
+    CommunityBBSDTO communitySelectView(String community_pk);
 }

@@ -1,51 +1,63 @@
-.community-details{
-  display: flex;
+.post-detail-contents {
+  width: 700px;
+  margin: 0 auto;
 }
-.post-detail-container {
-  width: 80%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.post-detail-contents hr{
+  width: 728.67px;
 }
-.post-detail-content{
-  display: flex;
-  flex-direction: column;
-}
-/* .title{
-  width: 778px;
-  height: 50px;
+
+.titleinput {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc; /* 회색 테두리 */
   border-radius: 4px;
   font-size: 24px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  outline: none;
-} */
-.post-detail-container h3 {
-  margin-bottom: 10px;
+  border: none;
+  font-weight: 800;
 }
 
-.post-detail-container p {
-    line-height: 1.5;
-  }
-
-  
-.button {
-  display: inline-block;
-  padding: 10px 20px;
-  font-size: 16px;
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-  outline: none;
-  border: 1px solid #333;
+.input {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: none;
   border-radius: 4px;
-  color: #fff;
+}
+
+.post-detail-content {
+  width: 100%;
+  margin-top: 20px;
+  padding: 15px;
+}
+
+.post-detail-content img{
+  max-width: 100%;
+}
+
+
+.button {
+  margin-top: 10px;
+  display: inline-block;
   background-color: #333;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  height: 50px;
+  color: white;
+  padding: 10px 20px;
+  /* 위아래 10px, 좌우 20px의 padding */
+  text-align: center;
+  /* 가운데 정렬 */
+  text-decoration: none;
+  /* 밑줄 없애기 */
+  border: none;
+  /* 테두리 없애기 */
+  border-radius: 4px;
+  /* 둥근 테두리 */
+  cursor: pointer;
+  /* 커서를 포인터로 변경하여 클릭 가능한 것임을 나타냄 */
+  transition: background-color 0.3s;
+  /* 배경색 변화에 0.3초의 transition 효과 추가 */
 }
 
 .button:hover {
-  background-color: #6c6868;
-  color: #fff;
+  background-color: #555;
+  /* 마우스를 올렸을 때 배경색 변경 */
 }
