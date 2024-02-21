@@ -3,7 +3,7 @@ import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import ImageResize from "quill-image-resize-module-react";
 import axios from "axios";
-import "./Editor.module.css";
+import styles from "./Editor.module.css"; // 모듈 CSS 파일 import
 
 Quill.register("modules/imageResize", ImageResize);
 
@@ -21,9 +21,9 @@ const Editor = ({ placeholder, value, ...rest }) => {
     const createPost = async (event) => {
         event.preventDefault();
         const postData = {
-            title: document.querySelector("#title").value,
-            category: document.querySelector("#category").value,
-            content: richText
+            community_title: document.querySelector("#title").value,
+            community_category: document.querySelector("#category").value,
+            community_content: richText
         };
 
         try {
@@ -32,7 +32,7 @@ const Editor = ({ placeholder, value, ...rest }) => {
                     "Content-Type": "application/json",
                 },
             });
-            return response.data;
+            window.location.href="http://localhost:3000/community/home";
         } catch (error) {
             console.error("Error creating post:", error);
             throw new Error("Failed to create post");
@@ -87,25 +87,23 @@ const Editor = ({ placeholder, value, ...rest }) => {
     }, []);
 
     return (
-        <div className="editor-container">
-            <div className="editor-content">
-                <div className="editor-header">글쓰기</div>
-                <form id="editor-form" onSubmit={createPost}>
-                    <input name="title" className="title" placeholder="제목" type="text" />
-                    <select id="category" name="category" className="editor-selectbox">
+        <div className={styles['post-detail-container']}>
+            <div className={styles['post-detail-contents']}>
+                <div className={styles['editor-header']}>글쓰기</div>
+                <form id="editor-form" className={styles['editor-form']} onSubmit={createPost}>
+                    <input id="title" className={styles.title} placeholder="제목" type="text" />
+                    <select id="category" name="category" className={styles['editor-selectbox']}>
                         <option value="">카테고리 선택</option>
-                        <option value="test1">test1</option>
-                        <option value="test2">test2</option>
-                        <option value="test3">test3</option>
-                        <option value="test4">test4</option>
-                        <option value="test5">test5</option>
+                        <option value="#자유게시판">#자유게시판</option>
+                        <option value="#글쓰기Tip공유게시판">#글쓰기Tip공유게시판</option>
+                        <option value="#과제게시판">#과제게시판</option>
                     </select>
                     <ReactQuill
                         style={{ width: "800px", height: "600px" }}
                         {...rest}
                         ref={quillRef}
-                        value={richText} 
-                        onChange={handleChange} 
+                        value={richText}
+                        onChange={handleChange}
                         theme="snow"
                         modules={{
                             toolbar: {
@@ -147,9 +145,9 @@ const Editor = ({ placeholder, value, ...rest }) => {
                         placeholder={placeholder}
                         preserveWhitespace
                     />
-                    <button className="editor-button" >
-                        제출
-                    </button>
+                        <button className={styles['editor-button']} type="submit">
+                            제출
+                        </button>
                 </form>
             </div>
         </div>
