@@ -1,5 +1,6 @@
 {
   "files": {
+
     "main.css": "/static/css/main.f458ec11.css",
     "main.js": "/static/js/main.b4522140.js",
     "index.html": "/index.html",
@@ -9,5 +10,6 @@
   "entrypoints": [
     "static/css/main.f458ec11.css",
     "static/js/main.b4522140.js"
+
   ]
 }
