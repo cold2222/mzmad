@@ -42,13 +42,15 @@ public class KakaoLoginService {
         String id = result.get("id").toString();
         String email = result.get("kakao_account").get("email").toString().replaceAll("\"", "");
         String nickname = result.get("properties").get("nickname").toString().replaceAll("\"", "");
+        String USER_PROFILE = result.get("properties").get("profile_image").toString().replaceAll("\"", "");
         String platform = registrationId;
         
-
+        
         System.out.println("id = " + id);
         System.out.println("email = " + email);
         System.out.println("nickname = " + nickname);
         System.out.println("platform = "+ platform);
+        System.out.println("USER_PROFILE = " + USER_PROFILE);
 
 
         List<KakaoUserDTO> existingUsers = kakaoMapper.SelUser(id);
@@ -95,15 +97,16 @@ public class KakaoLoginService {
                 return "suceess";
 
             } else {
+                
                 KakaoUserDTO userTableInfo = kakaoMapper.selectUserTableInfo(id);
                 System.out.println(userTableInfo);
-                Cookie userInfo = new Cookie("userInfo", userTableInfo.toString());
                 Cookie userIdCookie = new Cookie("userId", id);
                 Cookie userEmailCookie = new Cookie("userEmail", email);
                 Cookie userNicknameCookie = new Cookie("userNickname", nickname);
                 Cookie platformCookie = new Cookie("platform", platform);
                 Cookie coursesKeyCookie = new Cookie("coursesKey", userTableInfo.getUSER_COURSES_KEY());
                 Cookie isAdminCookie = new Cookie("isAdmin",Integer.toString(userTableInfo.getUSER_ISADMIN()));
+
                 System.out.println(userTableInfo.toString());
                 int cookieMaxAge = 3600;
                 
