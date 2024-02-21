@@ -1,6 +1,6 @@
 package com.platform.learning.reactbootproject.editor.communityDTO;
 
-import com.platform.learning.reactbootproject.dy.login.kakao.KakaoUserDTO;
+import com.platform.learning.reactbootproject.dy.login.UserDTO;
 import java.time.LocalDateTime;
 import lombok.Data;
 
@@ -15,6 +15,6 @@ public class CommunityBBSDTO {
     private int community_view;
     private int community_isgood;
     private int community_report;
-    private KakaoUserDTO userDTO;
+    private UserDTO userDTO;
     
 }

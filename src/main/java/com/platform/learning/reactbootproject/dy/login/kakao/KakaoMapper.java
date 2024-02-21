@@ -1,8 +1,9 @@
-    package com.platform.learning.reactbootproject.dy.login;
-
+    package com.platform.learning.reactbootproject.dy.login.kakao;
+    
+    import com.platform.learning.reactbootproject.dy.login.UserDTO;
     import java.util.List;
-
     import org.apache.ibatis.annotations.Mapper;
+
 
     @Mapper
     public interface KakaoMapper {
