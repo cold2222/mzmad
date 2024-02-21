@@ -174,6 +174,7 @@ public class KakaoLoginService {
                 response.addCookie(coursesKeyCookie);
                 response.addCookie(isAdminCookie);
                 response.addCookie(profilCookie);
+                //test
 
 
             return "success";
