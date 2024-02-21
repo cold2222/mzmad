@@ -1,97 +1,75 @@
 import React, { useRef, useEffect, useState } from "react";
+import { useParams } from 'react-router-dom';
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import ImageResize from "quill-image-resize-module-react";
 import axios from "axios";
-import styles from "./Editor.module.css"; // 모듈 CSS 파일 import
+import styles from "./Editor.module.css";
+import { useNavigate } from 'react-router-dom';
 
 Quill.register("modules/imageResize", ImageResize);
 
-const Editor = ({ placeholder, value, ...rest }) => {
+const Editor = ({ placeholder, ...rest }) => {
+    const navigate = useNavigate();
     const quillRef = useRef(null);
+    const { community_pk } = useParams();
+    const [post, setPost] = useState({ community_title: '', community_category: '' }); // 초기값 설정
     const [richText, setRichText] = useState('');
+
+    const handleUpdatePost = () => {
+        navigate(-1);
+      };
+
+    useEffect(() => {
+        function communityUpdate() {
+            axios.get(`http://localhost:8080/community/view/${community_pk}`)
+                .then(response => {
+                    console.log('게시글 불러오기:', response.data);
+                    setPost(response.data);
+                    setRichText(response.data.community_content)
+                })
+                .catch(error => {
+                    console.error('데이터 불러오기 실패:', error);
+                });
+        }
+
+        communityUpdate();
+    }, [community_pk]);
 
     const handleChange = (content) => {
         setRichText(content);
-        console.log(content)
+        console.log(content);
     };
 
-
-    const createPost = async (event) => {
+    const updatePost = async (event) => {
         event.preventDefault();
-        const postData = {
-            community_title: document.querySelector("#title").value,
-            community_category: document.querySelector("#category").value,
+        
+        const updatedPostData = {
+            ...post,
             community_content: richText
         };
-
+    
         try {
-            const response = await axios.post("http://localhost:8080/community/insert", postData, {
+            const response = await axios.put("http://localhost:8080/community/update", updatedPostData, {
                 headers: {
                     "Content-Type": "application/json",
                 },
             });
-            window.location.href="http://localhost:3000/community/home";
+            
+            handleUpdatePost();
         } catch (error) {
-            console.error("Error creating post:", error);
-            throw new Error("Failed to create post");
+            console.error("Error updating post:", error);
+            throw new Error("Failed to update post");
         }
     };
-
-    useEffect(() => {
-        const handleImage = () => {
-            const input = document.createElement("input");
-            input.setAttribute("type", "file");
-            input.setAttribute("accept", "image/*");
-            input.click();
-            input.onchange = async () => {
-                const file = input.files[0];
-                if (!file) return;
-                console.log(file.name);
-                const range = quillRef.current.getEditor().getSelection(true);
-                quillRef.current.getEditor().insertEmbed(range.index, "image", `/UploadImage/loading.gif`);
-
-                try {
-                    const formData = new FormData();
-                    formData.append("image", file);
-
-                    // 이미지를 서버에 업로드하는 API 호출
-                    const response = await fetch("http://localhost:8080/community/image", {
-                        method: "POST",
-                        body: formData,
-                    });
-
-                    if (!response.ok) {
-                        throw new Error("Failed to upload image");
-                    }
-
-                    const imageUrl = await response.json();
-                    console.log(imageUrl.imageUrl);
-
-                    quillRef.current.getEditor().deleteText(range.index, 1);
-                    quillRef.current.getEditor().insertEmbed(range.index, "image", imageUrl.imageUrl);
-
-                    quillRef.current.getEditor().setSelection(range.index + 1);
-                } catch (error) {
-                    console.error("Image upload error:", error);
-                    quillRef.current.getEditor().deleteText(range.index, 1);
-                }
-            };
-        };
-
-        if (quillRef.current) {
-            const toolbar = quillRef.current.getEditor().getModule("toolbar");
-            toolbar.addHandler("image", handleImage);
-        }
-    }, []);
 
     return (
         <div className={styles['post-detail-container']}>
             <div className={styles['post-detail-contents']}>
-                <div className={styles['editor-header']}>글쓰기</div>
-                <form id="editor-form" className={styles['editor-form']} onSubmit={createPost}>
-                    <input id="title" className={styles.title} placeholder="제목" type="text" />
-                    <select id="category" name="category" className={styles['editor-selectbox']}>
+                <div className={styles['editor-header']}>수정하기</div>
+                <form id="editor-form" className={styles['editor-form']} onSubmit={updatePost}>
+                    <input id="title" value={post.community_title} onChange={(e) => setPost({ ...post, community_title: e.target.value })} className={styles.title} placeholder="제목" type="text" />
+                    <select id="category" value={post.community_category} onChange={(e) => setPost({ ...post, community_category: e.target.value })} className={styles['editor-selectbox']}>
                         <option value="">카테고리 선택</option>
                         <option value="#자유게시판">#자유게시판</option>
                         <option value="#글쓰기Tip공유게시판">#글쓰기Tip공유게시판</option>
@@ -144,9 +122,9 @@ const Editor = ({ placeholder, value, ...rest }) => {
                         placeholder={placeholder}
                         preserveWhitespace
                     />
-                        <button className={styles['editor-button']} type="submit">
-                            제출
-                        </button>
+                    <button className={styles['editor-button']} type="submit">
+                        제출
+                    </button>
                 </form>
             </div>
         </div>
