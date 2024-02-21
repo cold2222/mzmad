@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Cookies from 'js-cookie'; // js-cookie 라이브러리 import
 
 const Home = () => {
   // 쿠키 값 상태 변수 정의
@@ -9,47 +10,55 @@ const Home = () => {
   const [coursesKey, setCoursesKey] = useState('');
   const [isAdmin, setIsAdmin] = useState('');
   const [userInfo, setUserInfo] = useState('');
+  const [profile, setProfile] = useState('');
 
   // 페이지 로드 시 쿠키 값 가져오고 세션 스토리지에 저장하기
   useEffect(() => {
     // 쿠키 값 가져오기
     const fetchCookies = () => {
-      const cookies = document.cookie.split(';');
-      cookies.forEach(cookie => {
-        const [name, value] = cookie.trim().split('=');
-        switch (name.trim()) {
-          case 'userId':
-            setUserId(value);
-            sessionStorage.setItem('userId', value); // 세션 스토리지에 저장
-            break;
-          case 'userEmail':
-            setUserEmail(value);
-            sessionStorage.setItem('userEmail', value);
-            break;
-          case 'userNickname':
-            setUserNickname(value);
-            sessionStorage.setItem('userNickname', value);
-            break;
-          case 'platform':
-            setPlatform(value);
-            sessionStorage.setItem('platform', value);
-            break;
-          case 'coursesKey':
-            setCoursesKey(value);
-            sessionStorage.setItem('coursesKey', value);
-            break;
-          case 'isAdmin':
-            setIsAdmin(value);
-            sessionStorage.setItem('isAdmin', value);
-            break;
-          case 'userInfo':
-            setUserInfo(value);
-            sessionStorage.setItem('userInfo', value);
-            break;
-          default:
-            break;
-        }
-      });
+      // js-cookie를 사용하여 쿠키 값 가져오기
+      const userIdCookie = Cookies.get('userId');
+      const userEmailCookie = Cookies.get('userEmail');
+      const userNicknameCookie = Cookies.get('userNickname');
+      const platformCookie = Cookies.get('platform');
+      const coursesKeyCookie = Cookies.get('coursesKey');
+      const isAdminCookie = Cookies.get('isAdmin');
+      const userInfoCookie = Cookies.get('userInfo');
+      const profileCookie = Cookies.get('profile');
+
+      // 가져온 쿠키 값 세션 스토리지에 저장하기
+      if (userIdCookie) {
+        setUserId(userIdCookie);
+        sessionStorage.setItem('userId', userIdCookie);
+      }
+      if (userEmailCookie) {
+        setUserEmail(userEmailCookie);
+        sessionStorage.setItem('userEmail', userEmailCookie);
+      }
+      if (userNicknameCookie) {
+        setUserNickname(userNicknameCookie);
+        sessionStorage.setItem('userNickname', userNicknameCookie);
+      }
+      if (platformCookie) {
+        setPlatform(platformCookie);
+        sessionStorage.setItem('platform', platformCookie);
+      }
+      if (coursesKeyCookie) {
+        setCoursesKey(coursesKeyCookie);
+        sessionStorage.setItem('coursesKey', coursesKeyCookie);
+      }
+      if (isAdminCookie) {
+        setIsAdmin(isAdminCookie);
+        sessionStorage.setItem('isAdmin', isAdminCookie);
+      }
+      if (userInfoCookie) {
+        setUserInfo(userInfoCookie);
+        sessionStorage.setItem('userInfo', userInfoCookie);
+      }
+      if (profileCookie) {
+        setProfile(profileCookie);
+        sessionStorage.setItem('profile', profileCookie);
+      }
     };
 
     // 페이지 로드 시 실행
@@ -64,13 +73,14 @@ const Home = () => {
   // 쿠키 값 사용 및 세션 스토리지에 저장된 값 사용
   return (
     <div>
-      <p>User ID: {userId}</p>
-      <p>User Email: {userEmail}</p>
-      <p>User Nickname: {userNickname}</p>
-      <p>Platform: {platform}</p>
-      <p>Courses Key: {coursesKey}</p>
-      <p>Is Admin: {isAdmin}</p>
-      <p>UserINFO: {userInfo}</p>
+      <p>User ID: {sessionStorage.getItem('userId')}</p>
+      <p>User Email: {sessionStorage.getItem('userEmail')}</p>
+      <p>User Nickname: {sessionStorage.getItem('userNickname')}</p>
+      <p>Platform: {sessionStorage.getItem('platform')}</p>
+      <p>Courses Key: {sessionStorage.getItem('coursesKey')}</p>
+      <p>Is Admin: {sessionStorage.getItem('isAdmin')}</p>
+      <p>UserINFO: {sessionStorage.getItem('userInfo')}</p>
+      <p><img src={sessionStorage.getItem('profile')} alt="Profile Image" /></p>
     </div>
   );
 };

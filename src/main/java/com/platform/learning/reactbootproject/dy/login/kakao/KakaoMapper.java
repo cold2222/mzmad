@@ -4,12 +4,14 @@
 
     import org.apache.ibatis.annotations.Mapper;
 
+import com.platform.learning.reactbootproject.dy.login.UserDTO;
+
     @Mapper
     public interface KakaoMapper {
 
-        int RegUser(KakaoUserDTO kakaoUserDTO);
+        int RegUser(UserDTO UserDTO);
 
-        List<KakaoUserDTO> SelUser(String id);
+        List<UserDTO> SelUser(String USER_PK);
 
-        KakaoUserDTO selectUserTableInfo(String id);
+        UserDTO selectUserTableInfo(String USER_PK);
     }
