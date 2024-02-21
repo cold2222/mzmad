@@ -1,14 +1,21 @@
 .header-container {
-    display: flex;
-    justify-content: flex-start;
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .header-container div {
-    font-size: 20px;
-    margin-right: 20px;
-    cursor: pointer;
-  }
+  display: flex;
+  justify-content: flex-start;
+  align-items: center; /* 요소를 세로로 중앙 정렬 */
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+.header-container div {
+  font-size: 20px;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+
+.header-container div:last-child {
+  margin-right: 0; 
+  margin-left: auto; 
+}
