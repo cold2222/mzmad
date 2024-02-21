@@ -1,4 +1,4 @@
-    package com.platform.learning.reactbootproject.dy.login.kakao;
+    package com.platform.learning.reactbootproject.dy.login;
 
     import java.util.List;
 
@@ -7,9 +7,9 @@
     @Mapper
     public interface KakaoMapper {
 
-        public int RegUser(KakaoUserDTO kakaoUserDTO);
+        public int RegUser(UserDTO kakaoUserDTO);
 
-        public List<KakaoUserDTO> SelUser(String id);
+        public List<UserDTO> SelUser(String id);
 
-        public KakaoUserDTO selectUserTableInfo(String id);
+        public UserDTO selectUserTableInfo(String id);
     }
