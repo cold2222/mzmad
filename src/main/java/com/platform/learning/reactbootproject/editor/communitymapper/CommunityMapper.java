@@ -16,4 +16,14 @@ public interface CommunityMapper {
     List<CommunityBBSDTO> SelectMenuCommunity(String category);
 
     CommunityBBSDTO communitySelectView(String community_pk);
+
+    void updateViews(String community_pk);
+
+    void isGood(String community_pk);
+
+    void report(String community_pk);
+
+    void delete(String community_pk);
+
+    void update(CommunityBBSDTO communityBBSDTO);
 }
