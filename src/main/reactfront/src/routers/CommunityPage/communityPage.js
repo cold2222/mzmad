@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
 import PostList from './postList';
 import PostDetail from './postDetail';
+import EditorUpdate from '../Editor/EditorUpdate';
 import Sidebar from './sidebar';
 import styles from './css/communityPage.module.css';
 
@@ -25,6 +25,7 @@ const CommunityPage = () => {
                     <Routes>
                         <Route path="/:category" element={<PostList selectedMenu={selectedMenu}/>} />
                         <Route path="/:category/view/:community_pk" element={<PostDetail />} />
+                        <Route path="/update/:community_pk" element={<EditorUpdate />} />
                     </Routes>
                 </div>
             </div>
