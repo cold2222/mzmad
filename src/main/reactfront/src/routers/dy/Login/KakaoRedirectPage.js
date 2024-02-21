@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Cookies from 'js-cookie';
+
 
 const KakaoRedirectPage = () => {
     const location = useLocation();
@@ -9,9 +11,18 @@ const KakaoRedirectPage = () => {
     const handleOAuthKakao = async (code) => {
         try {
             // 카카오로부터 받아온 code를 서버에 전달하여 카카오로 회원가입 & 로그인한다
-            const response = await axios.get(`http://localhost:8080/login/oauth2/callback/kakao?code=${code}`);
+            const header = {"Content-type":"application/json"}
+            const crossOriginIsolated = {withCredentials: true}
+            const response = await axios.post(`http://localhost:8080/login/oauth2/callback/kakao?code=${code}`,header,crossOriginIsolated);
+            console.log(response);
             const data = response.data; // 응답 데이터
-            navigate("/success");
+            console.log(data);
+            console.log(Cookies.get("userId"));
+            console.log(Cookies.get("userInfo"))
+
+             navigate("/");  
+            
+         // 성공 시 메인 페이지로 이동
         } catch (error) {
             navigate("/fail");
         }

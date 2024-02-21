@@ -18,7 +18,8 @@ public class WebConfig implements WebMvcConfigurer {
             registry.addMapping("/**")
                     .allowedOriginPatterns("*")
                     .allowedMethods("GET","POST","PUT","DELETE")
-                    .allowedHeaders("*");
+                    .allowedHeaders("*")
+                    .allowCredentials(true); // 자격 증명 허용
                     System.out.println("콘피그 실행!!");
 
         }
