@@ -8,53 +8,60 @@ const Home = () => {
   const [platform, setPlatform] = useState('');
   const [coursesKey, setCoursesKey] = useState('');
   const [isAdmin, setIsAdmin] = useState('');
-  const [userInfo,setUserInfo]= useState('') ;
+  const [userInfo, setUserInfo] = useState('');
 
-  // 페이지 로드 시 쿠키 값 가져오기
+  // 페이지 로드 시 쿠키 값 가져오고 세션 스토리지에 저장하기
   useEffect(() => {
     // 쿠키 값 가져오기
     const fetchCookies = () => {
-      const cookies = document.cookie.split(';'); // 쿠키 문자열을 ; 이거 기준으로 분리해둠
+      const cookies = document.cookie.split(';');
       cookies.forEach(cookie => {
-        const [name, value] = cookie.trim().split('='); // 쿠키 이름과 값으로 분리 ㅇㅇ
+        const [name, value] = cookie.trim().split('=');
         switch (name.trim()) {
           case 'userId':
             setUserId(value);
+            sessionStorage.setItem('userId', value); // 세션 스토리지에 저장
             break;
           case 'userEmail':
             setUserEmail(value);
+            sessionStorage.setItem('userEmail', value);
             break;
           case 'userNickname':
             setUserNickname(value);
+            sessionStorage.setItem('userNickname', value);
             break;
           case 'platform':
             setPlatform(value);
+            sessionStorage.setItem('platform', value);
             break;
           case 'coursesKey':
             setCoursesKey(value);
+            sessionStorage.setItem('coursesKey', value);
             break;
           case 'isAdmin':
             setIsAdmin(value);
+            sessionStorage.setItem('isAdmin', value);
             break;
-            case 'userInfo':
-              setUserInfo(value);
-            
+          case 'userInfo':
+            setUserInfo(value);
+            sessionStorage.setItem('userInfo', value);
+            break;
           default:
             break;
         }
       });
     };
 
-    // 페이지 로드 시 실행함요
+    // 페이지 로드 시 실행
     fetchCookies();
 
-    
+    // cleanup 함수
     return () => {
-      
+      // cleanup 코드
     };
-  }, []); // useEffect를 한 번만 실행하도록 빈 배열 박아둠
+  }, []); // useEffect를 한 번만 실행하도록 빈 배열 전달
 
-  // 쿠키 값 사용 예시
+  // 쿠키 값 사용 및 세션 스토리지에 저장된 값 사용
   return (
     <div>
       <p>User ID: {userId}</p>
