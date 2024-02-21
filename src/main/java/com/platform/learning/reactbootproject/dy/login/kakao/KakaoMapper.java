@@ -7,9 +7,9 @@
     @Mapper
     public interface KakaoMapper {
 
-        int RegUser(KakaoUserDTO kakaoUserDTO);
+        public int RegUser(KakaoUserDTO kakaoUserDTO);
 
-        List<KakaoUserDTO> SelUser(String id);
+        public List<KakaoUserDTO> SelUser(String id);
 
-        KakaoUserDTO selectUserTableInfo(String id);
+        public KakaoUserDTO selectUserTableInfo(String id);
     }

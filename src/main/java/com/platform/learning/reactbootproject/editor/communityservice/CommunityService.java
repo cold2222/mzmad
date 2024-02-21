@@ -1,8 +1,5 @@
 package com.platform.learning.reactbootproject.editor.communityservice;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -41,18 +38,7 @@ public class CommunityService {
 
     public CommunityBBSDTO communitySelectView(String community_pk) {
         
-        CommunityBBSDTO bbsDTO = communityMapper.communitySelectView(community_pk);
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-           Date date = dateFormat.parse(bbsDTO.getCommunity_date());
-           bbsDTO.setCommunity_date(dateFormat.format(date));
-        } catch (ParseException e) {
-            System.out.println("디테일view페이지 데이터 변환 에러");
-            e.printStackTrace();
-        }
-
-        return bbsDTO;
+        return communityMapper.communitySelectView(community_pk);
     }
 
     public void updateViews(String community_pk) {

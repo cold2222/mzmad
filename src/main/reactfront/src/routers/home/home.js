@@ -10,58 +10,54 @@ const Home = () => {
   const [isAdmin, setIsAdmin] = useState('');
   const [userInfo, setUserInfo] = useState('');
 
-  // 페이지 로드 시 쿠키 값 가져오고 세션 스토리지에 저장하기
   useEffect(() => {
-    // 쿠키 값 가져오기
     const fetchCookies = () => {
       const cookies = document.cookie.split(';');
       cookies.forEach(cookie => {
         const [name, value] = cookie.trim().split('=');
         switch (name.trim()) {
           case 'userId':
-            setUserId(value);
-            sessionStorage.setItem('userId', value); // 세션 스토리지에 저장
+            sessionStorage.setItem('userId', value);
             break;
           case 'userEmail':
-            setUserEmail(value);
             sessionStorage.setItem('userEmail', value);
             break;
           case 'userNickname':
-            setUserNickname(value);
             sessionStorage.setItem('userNickname', value);
             break;
           case 'platform':
-            setPlatform(value);
             sessionStorage.setItem('platform', value);
             break;
           case 'coursesKey':
-            setCoursesKey(value);
             sessionStorage.setItem('coursesKey', value);
             break;
           case 'isAdmin':
-            setIsAdmin(value);
             sessionStorage.setItem('isAdmin', value);
             break;
           case 'userInfo':
-            setUserInfo(value);
             sessionStorage.setItem('userInfo', value);
             break;
           default:
             break;
         }
       });
-    };
 
-    // 페이지 로드 시 실행
+      setUserId(sessionStorage.getItem('userId'));
+      setUserEmail(sessionStorage.getItem('userEmail')); // 수정된 부분
+      setUserNickname(sessionStorage.getItem('userNickname')); // 수정된 부분
+      setUserNickname(sessionStorage.getItem('userNickname')); // 수정된 부분
+      setPlatform(sessionStorage.getItem('platform')); // 수정된 부분
+      setCoursesKey(sessionStorage.getItem('coursesKey')); // 수정된 부분
+      setIsAdmin(sessionStorage.getItem('isAdmin')); // 수정된 부분
+      setUserInfo(sessionStorage.getItem('userInfo')); // 수정된 부분
+
+    };
     fetchCookies();
 
-    // cleanup 함수
     return () => {
-      // cleanup 코드
     };
-  }, []); // useEffect를 한 번만 실행하도록 빈 배열 전달
+  }, []); // 의존성 배열을 빈 배열로 설정하여 한 번만 실행되도록 함
 
-  // 쿠키 값 사용 및 세션 스토리지에 저장된 값 사용
   return (
     <div>
       <p>User ID: {userId}</p>
