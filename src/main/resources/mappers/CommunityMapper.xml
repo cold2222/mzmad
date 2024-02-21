@@ -2,18 +2,64 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.platform.learning.reactbootproject.editor.communitymapper.CommunityMapper">
 	<insert id="communityInsert">
-		insert into community values(community_pk_seq.NEXTVAL,'임시아이디',#{community_category},#{community_title},#{community_content},
+		insert into community values(community_pk_seq.NEXTVAL,#{user_pk},#{community_category},#{community_title},#{community_content},
         SYSDATE,0,0,0)
 	</insert>
-    <select id="selectAllCommunity" resultType="CommunityBBSDTO">
+    <!-- <select id="selectAllCommunity" resultType="CommunityBBSDTO">
         select * from community where community_report &lt;= 10 order by community_pk desc
-    </select>
+    </select> -->
     <select id="SelectMenuCommunity" resultType="CommunityBBSDTO">
         select * from community where community_category = #{selectedMenu} and community_report &lt;= 10 order by community_pk desc
     </select>
-    <select id="communitySelectView" resultType="CommunityBBSDTO">
+    <select id="communitySelectView" resultMap="communityWithUserResultMap">
         select * from community where community_pk = #{community_pk}
     </select>
+
+
+<resultMap id="communityWithUserResultMap" type="com.platform.learning.reactbootproject.editor.communityDTO.CommunityBBSDTO">
+    <result property="community_pk" column="community_pk"/>
+    <result property="user_pk" column="user_pk"/>
+    <result property="community_category" column="community_category"/>
+    <result property="community_title" column="community_title"/>
+    <result property="community_content" column="community_content"/>
+    <!-- 'community_date'에 대한 DateTypeHandler 설정 -->
+    <result property="communityDate" column="community_date" jdbcType="TIMESTAMP" javaType="java.time.LocalDateTime" />
+    <result property="community_view" column="community_view"/>
+    <result property="community_isgood" column="community_isgood"/>
+    <result property="community_report" column="community_report"/>
+    <association property="userDTO" javaType="com.platform.learning.reactbootproject.dy.login.kakao.KakaoUserDTO">
+        <result property="id" column="pk"/>
+        <result property="nickname" column="nickname"/>
+        <result property="email" column="email"/>
+        <result property="platform" column="platform"/>
+        <result property="courses_key" column="courses_key"/>
+        <result property="isadmin" column="isadmin"/>
+    </association>
+</resultMap>
+  
+<select id="selectAllCommunity" resultMap="communityWithUserResultMap">
+    SELECT 
+        c.community_pk,
+        c.user_pk,
+        c.community_category,
+        c.community_title,
+        c.community_content,
+        c.community_date,
+        c.community_view,
+        c.community_isgood,
+        c.community_report,
+        u.user_pk as pk,
+        u.user_nickname as nickname,
+        u.user_email as email,
+        u.user_platform as platform,
+        u.USER_COURSES_KEY as COURSES_KEY,
+        u.USER_ISADMIN as ISADMIN 
+    FROM 
+        Community c
+    JOIN 
+        users u ON c.user_pk = u.user_pk
+</select>
+
     <update id="updateViews">
         update community set community_view = community_view + 1 where community_pk = #{community_pk}
     </update>
@@ -31,3 +77,4 @@
         , community_content = #{community_content} where community_pk = #{community_pk}
     </update>
 </mapper>
+
