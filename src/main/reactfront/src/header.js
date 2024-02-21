@@ -23,9 +23,9 @@ const Header = () => {
   return (
     <header className={styles['header-container']}>
         <div onClick={moveHome}>Home</div>
-        <div onClick={moveLogin}>Login</div>
         <div onClick={moveCourse}>course</div>
         <div onClick={moveCommunity}>community</div>
+        <div onClick={moveLogin}>Join</div>
     </header>
   );
 }

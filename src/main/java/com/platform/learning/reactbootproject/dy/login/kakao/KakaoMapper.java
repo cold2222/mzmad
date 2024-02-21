@@ -11,5 +11,5 @@ public interface KakaoMapper {
 
     List<KakaoUserDTO> SelUser(String id);
 
-    KakaoUserDTO selectUserTableInfo(String email);
+    KakaoUserDTO selectUserTableInfo(String id);
 }
