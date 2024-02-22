@@ -140,7 +140,7 @@ public class KakaoLoginService {
             String USER_COURSES_KEY="0";
             int USER_ISADMIN =0;
             
-            UserDTO newUser = new UserDTO(USER_PK, USER_EMAIL, USER_NICKNAME,USER_PLATFORM,USER_COURSES_KEY,USER_ISADMIN,USER_PROFILE); // platform 변수 사용
+            UserDTO newUser = new UserDTO(USER_PK,USER_NICKNAME,USER_EMAIL,USER_PLATFORM,USER_COURSES_KEY,USER_ISADMIN,USER_PROFILE); // platform 변수 사용
             System.out.println(newUser);
             System.out.println("최초 등록시 dto  담기");
             System.out.println(newUser);
