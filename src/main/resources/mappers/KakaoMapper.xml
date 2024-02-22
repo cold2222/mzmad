@@ -11,7 +11,7 @@
 
     <!-- RegUser 메서드에 대한 SQL 쿼리 매핑 -->
     <insert id="RegUser" parameterType="com.platform.learning.reactbootproject.dy.login.UserDTO">
-        INSERT INTO users VALUES (#{USER_PK},#{USER_NICKNAME}, #{USER_EMAIL},#{USER_PLATFORM},#{USER_COURSES_KEY},#{USER_ISADMIN},#{USER_PROFILE})
+        INSERT INTO users VALUES (#{USER_PK},#{USER_NICKNAME},#{USER_EMAIL},#{USER_PLATFORM},#{USER_COURSES_KEY},#{USER_ISADMIN},#{USER_PROFILE})
     </insert>
 
     <!-- selectUserTableInfo 메서드에 대한 SQL 쿼리 매핑 -->

@@ -27,7 +27,7 @@
     <result property="community_view" column="community_view"/>
     <result property="community_isgood" column="community_isgood"/>
     <result property="community_report" column="community_report"/>
-    <association property="userDTO" javaType="com.platform.learning.reactbootproject.dy.login.kakao.KakaoUserDTO">
+    <association property="userDTO" javaType="com.platform.learning.reactbootproject.dy.login.UserDTO">
         <result property="id" column="pk"/>
         <result property="nickname" column="nickname"/>
         <result property="email" column="email"/>
