@@ -28,7 +28,7 @@ public class InsertLectureService {
             String newFilename = generateUniqueFilename(fileExtension);
     
             // 경로 설정
-            Path directoryPath = Paths.get("src/main/resources/static/LectureVideo/");
+            Path directoryPath = Paths.get("src/main/reactfront/public/LectureVideo/");
             Files.createDirectories(directoryPath);
     
             Path filePath = Paths.get(directoryPath.toString(), newFilename);

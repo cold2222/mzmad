@@ -25,11 +25,14 @@
   
   .list {
     list-style-type: none;
+    display: flex;
     padding: 0;
+    flex-wrap: wrap;
+    justify-content: space-around;
   }
   
   .item {
-    margin-bottom: 10px;
+    margin : 10px;
   }
   
   /* 선택된 카테고리를 동그라미로 표시 */
