@@ -1,6 +1,6 @@
 package com.platform.learning.reactbootproject.dy.login.kakao;
 
-import java.net.http.HttpHeaders;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -15,8 +15,11 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.platform.learning.reactbootproject.dy.login.UserDTO;
 
 import ch.qos.logback.core.model.Model;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
@@ -28,32 +31,33 @@ public class KakaoLoginService {
     private final RestTemplate restTemplate = new RestTemplate();
     
 
-    public String socialLogin(String code, String registrationId, HttpSession session, Model model) {
+    public String socialLogin(String code, String registrationId, HttpSession session, Model model,HttpServletResponse response) {
         String accessToken = getAccessToken(code, registrationId);
         System.out.println("112213123213213213123123");
         System.out.println("accessToken = " + accessToken);
         System.out.println(registrationId);
-
         JsonNode result = getUserInfo(accessToken, registrationId);
 
         System.out.println("result test" + result);
 
-        String id = result.get("id").toString();
-        String email = result.get("kakao_account").get("email").toString().replaceAll("\"", "");
-        String nickname = result.get("properties").get("nickname").toString().replaceAll("\"", "");
-        String platform = registrationId;
+        String USER_PK = result.get("id").toString();
+        String USER_EMAIL = result.get("kakao_account").get("email").toString().replaceAll("\"", "");
+        String USER_NICKNAME = result.get("properties").get("nickname").toString().replaceAll("\"", "");
+        String USER_PROFILE = result.get("properties").get("profile_image").toString().replaceAll("\"", "");
+        String USER_PLATFORM = registrationId;
+        
+        
+        System.out.println("id = " + USER_PK);
+        System.out.println("email = " + USER_EMAIL);
+        System.out.println("nickname = " + USER_NICKNAME);
+        System.out.println("platform = "+ USER_PLATFORM);
+        System.out.println("USER_PROFILE = " + USER_PROFILE);
 
-        System.out.println("id = " + id);
-        System.out.println("email = " + email);
-        System.out.println("nickname = " + nickname);
-        System.out.println("platform = "+ platform);
 
-
-        List<KakaoUserDTO> existingUsers = kakaoMapper.SelUser(id);
+        List<UserDTO> existingUsers = kakaoMapper.SelUser(USER_PK);
 
         System.out.println(existingUsers);
-        
-        System.out.println("여기안되용");
+        System.out.println("잘된다잉");
 
         if (existingUsers.size()==1) {
             
@@ -61,44 +65,117 @@ public class KakaoLoginService {
 
             // 이미 존재하는 사용자에 대한 추가 작업 수행
 
-            if (Objects.isNull(kakaoMapper.selectUserTableInfo(email))) {
-
-                session.setAttribute("userId", id);
-                session.setAttribute("userEmail", email);
-                session.setAttribute("userNickname", nickname);
-                session.setAttribute("platform", registrationId);
-                session.setAttribute("accessToken", accessToken);
-                session.setMaxInactiveInterval(3600);
-
+            if (Objects.isNull(kakaoMapper.selectUserTableInfo(USER_PK))) {
+                UserDTO userTableInfo = kakaoMapper.selectUserTableInfo(USER_PK);
+                System.out.println(userTableInfo);
+                // Cookie userIdCookie = new Cookie("userId", id);
+                // Cookie userEmailCookie = new Cookie("userEmail", email);
+                // Cookie userNicknameCookie = new Cookie("userNickname", nickname);
+                // Cookie platformCookie = new Cookie("platform", platform);
+                Cookie coursesKeyCookie = new Cookie("coursesKey", "0");
+                Cookie isAdminCookie = new Cookie("isAdmin", "0");
+                Cookie userInfo = new Cookie("userInfo", userTableInfo.toString());
+                System.out.println("=================================== 여기 걸림?");
+                System.out.println(userInfo);
+                System.out.println(userInfo);
+                System.out.println("쿠키 확인 = "+userInfo);
+                // System.out.println("쿠키 확인 = "+userEmailCookie);
+                // System.out.println("쿠키 확인 = "+userNicknameCookie);
+                // 쿠키 만료 시간 설정 (예: 1시간)
+                int cookieMaxAge = 3600;
+                // userIdCookie.setMaxAge(cookieMaxAge);
+                // userEmailCookie.setMaxAge(cookieMaxAge);
+                // userNicknameCookie.setMaxAge(cookieMaxAge);
+                // platformCookie.setMaxAge(cookieMaxAge);
+                // corsesKeyCookie.setMaxAge(cookieMaxAge);
+                // isAdminCookie.setMaxAge(cookieMaxAge);
+                // response.addCookie(userIdCookie);
+                // response.addCookie(userEmailCookie);
+                // response.addCookie(userNicknameCookie);
+                // response.addCookie(platformCookie);
+                response.addCookie(coursesKeyCookie);
+                response.addCookie(isAdminCookie);
                 return "suceess";
 
             } else {
-                KakaoUserDTO userTableInfo = kakaoMapper.selectUserTableInfo(email);
-
-                session.setAttribute("userId", id);
-                session.setAttribute("userEmail", userTableInfo.getEmail());
-                session.setAttribute("userNickname", userTableInfo.getNickname());
-                session.setAttribute("platform", registrationId);
-                session.setAttribute("accessToken", accessToken);
-                session.setMaxInactiveInterval(3600);
-
+                
+                UserDTO userTableInfo = kakaoMapper.selectUserTableInfo(USER_PK);
+                System.out.println(userTableInfo);
+                Cookie userIdCookie = new Cookie("userId", USER_PK);
+                Cookie userEmailCookie = new Cookie("userEmail", USER_EMAIL);
+                Cookie userNicknameCookie = new Cookie("userNickname", USER_NICKNAME);
+                Cookie platformCookie = new Cookie("platform", USER_PLATFORM);
+                Cookie coursesKeyCookie = new Cookie("coursesKey", userTableInfo.getUSER_COURSES_KEY());
+                Cookie isAdminCookie = new Cookie("isAdmin",Integer.toString(userTableInfo.getUSER_ISADMIN()));
+                Cookie profilCookie = new Cookie("profile", USER_PROFILE);
+                System.out.println(userTableInfo.toString());
+                int cookieMaxAge = 3600;
+                
+                System.out.println("===========================2222222222");
+                // System.out.println("쿠키 확인 = "+userIdCookie.getValue());
+                // System.out.println("쿠키 확인 = "+userEmailCookie);
+                // System.out.println("쿠키 확인 = "+userNicknameCookie);
+                // 쿠키 만료 시간 설정 (예: 1시간)
+                userIdCookie.setMaxAge(cookieMaxAge);
+                userEmailCookie.setMaxAge(cookieMaxAge);
+                userNicknameCookie.setMaxAge(cookieMaxAge);
+                platformCookie.setMaxAge(cookieMaxAge);
+                coursesKeyCookie.setMaxAge(cookieMaxAge);
+                isAdminCookie.setMaxAge(cookieMaxAge);
+                platformCookie.setMaxAge(cookieMaxAge);
+                response.addCookie(userIdCookie);
+                response.addCookie(userEmailCookie);
+                response.addCookie(userNicknameCookie);
+                response.addCookie(platformCookie);
+                response.addCookie(coursesKeyCookie);
+                response.addCookie(isAdminCookie);
+                response.addCookie(profilCookie);
                 // 홈페이지로 보내고싶어양
                 return "success";
             }
         }
         // 아이디가 중복이 아닐경우
         else {
-            KakaoUserDTO newUser = new KakaoUserDTO(id, email, nickname, platform); // platform 변수 사용
-
+            System.out.println("등록시 넘어옵니다");
+            String USER_COURSES_KEY="0";
+            int USER_ISADMIN =0;
+            
+            UserDTO newUser = new UserDTO(USER_PK,USER_NICKNAME,USER_EMAIL,USER_PLATFORM,USER_COURSES_KEY,USER_ISADMIN,USER_PROFILE); // platform 변수 사용
+            System.out.println(newUser);
+            System.out.println("최초 등록시 dto  담기");
+            System.out.println(newUser);
             if (kakaoMapper.RegUser(newUser) == 1) {
                 System.out.println("Kakao 테이블 등록 성공");
             }
-            session.setAttribute("userId", id);
-            session.setAttribute("userEmail", email);
-            session.setAttribute("userNickname", nickname);
-            session.setAttribute("platform", registrationId);
-            session.setAttribute("accessToken", accessToken);
-            session.setMaxInactiveInterval(3600);
+            Cookie userIdCookie = new Cookie("userId", USER_PK);
+                Cookie userEmailCookie = new Cookie("userEmail", USER_EMAIL);
+                Cookie userNicknameCookie = new Cookie("userNickname", USER_NICKNAME);
+                Cookie platformCookie = new Cookie("platform", USER_PLATFORM);
+                Cookie coursesKeyCookie = new Cookie("coursesKey",USER_COURSES_KEY);
+                Cookie isAdminCookie = new Cookie("isAdmin",  Integer.toString(USER_ISADMIN));
+                Cookie profilCookie = new Cookie("profile", USER_PROFILE);
+                System.out.println("쿠키 확인 = "+userIdCookie);
+                System.out.println("쿠키 확인 = "+userEmailCookie);
+                System.out.println("쿠키 확인 = "+userNicknameCookie);
+
+                // 쿠키 만료 시간 설정 (예: 1시간)
+                int cookieMaxAge = 3600;
+                userIdCookie.setMaxAge(cookieMaxAge);
+                userEmailCookie.setMaxAge(cookieMaxAge);
+                userNicknameCookie.setMaxAge(cookieMaxAge);
+                platformCookie.setMaxAge(cookieMaxAge);
+                coursesKeyCookie.setMaxAge(cookieMaxAge);
+                isAdminCookie.setMaxAge(cookieMaxAge);
+                profilCookie.setMaxAge(cookieMaxAge);
+                response.addCookie(userIdCookie);
+                response.addCookie(userEmailCookie);
+                response.addCookie(userNicknameCookie);
+                response.addCookie(platformCookie);
+                response.addCookie(coursesKeyCookie);
+                response.addCookie(isAdminCookie);
+                response.addCookie(profilCookie);
+                //test
+
 
             return "success";
         }

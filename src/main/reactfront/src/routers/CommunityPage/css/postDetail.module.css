@@ -1,51 +1,88 @@
-.community-details{
+.post-detail-head{
   display: flex;
+  justify-content: end;
 }
-.post-detail-container {
-  width: 80%;
+
+.post-detail-contents {
+  width: 700px;
+  margin: 0 auto;
+}
+.post-detail-contents hr{
+  width: 728.67px;
+}
+.post-detail-contents-head{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.post-detail-contents-head-1{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 4px;
+}
+.titleinput {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 20px;
+  font-size: 24px;
+  border: none;
+  font-weight: 800;
+}
+.userinput{
+  width: 100%;
+  padding: 0 15px;
+  font-size: 18px;
+  border: none;
+  font-weight: 700;
+}
+.post-list-textbox-info{
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.post-detail-content{
-  display: flex;
-  flex-direction: column;
+.post-list-textbox-info img{
+  margin-left: 3px;
+  margin-right: 3px;
 }
-/* .title{
-  width: 778px;
-  height: 50px;
-  border-radius: 4px;
-  font-size: 24px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  outline: none;
-} */
-.post-detail-container h3 {
-  margin-bottom: 10px;
+.post-list-textbox-date{
+  width: 100px;
 }
 
-.post-detail-container p {
-    line-height: 1.5;
-  }
+.input {
+margin-right: 10px;
+}
 
-  
+.post-detail-content {
+  width: 100%;
+  margin-top: 20px;
+  padding: 15px;
+}
+
+.post-detail-content img{
+  max-width: 100%;
+}
+
+
 .button {
+  margin-right: 6px;
+  margin-top: 10px;
   display: inline-block;
+  background-color: #333;
+  color: white;
   padding: 10px 20px;
-  font-size: 16px;
   text-align: center;
   text-decoration: none;
-  cursor: pointer;
-  outline: none;
-  border: 1px solid #333;
+  border: none;
   border-radius: 4px;
-  color: #fff;
-  background-color: #333;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  height: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .button:hover {
-  background-color: #6c6868;
-  color: #fff;
+  background-color: #555;
 }

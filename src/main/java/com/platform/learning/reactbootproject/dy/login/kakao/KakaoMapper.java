@@ -3,13 +3,14 @@ package com.platform.learning.reactbootproject.dy.login.kakao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import com.platform.learning.reactbootproject.dy.login.UserDTO;
 
-@Mapper
-public interface KakaoMapper {
+    @Mapper
+    public interface KakaoMapper {
 
-    int RegUser(KakaoUserDTO kakaoUserDTO);
+        public int RegUser(UserDTO userDTO);
 
-    List<KakaoUserDTO> SelUser(String id);
+        public List<UserDTO> SelUser(String USER_PK);
 
-    KakaoUserDTO selectUserTableInfo(String email);
-}
+        public UserDTO selectUserTableInfo(String USER_PK);
+    }

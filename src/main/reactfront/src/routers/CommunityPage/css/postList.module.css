@@ -1,24 +1,54 @@
 .post-list-container {
-    width: 80%;
-    padding: 20px;
-  }
-.post-list-container h2{
+  width: 60%;
+  padding: 20px;
+}
+
+.post-list-container h2 {
   margin-bottom: 20px;
 }
-  
-  .post-list {
-    list-style-type: none;
-    padding: 0;
-    cursor: pointer;
-  }
-  
-  .post-list li {
-    margin-bottom: 10px;
-    padding: 8px;
-    background-color: #ddd;
-    border-radius: 4px;
-  }
-  
-  .post-list li:hover {
-    background-color: #ccc;
-  }
+
+.post-list {
+  list-style-type: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.post-list li {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #ddd;
+  border-radius: 4px;
+}
+
+.post-list li:hover {
+  background-color: #ccc;
+}
+
+.post-list-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.post-list-textbox {
+  display: flex;
+  justify-content: space-between;
+}
+
+.post-list-textbox-title {
+  width: 600px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 800;
+  font-size: 18px;
+}
+.post-list-textbox-info{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+}
+.post-list-textbox-info img{
+  margin-left: 3px;
+  margin-right: 3px;
+}
