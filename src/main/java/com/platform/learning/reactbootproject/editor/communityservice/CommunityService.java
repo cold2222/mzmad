@@ -2,20 +2,21 @@ package com.platform.learning.reactbootproject.editor.communityservice;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.platform.learning.reactbootproject.editor.communityDTO.CommunityBBSDTO;
 import com.platform.learning.reactbootproject.editor.communitymapper.CommunityMapper;
 
-import lombok.RequiredArgsConstructor;
-
 @Service
-@RequiredArgsConstructor
 public class CommunityService {
     
-    private final CommunityMapper communityMapper;
+	@Autowired
+    private CommunityMapper communityMapper;
 
     public void insertCommunity(CommunityBBSDTO bbsDTO){
+        System.out.println(bbsDTO);
+        System.out.println("dto값 머들어감?");
         communityMapper.communityInsert(bbsDTO);
     }
 
@@ -29,6 +30,9 @@ public class CommunityService {
         }else if(category.equals("assignment")){
             category = "#과제게시판";
         }
+        System.out.println(communityMapper.selectAllCommunity());
+        System.out.println(communityMapper.selectAllCommunity().get(0).getCommunity_date());
+        System.out.println(communityMapper.selectAllCommunity().get(0).getUserDTO());
         
         if(category.equals("#home")){
             return communityMapper.selectAllCommunity();

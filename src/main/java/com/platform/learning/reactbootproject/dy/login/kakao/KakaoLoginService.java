@@ -4,6 +4,7 @@ package com.platform.learning.reactbootproject.dy.login.kakao;
 import java.util.List;
 import java.util.Objects;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -21,14 +22,17 @@ import ch.qos.logback.core.model.Model;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
 public class KakaoLoginService {
-    private final KakaoMapper kakaoMapper;
-    private final Environment env;
-    private final RestTemplate restTemplate = new RestTemplate();
+
+	@Autowired
+	private KakaoMapper kakaoMapper;
+    
+	@Autowired
+	private Environment env;
+    
+	private final RestTemplate restTemplate = new RestTemplate();
     
 
     public String socialLogin(String code, String registrationId, HttpSession session, Model model,HttpServletResponse response) {
@@ -105,12 +109,11 @@ public class KakaoLoginService {
                 Cookie userEmailCookie = new Cookie("userEmail", USER_EMAIL);
                 Cookie userNicknameCookie = new Cookie("userNickname", USER_NICKNAME);
                 Cookie platformCookie = new Cookie("platform", USER_PLATFORM);
-                Cookie coursesKeyCookie = new Cookie("coursesKey", userTableInfo.getUSER_COURSES_KEY());
-                Cookie isAdminCookie = new Cookie("isAdmin",Integer.toString(userTableInfo.getUSER_ISADMIN()));
+                Cookie coursesKeyCookie = new Cookie("coursesKey", userTableInfo.getUser_courses_key());
+                Cookie isAdminCookie = new Cookie("isAdmin",Integer.toString(userTableInfo.getUser_isAdmin()));
                 Cookie profilCookie = new Cookie("profile", USER_PROFILE);
                 System.out.println(userTableInfo.toString());
                 int cookieMaxAge = 3600;
-                
                 System.out.println("===========================2222222222");
                 // System.out.println("쿠키 확인 = "+userIdCookie.getValue());
                 // System.out.println("쿠키 확인 = "+userEmailCookie);

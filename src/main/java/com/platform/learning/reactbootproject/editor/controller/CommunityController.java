@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,6 +37,11 @@ public class CommunityController {
 
     @PostMapping("/insert")
     public void communityInsert(@RequestBody CommunityBBSDTO bbsDTO){
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String sysDate = today.format(formatter);
+        bbsDTO.setCommunity_date(sysDate);
+        
         communityservice.insertCommunity(bbsDTO);
     }
     @GetMapping("/selectAll/{category}")
