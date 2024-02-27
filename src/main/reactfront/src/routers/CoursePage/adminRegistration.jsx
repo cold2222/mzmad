@@ -14,6 +14,12 @@ const AdminRegistration = () => {
   const [categoryList, setCategoryList] = useState([]); //카테고리 항목 가져오는부분
 
   useEffect(() => {
+    // 페이지에 처음 진입했을 때 기존에 선택되어 있던 카테고리를 설정합니다.
+    const initialSelectedCategory = categoryList.length > 0 ? categoryList[0] : null;
+    setSelectedCategory(initialSelectedCategory);
+  }, [categoryList]);
+
+  useEffect(() => {
     // selectedCategory가 변경될 때의 처리
     console.log('selectedCategory가 변경되었습니다.', selectedCategory);
   }, [selectedCategory]);
@@ -66,6 +72,7 @@ const AdminRegistration = () => {
 
   const handleInsertCategory = async () => {
     try {
+      
       await axios.get('/insert-category', {
         params: {
           category: insertCategory,
@@ -78,8 +85,9 @@ const AdminRegistration = () => {
       console.log('카테고리가 성공적으로 등록되었습니다!');
       alert('카테고리가 성공적으로 등록되었습니다!')
 
-      //목록 갱신
+      
       fetchCategoryList();
+
     } catch (error) {
       console.error('카테고리 등록 중 오류 발생:', error);
     }
@@ -94,7 +102,17 @@ const AdminRegistration = () => {
   };
 
   const handleLectureRegistration = async () => {
+
+    if (!selectedCategory) {
+      console.error('카테고리를 선택해주세요!');
+      alert('카테고리를 선택해주세요!');
+      return;
+    }
+    
     const formData = new FormData();
+    console.log("test1"+selectedCategory)
+    console.log("test2"+insertCategory)
+
     formData.append('courses_category', selectedCategory);
     formData.append('courses_name', lectureName);
     formData.append('courses_video', videoFile);
@@ -128,14 +146,16 @@ const AdminRegistration = () => {
       <input className={styles.input} type="text" value={insertCategory} onChange={(e) => setInsertCategory(e.target.value)} />
       <button className={styles.button} onClick={handleInsertCategory}>카테고리 등록</button>
       <br/><br/>
-      <label className={styles.label}>카테고리 선택:</label>
-      <select className={styles.select} value={selectedCategory} onChange={handleCategoryChange}>
+      <label className={styles.label}>카테고리 선택(등록이 안될경우 카테고리를 재선택 해주세요)</label>
+             
+      <select className={styles.select} value={selectedCategory || ''} onChange={handleCategoryChange}>
         {categoryList.map((category) => (
             <option key={category} value={category}>
-            {category}
+              {category}
             </option>
         ))}
-        </select>
+      </select>
+
 
       <label className={styles.label}>강의(동영상) 이름:</label>
       <input className={styles.input} type="text" value={lectureName} onChange={handleLectureNameChange} />

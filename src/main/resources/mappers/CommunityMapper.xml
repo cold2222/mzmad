@@ -2,12 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.platform.learning.reactbootproject.editor.communitymapper.CommunityMapper">
 	<insert id="communityInsert">
-		insert into community values(community_pk_seq.NEXTVAL,#{user_pk},#{community_category},#{community_title},#{community_content},
-        SYSDATE,0,0,0)
+		insert into community values(community_pk_seq.NEXTVAL,#{community_user_pk},#{community_category},#{community_title},#{community_content},
+        #{community_date},0,0,0)
 	</insert>
-    <!-- <select id="selectAllCommunity" resultType="CommunityBBSDTO">
-        select * from community where community_report &lt;= 10 order by community_pk desc
-    </select> -->
     <select id="SelectMenuCommunity" resultType="CommunityBBSDTO">
         select * from community where community_category = #{selectedMenu} and community_report &lt;= 10 order by community_pk desc
     </select>
@@ -16,31 +13,31 @@
     </select>
 
 
-<resultMap id="communityWithUserResultMap" type="com.platform.learning.reactbootproject.editor.communityDTO.CommunityBBSDTO">
-    <result property="community_pk" column="community_pk"/>
-    <result property="user_pk" column="user_pk"/>
+<resultMap id="communityWithUserResultMap" type="CommunityBBSDTO">
+    <result property="community_pk" column="community_pk" />
+    <result property="community_user_pk" column="community_user_pk" />
     <result property="community_category" column="community_category"/>
-    <result property="community_title" column="community_title"/>
-    <result property="community_content" column="community_content"/>
-    <!-- 'community_date'에 대한 DateTypeHandler 설정 -->
-    <result property="communityDate" column="community_date" jdbcType="TIMESTAMP" javaType="java.time.LocalDateTime" />
-    <result property="community_view" column="community_view"/>
-    <result property="community_isgood" column="community_isgood"/>
-    <result property="community_report" column="community_report"/>
-    <association property="userDTO" javaType="com.platform.learning.reactbootproject.dy.login.UserDTO">
-        <result property="id" column="pk"/>
-        <result property="nickname" column="nickname"/>
-        <result property="email" column="email"/>
-        <result property="platform" column="platform"/>
-        <result property="courses_key" column="courses_key"/>
-        <result property="isadmin" column="isadmin"/>
+    <result property="community_title" column="community_title" />
+    <result property="community_content" column="community_content" />
+    <result property="community_date" column="community_date"/>
+    <result property="community_view" column="community_view" />
+    <result property="community_isgood" column="community_isgood" />
+    <result property="community_report" column="community_report" />
+  	<association property="userDTO" javaType="UserDTO">
+        <result property="user_pk" column="user_pk" />
+        <result property="user_nickName" column="user_nickName" />
+        <result property="user_email" column="user_email" />
+        <result property="user_platform" column="user_platform" />
+        <result property="user_courses_key" column="user_courses_key" />
+        <result property="user_isAdmin" column="user_isAdmin" />
+        <result property="user_profile" column="user_profile" />
     </association>
 </resultMap>
   
 <select id="selectAllCommunity" resultMap="communityWithUserResultMap">
     SELECT 
         c.community_pk,
-        c.user_pk,
+        c.community_user_pk,
         c.community_category,
         c.community_title,
         c.community_content,
@@ -48,16 +45,18 @@
         c.community_view,
         c.community_isgood,
         c.community_report,
-        u.user_pk as pk,
-        u.user_nickname as nickname,
-        u.user_email as email,
-        u.user_platform as platform,
-        u.USER_COURSES_KEY as COURSES_KEY,
-        u.USER_ISADMIN as ISADMIN 
+        u.user_pk,
+        u.user_nickname,
+        u.user_email,
+        u.user_platform,
+        u.user_courses_key,
+        u.user_isAdmin,
+        u.user_profile
     FROM 
-        Community c
-    JOIN 
-        users u ON c.user_pk = u.user_pk
+        Community c, Users u
+    where 
+        c.community_user_pk = u.user_pk
+        order by community_pk desc
 </select>
 
     <update id="updateViews">
