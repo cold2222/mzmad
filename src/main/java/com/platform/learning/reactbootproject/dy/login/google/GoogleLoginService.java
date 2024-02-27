@@ -1,10 +1,8 @@
-package com.platform.learning.reactbootproject.dy.login.kakao;
-
+package com.platform.learning.reactbootproject.dy.login.google;
 
 import java.util.List;
 import java.util.Objects;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -23,16 +21,13 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-@RequiredArgsConstructor
-@Service
-public class KakaoLoginService {
 
-	private final KakaoMapper kakaoMapper;
-    
-	private final Environment env;
-    
-	private final RestTemplate restTemplate = new RestTemplate();
-    
+@Service
+@RequiredArgsConstructor
+public class GoogleLoginService {
+    private final GoogleMapper googleMapper;
+    private final Environment env;
+    private final RestTemplate restTemplate = new RestTemplate();
 
     public String socialLogin(String code, String registrationId, HttpSession session, Model model,HttpServletResponse response) {
         String accessToken = getAccessToken(code, registrationId);
@@ -43,10 +38,12 @@ public class KakaoLoginService {
 
         System.out.println("result test" + result);
 
-        String user_pk = result.get("id").toString();
-        String user_email = result.get("kakao_account").get("email").toString().replaceAll("\"", "");
-        String user_nickname = result.get("properties").get("nickname").toString().replaceAll("\"", "");
-        String user_profile = result.get("properties").get("profile_image").toString().replaceAll("\"", "");
+        System.out.println("result test" + result);
+
+        String user_pk = result.get("id").asText();
+        String user_email = result.get("email").asText();
+        String user_nickname = result.get("name").asText();
+        String user_profile = result.get("picture").asText();
         String user_platform = registrationId;
         
         
@@ -57,7 +54,7 @@ public class KakaoLoginService {
         System.out.println("USER_PROFILE = " + user_profile);
 
 
-        List<UserDTO> existingUsers = kakaoMapper.SelUser(user_pk);
+        List<UserDTO> existingUsers = googleMapper.SelUser(user_pk);
 
         System.out.println(existingUsers);
         System.out.println("잘된다잉");
@@ -68,8 +65,8 @@ public class KakaoLoginService {
 
             // 이미 존재하는 사용자에 대한 추가 작업 수행
 
-            if (Objects.isNull(kakaoMapper.selectUserTableInfo(user_pk))) {
-                UserDTO userTableInfo = kakaoMapper.selectUserTableInfo(user_pk);
+            if (Objects.isNull(googleMapper.selectUserTableInfo(user_pk))) {
+                UserDTO userTableInfo = googleMapper.selectUserTableInfo(user_pk);
                 System.out.println(userTableInfo);
                 // Cookie userIdCookie = new Cookie("userId", id);
                 // Cookie userEmailCookie = new Cookie("userEmail", email);
@@ -102,7 +99,7 @@ public class KakaoLoginService {
 
             } else {
                 
-                UserDTO userTableInfo = kakaoMapper.selectUserTableInfo(user_pk);
+                UserDTO userTableInfo = googleMapper.selectUserTableInfo(user_pk);
                 System.out.println(userTableInfo);
                 Cookie userIdCookie = new Cookie("userId", user_pk);
                 Cookie userEmailCookie = new Cookie("userEmail", user_email);
@@ -113,6 +110,7 @@ public class KakaoLoginService {
                 Cookie profilCookie = new Cookie("profile", user_profile);
                 System.out.println(userTableInfo.toString());
                 int cookieMaxAge = 3600;
+                
                 System.out.println("===========================2222222222");
                 // System.out.println("쿠키 확인 = "+userIdCookie.getValue());
                 // System.out.println("쿠키 확인 = "+userEmailCookie);
@@ -146,8 +144,8 @@ public class KakaoLoginService {
             System.out.println(newUser);
             System.out.println("최초 등록시 dto  담기");
             System.out.println(newUser);
-            if (kakaoMapper.RegUser(newUser) == 1) {
-                System.out.println("Kakao 테이블 등록 성공");
+            if (googleMapper.RegUser(newUser) == 1) {
+                System.out.println("google 테이블 등록 성공");
             }
             Cookie userIdCookie = new Cookie("userId", user_pk);
                 Cookie userEmailCookie = new Cookie("userEmail", user_email);
@@ -181,6 +179,9 @@ public class KakaoLoginService {
 
             return "success";
         }
+
+
+
 
     }
 
@@ -216,17 +217,22 @@ public class KakaoLoginService {
 
         return accessTokenNode.get("access_token").asText();
     }
-    
 
     public JsonNode getUserInfo(String accessToken, String registrationId) {
-        String refresh_uri = env.getProperty("oauth2." + registrationId + ".refresh-token-uri");
+        String resourceUri = env.getProperty("oauth2." + registrationId + ".resource-uri");
 
-        System.out.println("refresh_uri 확인 " + refresh_uri);
+        System.out.println("resource-uri 확인 " + resourceUri);
         org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
         headers.set("Authorization", "Bearer " + accessToken);
         HttpEntity entity = new HttpEntity(headers);
+        System.out.println(entity);
         System.out.println("제이슨 확인");
         System.out.println("여기까진됐습니다");
-        return  restTemplate.exchange(refresh_uri, HttpMethod.GET, entity, JsonNode.class).getBody();
+        System.out.println("토큰입니당"+accessToken);
+        return  restTemplate.exchange(resourceUri, HttpMethod.GET, entity, JsonNode.class).getBody();
     }
+
+
+
+    
 }
