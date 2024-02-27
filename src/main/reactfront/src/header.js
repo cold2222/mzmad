@@ -52,6 +52,7 @@ const Header = () => {
               sessionStorage.removeItem('platform');
               sessionStorage.removeItem('isAdmin');
               sessionStorage.removeItem('coursesKey');
+              sessionStorage.removeItem('profile');
               navigate('/'); 
             }}>Logout</div>}
           </div>
