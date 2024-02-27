@@ -6,17 +6,17 @@
 
     <!-- SelUser 메서드에 대한 SQL 쿼리 매핑 -->
     <select id="SelUser" resultType="com.platform.learning.reactbootproject.dy.login.UserDTO">
-        SELECT * FROM users WHERE user_pk = #{USER_PK}
+        SELECT * FROM users WHERE user_pk = #{user_pk}
     </select>
 
     <!-- RegUser 메서드에 대한 SQL 쿼리 매핑 -->
     <insert id="RegUser" parameterType="com.platform.learning.reactbootproject.dy.login.UserDTO">
-        INSERT INTO users VALUES (#{USER_PK},#{USER_NICKNAME},#{USER_EMAIL},#{USER_PLATFORM},#{USER_COURSES_KEY},#{USER_ISADMIN},#{USER_PROFILE})
+        INSERT INTO users VALUES (#{user_pk},#{user_nickname},#{user_email},#{user_platform},#{user_courses_key},#{user_isAdmin},#{user_profile})
     </insert>
 
     <!-- selectUserTableInfo 메서드에 대한 SQL 쿼리 매핑 -->
     <select id="selectUserTableInfo" resultType="com.platform.learning.reactbootproject.dy.login.UserDTO">
-        SELECT * FROM users WHERE user_pk = #{USER_PK}
+        SELECT * FROM users WHERE user_pk = #{user_pk}
     </select>
 
 </mapper>

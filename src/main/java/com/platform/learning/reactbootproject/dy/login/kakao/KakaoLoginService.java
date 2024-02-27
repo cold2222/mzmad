@@ -44,21 +44,21 @@ public class KakaoLoginService {
 
         System.out.println("result test" + result);
 
-        String USER_PK = result.get("id").toString();
-        String USER_EMAIL = result.get("kakao_account").get("email").toString().replaceAll("\"", "");
-        String USER_NICKNAME = result.get("properties").get("nickname").toString().replaceAll("\"", "");
-        String USER_PROFILE = result.get("properties").get("profile_image").toString().replaceAll("\"", "");
-        String USER_PLATFORM = registrationId;
+        String user_pk = result.get("id").toString();
+        String user_email = result.get("kakao_account").get("email").toString().replaceAll("\"", "");
+        String user_nickname = result.get("properties").get("nickname").toString().replaceAll("\"", "");
+        String user_profile = result.get("properties").get("profile_image").toString().replaceAll("\"", "");
+        String user_platform = registrationId;
         
         
-        System.out.println("id = " + USER_PK);
-        System.out.println("email = " + USER_EMAIL);
-        System.out.println("nickname = " + USER_NICKNAME);
-        System.out.println("platform = "+ USER_PLATFORM);
-        System.out.println("USER_PROFILE = " + USER_PROFILE);
+        System.out.println("id = " + user_pk);
+        System.out.println("email = " + user_email);
+        System.out.println("nickname = " + user_nickname);
+        System.out.println("platform = "+ user_platform);
+        System.out.println("USER_PROFILE = " + user_profile);
 
 
-        List<UserDTO> existingUsers = kakaoMapper.SelUser(USER_PK);
+        List<UserDTO> existingUsers = kakaoMapper.SelUser(user_pk);
 
         System.out.println(existingUsers);
         System.out.println("잘된다잉");
@@ -69,8 +69,8 @@ public class KakaoLoginService {
 
             // 이미 존재하는 사용자에 대한 추가 작업 수행
 
-            if (Objects.isNull(kakaoMapper.selectUserTableInfo(USER_PK))) {
-                UserDTO userTableInfo = kakaoMapper.selectUserTableInfo(USER_PK);
+            if (Objects.isNull(kakaoMapper.selectUserTableInfo(user_pk))) {
+                UserDTO userTableInfo = kakaoMapper.selectUserTableInfo(user_pk);
                 System.out.println(userTableInfo);
                 // Cookie userIdCookie = new Cookie("userId", id);
                 // Cookie userEmailCookie = new Cookie("userEmail", email);
@@ -103,15 +103,15 @@ public class KakaoLoginService {
 
             } else {
                 
-                UserDTO userTableInfo = kakaoMapper.selectUserTableInfo(USER_PK);
+                UserDTO userTableInfo = kakaoMapper.selectUserTableInfo(user_pk);
                 System.out.println(userTableInfo);
-                Cookie userIdCookie = new Cookie("userId", USER_PK);
-                Cookie userEmailCookie = new Cookie("userEmail", USER_EMAIL);
-                Cookie userNicknameCookie = new Cookie("userNickname", USER_NICKNAME);
-                Cookie platformCookie = new Cookie("platform", USER_PLATFORM);
+                Cookie userIdCookie = new Cookie("userId", user_pk);
+                Cookie userEmailCookie = new Cookie("userEmail", user_email);
+                Cookie userNicknameCookie = new Cookie("userNickname", user_nickname);
+                Cookie platformCookie = new Cookie("platform", user_platform);
                 Cookie coursesKeyCookie = new Cookie("coursesKey", userTableInfo.getUser_courses_key());
                 Cookie isAdminCookie = new Cookie("isAdmin",Integer.toString(userTableInfo.getUser_isAdmin()));
-                Cookie profilCookie = new Cookie("profile", USER_PROFILE);
+                Cookie profilCookie = new Cookie("profile", user_profile);
                 System.out.println(userTableInfo.toString());
                 int cookieMaxAge = 3600;
                 System.out.println("===========================2222222222");
@@ -140,23 +140,23 @@ public class KakaoLoginService {
         // 아이디가 중복이 아닐경우
         else {
             System.out.println("등록시 넘어옵니다");
-            String USER_COURSES_KEY="0";
-            int USER_ISADMIN =0;
+            String user_courses_key="0";
+            int user_isAdmin =0;
             
-            UserDTO newUser = new UserDTO(USER_PK,USER_NICKNAME,USER_EMAIL,USER_PLATFORM,USER_COURSES_KEY,USER_ISADMIN,USER_PROFILE); // platform 변수 사용
+            UserDTO newUser = new UserDTO(user_pk,user_nickname,user_email,user_platform,user_courses_key,user_isAdmin,user_profile); // platform 변수 사용
             System.out.println(newUser);
             System.out.println("최초 등록시 dto  담기");
             System.out.println(newUser);
             if (kakaoMapper.RegUser(newUser) == 1) {
                 System.out.println("Kakao 테이블 등록 성공");
             }
-            Cookie userIdCookie = new Cookie("userId", USER_PK);
-                Cookie userEmailCookie = new Cookie("userEmail", USER_EMAIL);
-                Cookie userNicknameCookie = new Cookie("userNickname", USER_NICKNAME);
-                Cookie platformCookie = new Cookie("platform", USER_PLATFORM);
-                Cookie coursesKeyCookie = new Cookie("coursesKey",USER_COURSES_KEY);
-                Cookie isAdminCookie = new Cookie("isAdmin",  Integer.toString(USER_ISADMIN));
-                Cookie profilCookie = new Cookie("profile", USER_PROFILE);
+            Cookie userIdCookie = new Cookie("userId", user_pk);
+                Cookie userEmailCookie = new Cookie("userEmail", user_email);
+                Cookie userNicknameCookie = new Cookie("userNickname", user_nickname);
+                Cookie platformCookie = new Cookie("platform", user_platform);
+                Cookie coursesKeyCookie = new Cookie("coursesKey",user_courses_key);
+                Cookie isAdminCookie = new Cookie("isAdmin",  Integer.toString(user_isAdmin));
+                Cookie profilCookie = new Cookie("profile", user_profile);
                 System.out.println("쿠키 확인 = "+userIdCookie);
                 System.out.println("쿠키 확인 = "+userEmailCookie);
                 System.out.println("쿠키 확인 = "+userNicknameCookie);
