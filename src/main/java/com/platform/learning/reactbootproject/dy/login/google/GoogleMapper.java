@@ -11,8 +11,8 @@ public interface GoogleMapper {
 
         public int RegUser(UserDTO userDTO);
 
-        public List<UserDTO> SelUser(String USER_PK);
+        public List<UserDTO> SelUser(String user_pk);
 
-        public UserDTO selectUserTableInfo(String USER_PK);
+        public UserDTO selectUserTableInfo(String user_pk);
     
 }
