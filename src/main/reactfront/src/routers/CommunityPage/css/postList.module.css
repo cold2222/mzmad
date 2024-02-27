@@ -44,9 +44,10 @@
 }
 .post-list-textbox-info{
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   font-size: 14px;
+  width: 20%;
 }
 .post-list-textbox-info img{
   margin-left: 3px;

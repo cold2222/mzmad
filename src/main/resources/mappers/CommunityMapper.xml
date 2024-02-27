@@ -1,79 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.platform.learning.reactbootproject.editor.communitymapper.CommunityMapper">
+<mapper
+	namespace="com.platform.learning.reactbootproject.editor.communitymapper.CommunityMapper">
 	<insert id="communityInsert">
-		insert into community values(community_pk_seq.NEXTVAL,#{community_user_pk},#{community_category},#{community_title},#{community_content},
-        #{community_date},0,0,0)
+		insert into community
+		values(community_pk_seq.NEXTVAL,#{community_user_pk},#{community_category},#{community_title},#{community_content},
+		0,0,0,sysdate)
 	</insert>
-    <select id="SelectMenuCommunity" resultType="CommunityBBSDTO">
-        select * from community where community_category = #{selectedMenu} and community_report &lt;= 10 order by community_pk desc
-    </select>
-    <select id="communitySelectView" resultMap="communityWithUserResultMap">
-        select * from community where community_pk = #{community_pk}
-    </select>
 
+	<resultMap id="communityWithUserResultMap" type="com.platform.learning.reactbootproject.editor.communityDTO.CommunityBBSDTO">
+		<result property="community_pk" column="COMMUNITY_PK" />
+		<result property="community_user_pk" column="COMMUNITY_USER_PK" />
+		<result property="community_category" column="COMMUNITY_CATEGORY" />
+		<result property="community_title" column="COMMUNITY_TITLE" />
+		<result property="community_content" column="COMMUNITY_CONTENT" />
+		<result property="community_view" column="COMMUNITY_VIEW" />
+		<result property="community_isgood" column="COMMUNITY_ISGOOD" />
+		<result property="community_report" column="COMMUNITY_REPORT" />
+		<result property="community_date" column="COMMUNITY_DATE" />
+		<association property="userDTO" resultMap="user" javaType="com.platform.learning.reactbootproject.dy.login.UserDTO">
+		</association>
+	</resultMap>
 
-<resultMap id="communityWithUserResultMap" type="CommunityBBSDTO">
-    <result property="community_pk" column="community_pk" />
-    <result property="community_user_pk" column="community_user_pk" />
-    <result property="community_category" column="community_category"/>
-    <result property="community_title" column="community_title" />
-    <result property="community_content" column="community_content" />
-    <result property="community_date" column="community_date"/>
-    <result property="community_view" column="community_view" />
-    <result property="community_isgood" column="community_isgood" />
-    <result property="community_report" column="community_report" />
-  	<association property="userDTO" javaType="UserDTO">
-        <result property="user_pk" column="user_pk" />
-        <result property="user_nickName" column="user_nickName" />
-        <result property="user_email" column="user_email" />
-        <result property="user_platform" column="user_platform" />
-        <result property="user_courses_key" column="user_courses_key" />
-        <result property="user_isAdmin" column="user_isAdmin" />
-        <result property="user_profile" column="user_profile" />
-    </association>
-</resultMap>
-  
-<select id="selectAllCommunity" resultMap="communityWithUserResultMap">
-    SELECT 
-        c.community_pk,
-        c.community_user_pk,
-        c.community_category,
-        c.community_title,
-        c.community_content,
-        c.community_date,
-        c.community_view,
-        c.community_isgood,
-        c.community_report,
-        u.user_pk,
-        u.user_nickname,
-        u.user_email,
-        u.user_platform,
-        u.user_courses_key,
-        u.user_isAdmin,
-        u.user_profile
-    FROM 
-        Community c, Users u
-    where 
-        c.community_user_pk = u.user_pk
-        order by community_pk desc
-</select>
+	<resultMap type="com.platform.learning.reactbootproject.dy.login.UserDTO" id="user">
+		<id property="user_pk" column="USER_PK" />
+		<result property="user_nickName" column="USER_NICKNAME" />
+		<result property="user_email" column="USER_EMAIL" />
+		<result property="user_platform" column="USER_PLATFORM" />
+		<result property="user_courses_key" column="USER_COURSES_KEY" />
+		<result property="user_isAdmin" column="USER_ISADMIN" />
+		<result property="user_profile" column="USER_PROFILE" />
+	</resultMap>
+	
+	<select id="SelectMenuCommunity" resultMap="communityWithUserResultMap">
+		SELECT
+		c.COMMUNITY_PK,
+		c.COMMUNITY_USER_PK,
+		c.COMMUNITY_CATEGORY,
+		c.COMMUNITY_TITLE,
+		c.COMMUNITY_CONTENT,
+		c.COMMUNITY_VIEW,
+		c.COMMUNITY_ISGOOD,
+		c.COMMUNITY_REPORT,
+		to_char(c.COMMUNITY_DATE,'yyyy-mm-dd') as COMMUNITY_DATE,
+		u.*
+		FROM
+		COMMUNITY c, USERS u
+		WHERE
+		c.COMMUNITY_USER_PK = u.USER_PK AND
+		c.COMMUNITY_REPORT &lt;= 10
+		<if test="!category.equals('home')">
+		and c.community_category = #{category}
+		</if>
+		ORDER BY
+		c.COMMUNITY_PK DESC
+	</select>
 
-    <update id="updateViews">
-        update community set community_view = community_view + 1 where community_pk = #{community_pk}
-    </update>
-    <update id="isGood">
-        update community set community_isgood = community_isgood + 1 where community_pk = #{community_pk}
-    </update>
-    <update id="report">
-        update community set community_report = community_report+ 1 where community_pk = #{community_pk}
-    </update>
-    <delete id="delete">
-        delete community where community_pk = #{community_pk}
-    </delete>
-    <update id="update">
-        update community set community_title = #{community_title}, community_category = #{community_category}
-        , community_content = #{community_content} where community_pk = #{community_pk}
-    </update>
+	<select id="communitySelectView" resultMap="communityWithUserResultMap">
+		SELECT
+		c.COMMUNITY_PK,
+		c.COMMUNITY_USER_PK,
+		c.COMMUNITY_CATEGORY,
+		c.COMMUNITY_TITLE,
+		c.COMMUNITY_CONTENT,
+		c.COMMUNITY_VIEW,
+		c.COMMUNITY_ISGOOD,
+		c.COMMUNITY_REPORT,
+		to_char(c.COMMUNITY_DATE,'yyyy-mm-dd') as COMMUNITY_DATE,
+		u.*
+		FROM
+		COMMUNITY c, USERS u
+		WHERE
+		c.COMMUNITY_USER_PK = u.USER_PK
+		and c.community_pk = #{community_pk}
+		ORDER BY
+		c.COMMUNITY_PK DESC
+	</select>
+	
+	<update id="updateViews">
+		update community set community_view = community_view + 1 where community_pk
+		= #{community_pk}
+	</update>
+	<update id="isGood">
+		update community set community_isgood = community_isgood + 1 where
+		community_pk = #{community_pk}
+	</update>
+	<update id="report">
+		update community set community_report = community_report+ 1 where
+		community_pk = #{community_pk}
+	</update>
+	<delete id="delete">
+		delete community where community_pk = #{community_pk}
+	</delete>
+	<update id="update">
+		update community set community_title = #{community_title},
+		community_category = #{community_category}
+		, community_content = #{community_content} where community_pk =
+		#{community_pk}
+	</update>
 </mapper>
 

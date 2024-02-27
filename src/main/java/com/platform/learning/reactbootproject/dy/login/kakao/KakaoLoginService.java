@@ -22,15 +22,14 @@ import ch.qos.logback.core.model.Model;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
+import lombok.RequiredArgsConstructor;
+@RequiredArgsConstructor
 @Service
 public class KakaoLoginService {
 
-	@Autowired
-	private KakaoMapper kakaoMapper;
+	private final KakaoMapper kakaoMapper;
     
-	@Autowired
-	private Environment env;
+	private final Environment env;
     
 	private final RestTemplate restTemplate = new RestTemplate();
     

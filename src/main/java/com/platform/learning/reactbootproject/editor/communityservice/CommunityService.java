@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.platform.learning.reactbootproject.editor.communityDTO.CommunityBBSDTO;
+import com.platform.learning.reactbootproject.editor.communitydto.CommunityBBSDTO;
 import com.platform.learning.reactbootproject.editor.communitymapper.CommunityMapper;
 
 @Service
@@ -21,21 +21,12 @@ public class CommunityService {
     }
 
     public List<CommunityBBSDTO> selectAllCommunity(String category) {
-        if(category.equals("home")){
-            category = "#home";
-        }else if(category.equals("free")){
+        if(category.equals("free")){
             category = "#자유게시판";
         }else if(category.equals("tip")){
             category ="#글쓰기Tip공유게시판";
         }else if(category.equals("assignment")){
             category = "#과제게시판";
-        }
-        System.out.println(communityMapper.selectAllCommunity());
-        System.out.println(communityMapper.selectAllCommunity().get(0).getCommunity_date());
-        System.out.println(communityMapper.selectAllCommunity().get(0).getUserDTO());
-        
-        if(category.equals("#home")){
-            return communityMapper.selectAllCommunity();
         }
         return communityMapper.SelectMenuCommunity(category);
     }

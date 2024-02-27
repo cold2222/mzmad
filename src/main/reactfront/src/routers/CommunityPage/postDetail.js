@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Comment from './comment';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from './css/postDetail.module.css';
 import axios from "axios";
@@ -87,7 +88,7 @@ const PostDetail = () => {
       </div>
       <div className={styles['post-detail-contents']}>
         <div name="title" id="title" dangerouslySetInnerHTML={{ __html: post.community_title }} className={styles.titleinput} ></div>
-        <div dangerouslySetInnerHTML={{ __html: post.user_pk }} className={styles.userinput}></div>
+        {post.userDTO && <div dangerouslySetInnerHTML={{ __html: post.userDTO.user_nickName }} className={styles.userinput}></div>}
         <div className={styles['post-detail-contents-head']} >
           <div className={styles['post-detail-contents-head-1']}>
             <div className={styles['post-list-textbox-info']}>
@@ -106,6 +107,7 @@ const PostDetail = () => {
       <div className={styles['button']} onClick={handleGoBack}>돌아가기</div>
       <div className={styles['button']} onClick={communityDelect}>삭제</div>
       <div className={styles['button']} onClick={communityUpdate}>수정</div>
+      <Comment communty_pk={post.communty_pk}/>
     </div>
   );
 }
