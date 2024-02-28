@@ -4,5 +4,10 @@
 	<select id="getAllLectures" resultType="SelectLectureDTO">
 		select * from courses
 	</select>
+
+	<select id="getVideoInfo" resultType="SelectLectureDTO">
+		select * from courses where courses_id = #{number}
+	</select>
+	
 </mapper>
 

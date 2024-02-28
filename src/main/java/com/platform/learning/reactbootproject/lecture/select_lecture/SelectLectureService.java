@@ -16,4 +16,9 @@ public class SelectLectureService {
         return selectLectureMapper.getAllLectures();
     }
 
+    public SelectLectureDTO getVideoInfo(String number) {
+
+        return selectLectureMapper.getVideoInfo(number);
+    }
+
 }

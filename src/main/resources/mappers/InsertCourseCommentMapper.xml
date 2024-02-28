@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.platform.learning.reactbootproject.lecture.insert_comment.InsertCommentMapper">
+	<insert id="regCourseComment">
+        insert into course_comment
+		values(course_comment_seq.NEXTVAL,
+        #{course_comment_user_id},
+        #{course_comment_course_id},
+        #{course_comment_content},
+        #{course_comment_date})
+    </insert>
+</mapper>
