@@ -11,6 +11,8 @@ import LoginPage from './routers/dy/Login/LoginPage';
 import KakaoRedirectPage from "./routers/dy/Login/KakaoRedirectPage";
 import "./css/index.module.css"
 import useScrollRestoration from './useScrollRestoration';
+import GoogleRedirectPage from './routers/dy/Login/GoogleRedirectPage';
+import MyPage from './routers/dy/MyPage/myPage';
 
 const App = () => {
   return (
@@ -35,6 +37,8 @@ const ScrollRestorationWrapper = () => {
         <Route path="/write" element={<Editor />} />
         <Route path="/login" element={<LoginPage/>}></Route>
         <Route path="/login/oauth2/callback/kakao" element={<KakaoRedirectPage />}></Route>
+        <Route path="/login/oauth2/callback/google" element={<GoogleRedirectPage/>}></Route>
+        <Route path="/mypage" element={<MyPage/>}></Route>
       </Routes>
       <Footer />
     </>

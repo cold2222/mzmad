@@ -8,22 +8,22 @@ import lombok.Data;
 
 @Data
 public class UserDTO {
-	private String USER_PK;
-	private String USER_NICKNAME;
-	private String USER_EMAIL;
-    private String USER_PLATFORM;
-	private String USER_COURSES_KEY;
-	private int USER_ISADMIN;
-    private String USER_PROFILE;
+	private String user_pk;
+	private String user_nickname;
+	private String user_email;
+    private String user_platform;
+	private String user_courses_key;
+	private int user_isAdmin;
+	private String user_profile;
 
-	public UserDTO(String USER_PK, String USER_NICKNAME, String USER_EMAIL,String USER_PLATFORM,String USER_COURSES_KEY,int USER_ISADMIN,String USER_PROFILE) {
-		this.USER_PK = USER_PK;
-		this.USER_NICKNAME = USER_NICKNAME;
-		this.USER_EMAIL = USER_EMAIL;
-        this.USER_PLATFORM = USER_PLATFORM;
-        this.USER_COURSES_KEY= USER_COURSES_KEY;
-        this.USER_ISADMIN = USER_ISADMIN;
-        this.USER_PROFILE = USER_PROFILE;
+	public UserDTO(String user_pk, String user_nickname, String user_email, String user_platform,String user_courses_key, int user_isAdmin, String user_profile) {
+		this.user_pk = user_pk;
+		this.user_nickname = user_nickname;
+		this.user_email = user_email;
+		this.user_platform = user_platform;
+		this.user_courses_key = user_courses_key;
+		this.user_isAdmin = user_isAdmin;
+		this.user_profile = user_profile;
 	}
     
 // JSON으로 변환하는 메서드

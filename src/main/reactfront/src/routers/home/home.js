@@ -80,7 +80,7 @@ const Home = () => {
       <p>Courses Key: {sessionStorage.getItem('coursesKey')}</p>
       <p>Is Admin: {sessionStorage.getItem('isAdmin')}</p>
       <p>UserINFO: {sessionStorage.getItem('userInfo')}</p>
-      <p><img src={sessionStorage.getItem('profile')} alt="Profile Image" /></p>
+      <p><img src={sessionStorage.getItem('profile')} alt="Profile Image" style={{width: '100px', height: '100px'}} /></p>
     </div>
   );
 };
