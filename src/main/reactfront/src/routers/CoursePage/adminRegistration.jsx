@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import styles from './AdminRegistration.module.css';
+import styles from './css/AdminRegistration.module.css';
 
 const AdminRegistration = () => {
   const navigate = useNavigate(); 

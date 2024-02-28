@@ -1,7 +1,7 @@
 // LecturePage.js
 import React, { useState, useEffect } from 'react';
 // eslint-disable-next-line
-import styles from './LecturePage.module.css';
+import styles from './css/LecturePage.module.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -13,6 +13,11 @@ const LecturePage = () => {
 
   const handleCategoryChange = (newCategory) => {
     setCategory(newCategory);
+  };
+  // 각 동영상의 고유 번호를 사용하여 개별 동영상 페이지로 이동
+  const handleVideoClick = (uniqueNumber) => {
+
+    navigate(`/course/${uniqueNumber}`);
   };
 
   const handleAdminRegistration = () => {
@@ -51,27 +56,29 @@ const LecturePage = () => {
           관리자 등록
         </button>
 
-        <label className={styles.label}>카테고리 선택:</label>
+        <label className={styles.label}>카테고리 선택</label>
         <select className={styles.select} value={category} onChange={(e) => handleCategoryChange(e.target.value)}>
           <option value="전체">전체</option>
           {uniqueCategories.map(categoryOption => (
             <option key={categoryOption} value={categoryOption}>{categoryOption}</option>
           ))}
         </select>
-      </div>
+      </div><br/>
 
       <div>
-        <h2 className={styles.title}>{category} 카테고리의 강의 목록</h2>
+        <h2 className={styles.title}>{category} 강의 목록</h2>
         {lectureData.length === 0 ? (
             <p>Loading...</p>
           ) : (
             <ul className={styles.list}>
               {filteredLectures.map(lecture => (
                 <li key={lecture.courses_date} className={styles.item}>
-                <span>{lecture.courses_name}</span><br/>
-                <video width="320" height="240" controls>
-                  <source src={`LectureVideo/${lecture.courses_video}`} type="video/mp4" />
-                </video>
+                <div className = {styles.videoContainer} onClick={() => handleVideoClick(lecture.courses_id)}>
+                  <span>{lecture.courses_name}</span><br/>
+                  <video width="320" height="240">
+                    <source src={`LectureVideo/${lecture.courses_video}`} type="video/mp4" />
+                  </video>
+                </div>
               </li>
               ))}
             </ul>
@@ -80,5 +87,24 @@ const LecturePage = () => {
     </div>
   );
 };
+
+/*<ul className={styles.list}>
+{filteredLectures.map(lecture => (
+  <li key={lecture.courses_date} className={styles.item}>
+    <span>{lecture.courses_name}</span><br/>
+    <div className={styles.videoContainer} onClick={() => handleVideoClick(lecture.courses_id)}>
+      {selectedVideo === lecture.uniqueNumber ? (
+        <video width="320" height="240" controls>
+          <source src={`LectureVideo/${lecture.courses_video}`} type="video/mp4" />
+        </video>
+      ) : (
+        <div className={styles.blurOverlay}>
+          <p>클릭하여 잠금 해제</p>
+        </div>
+      )}
+    </div>
+  </li>
+))}
+</ul>*/
 
 export default LecturePage;
