@@ -9,5 +9,5 @@ public class CommunityCommentDTO {
     private int community_comment_community_pk;
     private String community_comment_content;
     private String community_comment_date;
-    private Long community_comment_isgood;
+    private int community_comment_isgood;
 }

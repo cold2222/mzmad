@@ -107,7 +107,7 @@ const PostDetail = () => {
       <div className={styles['button']} onClick={handleGoBack}>돌아가기</div>
       <div className={styles['button']} onClick={communityDelect}>삭제</div>
       <div className={styles['button']} onClick={communityUpdate}>수정</div>
-      <Comment communty_pk={post.communty_pk}/>
+      <Comment community_pk={community_pk}/>
     </div>
   );
 }

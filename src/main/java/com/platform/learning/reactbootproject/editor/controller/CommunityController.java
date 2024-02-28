@@ -118,13 +118,8 @@ public class CommunityController {
 
 	@PostMapping("/insertComment")
 	public void insertComment(@RequestBody CommunityCommentDTO communityCommentDTO) {
-
-		System.out.println("코멘트 잘들가누?");
-		System.out.println(communityCommentDTO.getCommunity_comment_community_pk());
-		System.out.println(communityCommentDTO.getCommunity_comment_user_pk());
-		System.out.println(communityCommentDTO.getCommunity_comment_content());
-
-		// communityservice.insertComment();
+		communityservice.insertComment(communityCommentDTO);
+		System.out.println("코멘트 저장 성공");
 	}
 
 }

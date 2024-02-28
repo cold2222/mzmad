@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.platform.learning.reactbootproject.editor.communitydto.CommunityBBSDTO;
+import com.platform.learning.reactbootproject.editor.communitydto.CommunityCommentDTO;
 import com.platform.learning.reactbootproject.editor.communitymapper.CommunityMapper;
 
 @Service
@@ -55,4 +56,9 @@ public class CommunityService {
     public void update(CommunityBBSDTO communityBBSDTO) {
         communityMapper.update(communityBBSDTO);
     }
+
+	public void insertComment(CommunityCommentDTO communityCommentDTO) {
+		communityMapper.insertComment(communityCommentDTO);
+		
+	}
 }

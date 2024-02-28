@@ -2,21 +2,23 @@ import React, { useState, useEffect } from 'react';
 import styles from './css/comment.module.css';
 import axios from "axios";
 
-const Comment = (community_pk) => {
+const Comment = (props) => {
     const [comment, setComment] = useState("");
+    const [comments, setComments] = useState([]);
 
-    const user_pk = sessionStorage.getItem('user_pk');
-
+    const { community_pk } = props;
     function handleCommentChange(event) {
         setComment(event.target.value);
     }
 
     function commentInsert() {
-        console.log("Inserted comment:", comment);
+        const community_comment_community_pk = community_pk;
+        const community_comment_user_pk = sessionStorage.getItem('userId');
+        const community_comment_content = comment;
         axios.post('http://localhost:8080/community/insertComment', {
-            community_comment_communty_pk: community_pk,
-            community_comment_user_pk : user_pk,
-            community_comment_content : comment
+            community_comment_community_pk,
+            community_comment_user_pk,
+            community_comment_content,
         })
         .then(response => {
             console.log('댓글추가 성공:', response.data);
@@ -30,7 +32,7 @@ const Comment = (community_pk) => {
 
 return (
     <div className={styles['comment-container']}>
-        <textarea className={styles['comment-textarea']} defaultValue={comment} onChange={handleCommentChange}></textarea>
+        <textarea className={styles['comment-textarea']} value={comment} onChange={handleCommentChange}></textarea>
         <button className={styles['comment-button']} onClick={commentInsert}>등록</button>
     </div>
 );
