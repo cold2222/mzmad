@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styles from './css/header.module.css';
 import { useNavigate } from 'react-router-dom';
 
+
+
 const Header = () => {
   const navigate = useNavigate();
   const userId = sessionStorage.getItem('userId');
@@ -30,6 +32,7 @@ const Header = () => {
 
   const toggleMenu = () => {
     setShowMenu(prevShowMenu => !prevShowMenu); // 이전 상태를 가져와서 반전시킴
+    
     console.log("Menu is now", !showMenu ? "visible" : "hidden"); // 이전 상태를 기준으로 로그 출력
   };
 

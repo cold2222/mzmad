@@ -1,0 +1,42 @@
+.mypage-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 화면 높이에 맞게 설정 */
+    background-color: #f0f0f0; /* 배경색 추가 */
+  }
+  
+  .mypage-content {
+    text-align: left; /* 내용을 왼쪽 정렬합니다. */
+    max-width: 600px; /* 내용의 최대 너비 지정 */
+    padding: 20px; /* 내용 주변의 여백 추가 */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+    background-color: white; /* 내용 배경색 추가 */
+  }
+  
+  .button-container {
+    margin-top: 20px; /* 버튼과 내용 사이의 간격 조정 */
+    text-align: center; /* 버튼 가운데 정렬 */
+  }
+  
+  .edit-button, .delete-button {
+    /* 버튼 공통 스타일링 */
+    padding: 10px 20px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+  }
+  
+  .edit-button {
+    background-color: #008CBA;
+  }
+  
+  .delete-button {
+    background-color: #f44336;
+  }
+  
+  .edit-button:hover, .delete-button:hover {
+    background-color: #005f7b; /* 호버 시 배경색 변경 */
+  }
