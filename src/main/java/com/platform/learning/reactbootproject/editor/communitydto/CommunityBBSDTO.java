@@ -1,9 +1,6 @@
-package com.platform.learning.reactbootproject.editor.communityDTO;
-
-
+package com.platform.learning.reactbootproject.editor.communitydto;
 
 import com.platform.learning.reactbootproject.dy.login.UserDTO;
-
 import lombok.Data;
 
 @Data
@@ -13,10 +10,10 @@ public class CommunityBBSDTO {
     private String community_category;
     private String community_title;
     private String community_content;
-    private String community_date;
     private int community_view;
     private int community_isgood;
     private int community_report;
     private UserDTO userDTO;
+    private String community_date;
     
 }

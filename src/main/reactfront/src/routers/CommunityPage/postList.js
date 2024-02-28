@@ -55,6 +55,7 @@ const PostList = () => {
                     {post.community_title}
                   </div>
                   <div className={styles['post-list-textbox-info']}>
+                    {post.community_date}
                     <img src="/img/eye.png" alt="view" width="15" height="15"/>{post.community_view}
                     <img src="/img/isgood.png" alt="isgood" width="15" height="15"/>{post.community_isgood}</div>
                 </div>
