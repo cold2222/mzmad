@@ -21,13 +21,13 @@ public class SelectCommentController {
     @GetMapping("/get-comments/{number}")
     public ResponseEntity<List<SelectCommentDTO>> getComments(@PathVariable("number") String number) {
 
-        List <SelectCommentDTO> result = selectCommentService.getComments(number);
+        List <SelectCommentDTO> getCommentsList = selectCommentService.getComments(number);
 
-        for(SelectCommentDTO selectCommentDTO : result){
+        /*for(SelectCommentDTO selectCommentDTO : result){
             System.out.println(selectCommentDTO);
-        }
+        }*/
 
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        return new ResponseEntity<>(getCommentsList, HttpStatus.OK);
     }
     
 }
