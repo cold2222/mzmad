@@ -1,13 +1,18 @@
 package com.platform.learning.reactbootproject.editor.communityservice;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.platform.learning.reactbootproject.editor.communitydto.CommunityBBSDTO;
 import com.platform.learning.reactbootproject.editor.communitydto.CommunityCommentDTO;
+import com.platform.learning.reactbootproject.editor.communitydto.CommunityIsGoodDTO;
+import com.platform.learning.reactbootproject.editor.communitydto.CommunityReportDTO;
 import com.platform.learning.reactbootproject.editor.communitymapper.CommunityMapper;
+
 
 @Service
 public class CommunityService {
@@ -16,8 +21,6 @@ public class CommunityService {
     private CommunityMapper communityMapper;
 
     public void insertCommunity(CommunityBBSDTO bbsDTO){
-        System.out.println(bbsDTO);
-        System.out.println("dto값 머들어감?");
         communityMapper.communityInsert(bbsDTO);
     }
 
@@ -29,7 +32,15 @@ public class CommunityService {
         }else if(category.equals("assignment")){
             category = "#과제게시판";
         }
-        return communityMapper.SelectMenuCommunity(category);
+        
+        List<CommunityBBSDTO> bbsList = communityMapper.SelectMenuCommunity(category);
+        for (int i = 0; i < bbsList.size(); i++) {
+			String content = bbsList.get(i).getCommunity_content();
+			content = removeImgTags(content);
+			bbsList.get(i).setCommunity_content_only(content);
+		}
+        
+        return bbsList;
     }
 
     public CommunityBBSDTO communitySelectView(String community_pk) {
@@ -60,5 +71,37 @@ public class CommunityService {
 	public void insertComment(CommunityCommentDTO communityCommentDTO) {
 		communityMapper.insertComment(communityCommentDTO);
 		
+	}
+
+	public List<CommunityCommentDTO> getCommentsByCommunityId(int community_pk) {
+		return communityMapper.getCommentsByCommunityId(community_pk);
+	}
+	
+	private static String removeImgTags(String input) {
+        String pattern = "<(/p|p|br|img)[^>]*>";
+        Pattern imgPattern = Pattern.compile(pattern);
+
+        Matcher matcher = imgPattern.matcher(input);
+        String result = matcher.replaceAll("");
+
+        return result;
+    }
+
+	public String isGoodCheck(CommunityIsGoodDTO communityIsGood) {
+		CommunityIsGoodDTO check = communityMapper.isGoodCheck(communityIsGood);
+		if(check == null) {
+			communityMapper.isGoodUserInsert(communityIsGood);
+			return "false";
+		}
+		return "true";
+	}
+
+	public String reportCheck(CommunityReportDTO communityReportDTO) {
+		CommunityReportDTO check = communityMapper.reportCheck(communityReportDTO);
+		if(check == null) {
+			communityMapper.reportUserInsert(communityReportDTO);
+			return "false";
+		}
+		return "true";
 	}
 }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.platform.learning.reactbootproject.dy.myPage.MyPageMapper">
+
+    <!-- 닉네임으로 사용자 정보 조회 -->
+    <select id="findByPk" resultType="com.platform.learning.reactbootproject.dy.login.UserDTO">
+        SELECT * FROM users WHERE user_pk = #{pk}
+    </select>
+
+    <!-- 사용자 정보 업데이트 -->
+    <update id="updateUser">
+        UPDATE users SET user_nickname = #{user_nickname}, user_email = #{user_email}, user_platform = #{user_platform}, user_courses_key = #{user_courses_key}, user_isAdmin = #{user_isAdmin}, user_profile = #{user_profile} WHERE user_pk = #{user_pk}
+    </update>
+
+    <!-- 프로필 사진 경로 업데이트 -->
+    <update id="updateProfileUrl">
+        UPDATE users SET user_profile = #{user_profile} WHERE user_pk = #{user_pk}
+    </update>
+
+</mapper>
