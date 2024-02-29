@@ -20,7 +20,7 @@ const Editor = ({ placeholder, value, ...rest }) => {
     const createPost = async (event) => {
         event.preventDefault();
         const postData = {
-            user_pk : sessionStorage.getItem('userId'),
+            community_user_pk : sessionStorage.getItem('userId'),
             community_title: document.querySelector("#title").value,
             community_category: document.querySelector("#category").value,
             community_content: richText

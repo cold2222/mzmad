@@ -5,6 +5,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.platform.learning.reactbootproject.editor.communitydto.CommunityBBSDTO;
 import com.platform.learning.reactbootproject.editor.communitydto.CommunityCommentDTO;
+import com.platform.learning.reactbootproject.editor.communitydto.CommunityIsGoodDTO;
+import com.platform.learning.reactbootproject.editor.communitydto.CommunityReportDTO;
 import com.platform.learning.reactbootproject.editor.communityservice.CommunityService;
 
 import lombok.RequiredArgsConstructor;
@@ -120,6 +122,22 @@ public class CommunityController {
 	public void insertComment(@RequestBody CommunityCommentDTO communityCommentDTO) {
 		communityservice.insertComment(communityCommentDTO);
 		System.out.println("코멘트 저장 성공");
+	}
+	
+	@GetMapping("/comments/{community_pk}")
+    public List<CommunityCommentDTO> getCommentsByCommunity(@PathVariable int community_pk) {
+        return communityservice.getCommentsByCommunityId(community_pk);
+    }
+	
+	@PostMapping("/isGoodCheck")
+	public String isGoodCheck(@RequestBody CommunityIsGoodDTO communityIsGood) {
+		
+		return communityservice.isGoodCheck(communityIsGood);
+	}
+	@PostMapping("/reportCheck")
+	public String reportCheck(@RequestBody CommunityReportDTO communityReportDTO) {
+		System.out.println(communityReportDTO);
+		return communityservice.reportCheck(communityReportDTO);
 	}
 
 }

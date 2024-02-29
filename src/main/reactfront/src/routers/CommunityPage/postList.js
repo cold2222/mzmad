@@ -19,6 +19,12 @@ const PostList = () => {
     menu = "#과제게시판"
   }
 
+  function truncateText(text, maxLength) {
+    if (text.length > maxLength) {
+        return text.substring(0, maxLength) + '...';
+    }
+    return text;
+}
 
   useEffect(() => {
     console.log(category)
@@ -46,24 +52,27 @@ const PostList = () => {
     <div className={styles['post-list-container']}>
       <h2>{menu}</h2>
       <ul className={styles['post-list']}>
-        {posts.map(post => (
-          <li key={post.community_pk}>
-            <div>
-              <NavLink className={styles['post-list-link']} to={'/community/' + category + '/view/' + post.community_pk}>
-                <div className={styles['post-list-textbox']}>
-                  <div className={styles['post-list-textbox-title']}>
-                    {post.community_title}
-                  </div>
-                  <div className={styles['post-list-textbox-info']}>
-                    {post.community_date}
-                    <img src="/img/eye.png" alt="view" width="15" height="15"/>{post.community_view}
-                    <img src="/img/isgood.png" alt="isgood" width="15" height="15"/>{post.community_isgood}</div>
-                </div>
-              </NavLink>
+  {posts.map(post => (
+    <li key={post.community_pk}>
+      <div>
+        <NavLink className={styles['post-list-link']} to={'/community/' + category + '/view/' + post.community_pk}>
+          <div className={styles['post-list-textbox']}>
+            <div className={styles['post-list-textbox-title']}>
+              {post.community_title}
             </div>
-          </li>
-        ))}
-      </ul>
+            </div>
+            <div className={styles['post-list-textbox-info']}>
+              {post.community_date}
+              <img src="/img/eye.png" alt="view" width="15" height="15" />{post.community_view}
+              <img src="/img/isgood.png" alt="isgood" width="15" height="15" />{post.community_isgood}
+            </div>
+            <div className={styles['post-list-textbox-content']} dangerouslySetInnerHTML={{ __html: truncateText(post.community_content_only, 140) }}>
+          </div>
+        </NavLink>
+      </div>
+    </li>
+  ))}
+</ul>
     </div>
   );
 }

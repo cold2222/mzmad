@@ -50,6 +50,9 @@
   margin-left: 3px;
   margin-right: 3px;
 }
+.post-list-textbox-isgood{
+  cursor: pointer;
+}
 .post-list-textbox-date{
   width: 100px;
 }
@@ -86,4 +89,14 @@ margin-right: 10px;
 
 .button:hover {
   background-color: #555;
+}
+.post-detail-footer{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.post-detail-footer-button{
+  display: flex;
+  justify-content: start;
 }
