@@ -16,9 +16,6 @@ public class InsertCommentController {
     @PostMapping("/submit-comment")
     public String regCourseComment(@RequestBody InsertCommentDTO insertCommentDTO) {
         
-        System.out.println("test입니다.");
-        System.out.println(insertCommentDTO);
-        
         return insertCommentService.regCourseComment(insertCommentDTO);
     }
     
