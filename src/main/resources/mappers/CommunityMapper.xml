@@ -102,5 +102,62 @@
 		insert into community_comment values(community_comment_seq.nextVal,#{community_comment_user_pk}
 		,#{community_comment_community_pk},#{community_comment_content},sysdate,0)
 	</insert>
+	
+	<resultMap id="commentWithUserResultMap" type="com.platform.learning.reactbootproject.editor.communitydto.CommunityCommentDTO">
+	    <result property="community_comment_pk" column="COMMUNITY_COMMENT_PK" />
+	    <result property="community_comment_community_pk" column="COMMUNITY_COMMENT_COMMUNITY_PK" />
+	    <result property="community_comment_user_pk" column="COMMUNITY_COMMENT_USER_PK" />
+	    <result property="community_comment_content" column="COMMUNITY_COMMENT_CONTENT" />
+	    <result property="community_comment_date" column="COMMUNITY_COMMENT_DATE" />
+	    <association property="userDTO" resultMap="commentUser" javaType="com.platform.learning.reactbootproject.dy.login.UserDTO">
+	    </association>
+	</resultMap>
+
+	<resultMap type="com.platform.learning.reactbootproject.dy.login.UserDTO" id="commentUser">
+	    <id property="user_pk" column="USER_PK" />
+	    <result property="user_nickname" column="USER_NICKNAME" />
+	    <result property="user_email" column="USER_EMAIL" />
+	    <result property="user_platform" column="USER_PLATFORM" />
+	    <result property="user_courses_key" column="USER_COURSES_KEY" />
+	    <result property="user_isAdmin" column="USER_ISADMIN" />
+	    <result property="user_profile" column="USER_PROFILE" />
+	</resultMap>
+	
+	<select id="getCommentsByCommunityId" resultMap="commentWithUserResultMap">
+	    SELECT
+	        cc.COMMUNITY_COMMENT_PK,
+	        cc.COMMUNITY_COMMENT_COMMUNITY_PK,
+	        cc.COMMUNITY_COMMENT_USER_PK,
+	        cc.COMMUNITY_COMMENT_CONTENT,
+	        to_char(cc.COMMUNITY_COMMENT_DATE,'yyyy-mm-dd') as COMMUNITY_COMMENT_DATE,
+	        u.*
+	    FROM
+	        COMMUNITY_COMMENT cc
+	        JOIN USERS u ON cc.COMMUNITY_COMMENT_USER_PK = u.USER_PK
+	    WHERE
+	        cc.COMMUNITY_COMMENT_COMMUNITY_PK = #{community_pk}
+	    ORDER BY
+	        cc.COMMUNITY_COMMENT_PK desc
+	</select>
+
+	<select id="isGoodCheck">
+		select * from community_isgood where community_isgood_community_pk = #{community_isgood_community_pk} 
+		and community_isgood_user_pk = #{community_isgood_user_pk}
+	</select>
+	
+	<insert id="isGoodUserInsert">
+		INSERT INTO community_isgood (community_isgood_community_pk, community_isgood_user_pk)
+		VALUES (#{community_isgood_community_pk}, #{community_isgood_user_pk})
+	</insert>
+	
+	<select id="reportCheck">
+		select * from community_report where community_report_community_pk = #{community_report_community_pk} 
+		and community_report_user_pk = #{community_report_user_pk}
+	</select>
+	
+	<insert id="reportUserInsert">
+		INSERT INTO community_report (community_report_community_pk, community_report_user_pk)
+		VALUES (#{community_report_community_pk}, #{community_report_user_pk})
+	</insert>
 </mapper>
 

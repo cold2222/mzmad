@@ -1,12 +1,15 @@
 .comment-container {
+    width: 60%;
     margin-top: 30px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .comment-textarea {
-    width: 550px;
-    height: 170px;
+    width: 750px;
+    height: 150px;
     overflow: auto;
     resize: none;
     padding: 10px;
@@ -15,7 +18,8 @@
 
 .comment-button {
     width: 60px;
-    margin-top: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
     display: inline-block;
     background-color: #333;
     color: white;
@@ -31,3 +35,51 @@
 .comment-button:hover {
     background-color: #555;
 }
+
+.commentContainer {
+    min-width: 60%;
+    max-width: 60%;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 20px;
+  }
+
+  .comment-container h2{
+    margin-bottom: 20px;
+    width: 165%;
+    padding: 5px;
+  }
+  
+  .commentList {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .commentItem {
+    margin-bottom: 20px;
+    border-top: solid 1px gray;
+    padding: 10px;
+  }
+  
+  .commentContent {
+    width: 750px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+  }
+  
+  .commentInfo {
+    font-size: 14px;
+    color: #666;
+    padding: 5px;
+  }
+  
+  .commentAuthor {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .commentDate {
+    margin-left: 10px;
+  }

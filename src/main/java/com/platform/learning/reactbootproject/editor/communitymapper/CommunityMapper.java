@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.platform.learning.reactbootproject.editor.communitydto.CommunityBBSDTO;
 import com.platform.learning.reactbootproject.editor.communitydto.CommunityCommentDTO;
+import com.platform.learning.reactbootproject.editor.communitydto.CommunityIsGoodDTO;
+import com.platform.learning.reactbootproject.editor.communitydto.CommunityReportDTO;
 
 @Mapper
 public interface CommunityMapper {
@@ -20,11 +22,21 @@ public interface CommunityMapper {
 
     public void isGood(String community_pk);
 
-    public  void report(String community_pk);
+    public void report(String community_pk);
 
-    public  void delete(String community_pk);
+    public void delete(String community_pk);
 
-    public  void update(CommunityBBSDTO communityBBSDTO);
+    public void update(CommunityBBSDTO communityBBSDTO);
 
 	public void insertComment(CommunityCommentDTO communityCommentDTO);
+
+	public List<CommunityCommentDTO> getCommentsByCommunityId(int community_pk);
+
+	public CommunityIsGoodDTO isGoodCheck(CommunityIsGoodDTO communityIsGood);
+	
+	public void isGoodUserInsert(CommunityIsGoodDTO communityIsGood);
+
+	public CommunityReportDTO reportCheck(CommunityReportDTO communityReportDTO);
+
+	public void reportUserInsert(CommunityReportDTO communityReportDTO);
 }

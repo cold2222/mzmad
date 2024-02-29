@@ -42,14 +42,34 @@
   font-weight: 800;
   font-size: 18px;
 }
-.post-list-textbox-info{
+
+.post-list-textbox-info {
   display: flex;
   justify-content: space-around;
   align-items: center;
   font-size: 14px;
   width: 20%;
 }
-.post-list-textbox-info img{
+
+.post-list-textbox-info img {
   margin-left: 3px;
   margin-right: 3px;
+}
+
+.post-list-textbox-content {
+  margin-top: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: box;
+  max-height: 65px;
+  overflow: hidden;
+  vertical-align: top;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.post-list-textbox-content * {
+  font-size: 16px;
 }
