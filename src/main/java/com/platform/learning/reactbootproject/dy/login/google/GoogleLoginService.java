@@ -101,13 +101,15 @@ public class GoogleLoginService {
                 
                 UserDTO userTableInfo = googleMapper.selectUserTableInfo(user_pk);
                 System.out.println(userTableInfo);
+
+                System.out.println(userTableInfo.getUser_profile());
                 Cookie userIdCookie = new Cookie("userId", user_pk);
-                Cookie userEmailCookie = new Cookie("userEmail", user_email);
-                Cookie userNicknameCookie = new Cookie("userNickname", user_nickname);
+                Cookie userEmailCookie = new Cookie("userEmail", userTableInfo.getUser_email());
+                Cookie userNicknameCookie = new Cookie("userNickname", userTableInfo.getUser_nickname());
                 Cookie platformCookie = new Cookie("platform", user_platform);
                 Cookie coursesKeyCookie = new Cookie("coursesKey", userTableInfo.getUser_courses_key());
                 Cookie isAdminCookie = new Cookie("isAdmin",Integer.toString(userTableInfo.getUser_isAdmin()));
-                Cookie profilCookie = new Cookie("profile", user_profile);
+                Cookie profilCookie = new Cookie("profile", userTableInfo.getUser_profile());
                 System.out.println(userTableInfo.toString());
                 int cookieMaxAge = 3600;
                 
