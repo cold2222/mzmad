@@ -14,6 +14,7 @@ public class CommunityBBSDTO {
     private int community_isgood;
     private int community_report;
     private UserDTO userDTO;
+    private String community_content_only;
     private String community_date;
     
 }
