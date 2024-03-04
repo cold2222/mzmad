@@ -18,6 +18,7 @@
 		<result property="community_isgood" column="COMMUNITY_ISGOOD" />
 		<result property="community_report" column="COMMUNITY_REPORT" />
 		<result property="community_date" column="COMMUNITY_DATE" />
+		<result property="community_rn" column="community_rn" />
 		<association property="userDTO" resultMap="user" javaType="com.platform.learning.reactbootproject.dy.login.UserDTO">
 		</association>
 	</resultMap>
@@ -33,27 +34,42 @@
 	</resultMap>
 	
 	<select id="SelectMenuCommunity" resultMap="communityWithUserResultMap">
-		SELECT
-		c.COMMUNITY_PK,
-		c.COMMUNITY_USER_PK,
-		c.COMMUNITY_CATEGORY,
-		c.COMMUNITY_TITLE,
-		c.COMMUNITY_CONTENT,
-		c.COMMUNITY_VIEW,
-		c.COMMUNITY_ISGOOD,
-		c.COMMUNITY_REPORT,
-		to_char(c.COMMUNITY_DATE,'yyyy-mm-dd') as COMMUNITY_DATE,
-		u.*
-		FROM
-		COMMUNITY c, USERS u
-		WHERE
-		c.COMMUNITY_USER_PK = u.USER_PK AND
-		c.COMMUNITY_REPORT &lt;= 10
-		<if test="!category.equals('home')">
-		and c.community_category = #{category}
+		SELECT *
+FROM (
+    SELECT c.*, ROWNUM AS rn
+    FROM (
+        SELECT 
+            c.COMMUNITY_PK,
+            c.COMMUNITY_USER_PK,
+            c.COMMUNITY_CATEGORY,
+            c.COMMUNITY_TITLE,
+            c.COMMUNITY_CONTENT,
+            c.COMMUNITY_VIEW,
+            c.COMMUNITY_ISGOOD,
+            c.COMMUNITY_REPORT,
+            to_char(c.COMMUNITY_DATE,'yyyy-mm-dd') as COMMUNITY_DATE,
+            u.*
+        FROM
+            COMMUNITY c
+        JOIN
+            USERS u ON c.COMMUNITY_USER_PK = u.USER_PK
+        WHERE
+            c.COMMUNITY_REPORT &lt;= 10
+            <if test="category != 'home'">
+            and c.community_category = #{category}
+            </if>
+        ORDER BY
+            c.COMMUNITY_PK DESC
+    ) c
+    WHERE ROWNUM &lt;= #{end_row}
+) WHERE rn > #{start_row}
+	</select>
+
+	<select id="selectMenuCommunityTotalCount">
+		SELECT COUNT(*) AS total_count FROM community
+		<if test="category !='home'">
+			where community_category = #{category}
 		</if>
-		ORDER BY
-		c.COMMUNITY_PK DESC
 	</select>
 
 	<select id="communitySelectView" resultMap="communityWithUserResultMap">

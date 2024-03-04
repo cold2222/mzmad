@@ -24,7 +24,7 @@ public class CommunityService {
         communityMapper.communityInsert(bbsDTO);
     }
 
-    public List<CommunityBBSDTO> selectAllCommunity(String category) {
+    public List<CommunityBBSDTO> selectAllCommunity(String category, int currentPage) {
         if(category.equals("free")){
             category = "#자유게시판";
         }else if(category.equals("tip")){
@@ -32,8 +32,11 @@ public class CommunityService {
         }else if(category.equals("assignment")){
             category = "#과제게시판";
         }
+        int limit = 10;
+        int start_row = currentPage * limit;
+        int end_row = start_row + limit;
         
-        List<CommunityBBSDTO> bbsList = communityMapper.SelectMenuCommunity(category);
+        List<CommunityBBSDTO> bbsList = communityMapper.SelectMenuCommunity(category ,start_row, end_row);
         for (int i = 0; i < bbsList.size(); i++) {
 			String content = bbsList.get(i).getCommunity_content();
 			content = removeImgTags(content);
@@ -41,6 +44,19 @@ public class CommunityService {
 		}
         
         return bbsList;
+    }
+    
+    public int selectMenuCommunityTotalCount(String category) {
+    	if(category.equals("free")){
+            category = "#자유게시판";
+        }else if(category.equals("tip")){
+            category ="#글쓰기Tip공유게시판";
+        }else if(category.equals("assignment")){
+            category = "#과제게시판";
+        }
+    	
+    	return communityMapper.selectMenuCommunityTotalCount(category);
+    	
     }
 
     public CommunityBBSDTO communitySelectView(String community_pk) {

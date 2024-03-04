@@ -5,7 +5,9 @@ import styles from './css/postDetail.module.css';
 import axios from "axios";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from "react-toastify";
-const PostDetail = () => {
+
+
+const PostDetail = ({ handleScrollToTop, handleSaveScrollPos, handleScrollRestore, prevScrollPos, setPrevScrollPos }) => {
   const [isgood, setIsgood] = useState(0);
   const [report, setReport] = useState(0);
   const [post, setPost] = useState([]);
@@ -150,6 +152,8 @@ const PostDetail = () => {
     }
   }
   useEffect(() => {
+    handleSaveScrollPos();
+    handleScrollToTop();
     const fetchData = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/community/view/${community_pk}`);

@@ -13,9 +13,9 @@ import lombok.RequiredArgsConstructor;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -46,11 +46,31 @@ public class CommunityController {
 		communityservice.insertCommunity(bbsDTO);
 	}
 
-	@GetMapping("/selectAll/{category}")
-	public List<CommunityBBSDTO> communitySelectAll(@PathVariable String category) {
+	@GetMapping("/selectAll/{category}/{currentPage}")
+	public ResponseEntity<Map<String, Object>> communitySelectAll(@PathVariable String category, @PathVariable int currentPage) {
 		System.out.println("검색한 목록 :" + category);
+		System.out.println("현재 페이지 :" + currentPage);
 
-		return communityservice.selectAllCommunity(category);
+		List<CommunityBBSDTO> communityList = communityservice.selectAllCommunity(category, currentPage);
+		int totalPageCount = communityservice.selectMenuCommunityTotalCount(category);
+		
+		for (int i = 0; i < communityList.size(); i++) {
+			System.out.println(communityList.get(i).getCommunity_title());
+		}
+		
+		Map<String, Object> response = new HashMap<>();
+		response.put("totalPageCount", totalPageCount);
+		response.put("communityList", communityList);
+		return ResponseEntity.ok(response);
+	}
+	@GetMapping("/getTotalCount/{category}")
+	public ResponseEntity<Map<String, Object>> communitygetTotalCount(@PathVariable String category) {
+		int totalPageCount = communityservice.selectMenuCommunityTotalCount(category);
+		System.out.println("검색한 토탈카운트 목록		:"+category);
+		System.out.println("토탈카운트		:"+totalPageCount);
+		Map<String, Object> response = new HashMap<>();
+		response.put("totalPageCount", totalPageCount);
+		return ResponseEntity.ok(response);
 	}
 
 	@GetMapping("/view/{community_pk}")
@@ -123,17 +143,18 @@ public class CommunityController {
 		communityservice.insertComment(communityCommentDTO);
 		System.out.println("코멘트 저장 성공");
 	}
-	
+
 	@GetMapping("/comments/{community_pk}")
-    public List<CommunityCommentDTO> getCommentsByCommunity(@PathVariable int community_pk) {
-        return communityservice.getCommentsByCommunityId(community_pk);
-    }
-	
+	public List<CommunityCommentDTO> getCommentsByCommunity(@PathVariable int community_pk) {
+		return communityservice.getCommentsByCommunityId(community_pk);
+	}
+
 	@PostMapping("/isGoodCheck")
 	public String isGoodCheck(@RequestBody CommunityIsGoodDTO communityIsGood) {
-		
+
 		return communityservice.isGoodCheck(communityIsGood);
 	}
+
 	@PostMapping("/reportCheck")
 	public String reportCheck(@RequestBody CommunityReportDTO communityReportDTO) {
 		System.out.println(communityReportDTO);
