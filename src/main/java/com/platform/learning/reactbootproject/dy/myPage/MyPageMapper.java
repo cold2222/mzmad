@@ -16,4 +16,6 @@ public interface MyPageMapper {
 
     // 프로필 사진 경로 업데이트
     void updateProfileUrl(UserDTO user);
+    
+    void deleteUser(String user_pk);
 }

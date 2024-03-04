@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 
 import java.io.IOException;
 import java.nio.file.StandardCopyOption;
+import java.util.UUID;
 
 @Service
 public class MyPageService {
@@ -30,22 +31,28 @@ public class MyPageService {
         // 닉네임 업데이트
         user.setUser_nickname(nickname);
         myPageMapper.updateUser(user);
+        System.out.println("닉업데이트 완료");
     
-        // 프로필 사진 업로드
-        if (profile != null && !profile.isEmpty()) {
-            String uploadDir = "src/main/reactfront/public/ProfileImg/";
-            Path directoryPath = Paths.get(uploadDir);
-            Files.createDirectories(directoryPath);
-    
-            String fileName = profile.getOriginalFilename();
-            String filePath = directoryPath.resolve(fileName).toString();
-    
-            // 파일 저장
-            Files.copy(profile.getInputStream(), directoryPath.resolve(fileName),StandardCopyOption.REPLACE_EXISTING);
-    
-            // 사용자의 프로필 사진 경로를 업데이트
-            user.setUser_profile(filePath.replace("\\", "/"));
-            myPageMapper.updateProfileUrl(user);
-        }
+       // 프로필 사진 업로드
+if (profile != null && !profile.isEmpty()) {
+    String uploadDir = "src/main/reactfront/public/ProfileImg/";
+    Path directoryPath = Paths.get(uploadDir);
+    Files.createDirectories(directoryPath);
+
+    // 고유한 파일 이름 생성
+    String fileName = UUID.randomUUID().toString() + "_" + profile.getOriginalFilename();
+    String filePath = directoryPath.resolve(fileName).toString();
+
+    // 파일 저장
+    Files.copy(profile.getInputStream(), directoryPath.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+
+    // 사용자의 프로필 사진 경로를 업데이트
+    user.setUser_profile(filePath.replace("\\", "/"));
+    myPageMapper.updateProfileUrl(user);
+}
+    }
+
+    public void deleteUser(String user_pk) {
+        myPageMapper.deleteUser(user_pk);
     }
 }

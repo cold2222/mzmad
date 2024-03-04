@@ -11,6 +11,7 @@ const Header = () => {
 
   const moveHome = () => {
     navigate('/');
+    
   };
 
   const moveCommunity = () => {

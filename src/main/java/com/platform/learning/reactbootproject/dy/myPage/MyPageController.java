@@ -15,15 +15,37 @@ public class MyPageController {
     @Autowired
     private MyPageService myPageService;
 
-    @PutMapping("/user")
+    @PutMapping("/update")
     public ResponseEntity<String> updateUser(@RequestParam String pk,@RequestParam String nickname, @RequestParam MultipartFile profile) {
         try {
             System.out.println("넘어왔어요");
+
             myPageService.updateUser(pk,nickname, profile);
-            return ResponseEntity.ok("회원 정보가 성공적으로 수정되었습니다.");
+            System.out.println("다했지요~");
+            return ResponseEntity.ok("success");    
         } catch (IOException e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 정보 수정 중 오류가 발생했습니다.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("fail");
         }
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteUser(@RequestParam String user_pk) {
+        try {
+            System.out.println("삭제 요청 받음");
+
+            // userId를 사용하여 사용자를 삭제하는 로직을 호출합니다.
+            myPageService.deleteUser(user_pk);
+            
+            System.out.println("사용자 삭제 완료");
+            return ResponseEntity.ok("success");    
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("fail");
+        }
+    }
+
+
+
+    
 }

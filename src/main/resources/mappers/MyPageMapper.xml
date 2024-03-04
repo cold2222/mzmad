@@ -17,4 +17,8 @@
         UPDATE users SET user_profile = #{user_profile} WHERE user_pk = #{user_pk}
     </update>
 
+    <delete id="deleteUser">
+        DELETE FROM USERS WHERE USER_PK = #{user_pk}
+    </delete>
+
 </mapper>

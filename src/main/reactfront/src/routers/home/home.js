@@ -1,86 +1,101 @@
 import React, { useState, useEffect } from 'react';
-import Cookies from 'js-cookie'; // js-cookie 라이브러리 import
+import Cookies from 'js-cookie';
 
 const Home = () => {
-  // 쿠키 값 상태 변수 정의
   const [userId, setUserId] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [userNickname, setUserNickname] = useState('');
   const [platform, setPlatform] = useState('');
   const [coursesKey, setCoursesKey] = useState('');
   const [isAdmin, setIsAdmin] = useState('');
-  const [userInfo, setUserInfo] = useState('');
   const [profile, setProfile] = useState('');
 
-  // 페이지 로드 시 쿠키 값 가져오고 세션 스토리지에 저장하기
   useEffect(() => {
-    // 쿠키 값 가져오기
+    // 세션 스토리지 값 상태 업데이트 함수
+    const updateSessionStorageValues = () => {
+      setUserId(sessionStorage.getItem('userId') || '');
+      setUserEmail(sessionStorage.getItem('userEmail') || '');
+      setUserNickname(sessionStorage.getItem('userNickname') || '');
+      setPlatform(sessionStorage.getItem('platform') || '');
+      setCoursesKey(sessionStorage.getItem('coursesKey') || '');
+      setIsAdmin(sessionStorage.getItem('isAdmin') || '');
+      setProfile(sessionStorage.getItem('profile') || '');
+    };
+
+    // 페이지 로드 시 세션 스토리지 값으로 상태 초기화
+    updateSessionStorageValues();
+
+    // 이벤트 리스너 등록하여 세션 스토리지 값이 변경될 때마다 상태 업데이트
+    window.addEventListener('storage', updateSessionStorageValues);
+
+    // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    return () => {
+      window.removeEventListener('storage', updateSessionStorageValues);
+    };
+  }, []);
+
+  useEffect(() => {
+    // 페이지 로드 시 쿠키 값을 세션 스토리지에 저장하고 쿠키를 제거
     const fetchCookies = () => {
-      // js-cookie를 사용하여 쿠키 값 가져오기
       const userIdCookie = Cookies.get('userId');
       const userEmailCookie = Cookies.get('userEmail');
       const userNicknameCookie = Cookies.get('userNickname');
       const platformCookie = Cookies.get('platform');
       const coursesKeyCookie = Cookies.get('coursesKey');
       const isAdminCookie = Cookies.get('isAdmin');
-      const userInfoCookie = Cookies.get('userInfo');
       const profileCookie = Cookies.get('profile');
-
-      // 가져온 쿠키 값 세션 스토리지에 저장하기
+  
       if (userIdCookie) {
-        setUserId(userIdCookie);
         sessionStorage.setItem('userId', userIdCookie);
+        setUserId(userIdCookie); // 상태 업데이트
+        Cookies.remove('userId'); // 쿠키 제거
       }
       if (userEmailCookie) {
-        setUserEmail(userEmailCookie);
         sessionStorage.setItem('userEmail', userEmailCookie);
+        setUserEmail(userEmailCookie); // 상태 업데이트
+        Cookies.remove('userEmail'); // 쿠키 제거
       }
       if (userNicknameCookie) {
-        setUserNickname(userNicknameCookie);
         sessionStorage.setItem('userNickname', userNicknameCookie);
+        setUserNickname(userNicknameCookie); // 상태 업데이트
+        Cookies.remove('userNickname'); // 쿠키 제거
       }
       if (platformCookie) {
-        setPlatform(platformCookie);
         sessionStorage.setItem('platform', platformCookie);
+        setPlatform(platformCookie); // 상태 업데이트
+        Cookies.remove('platform'); // 쿠키 제거
       }
       if (coursesKeyCookie) {
-        setCoursesKey(coursesKeyCookie);
         sessionStorage.setItem('coursesKey', coursesKeyCookie);
+        setCoursesKey(coursesKeyCookie); // 상태 업데이트
+        Cookies.remove('coursesKey'); // 쿠키 제거
       }
       if (isAdminCookie) {
-        setIsAdmin(isAdminCookie);
         sessionStorage.setItem('isAdmin', isAdminCookie);
-      }
-      if (userInfoCookie) {
-        setUserInfo(userInfoCookie);
-        sessionStorage.setItem('userInfo', userInfoCookie);
+        setIsAdmin(isAdminCookie); // 상태 업데이트
+        Cookies.remove('isAdmin'); // 쿠키 제거
       }
       if (profileCookie) {
-        setProfile(profileCookie);
         sessionStorage.setItem('profile', profileCookie);
+        setProfile(profileCookie); // 상태 업데이트
+        Cookies.remove('profile'); // 쿠키 제거
       }
     };
-
-    // 페이지 로드 시 실행
+  
     fetchCookies();
+  }, []);
 
-    // cleanup 함수
-    return () => {
-      // cleanup 코드
-    };
-  }, []); // useEffect를 한 번만 실행하도록 빈 배열 전달
 
-  // 쿠키 값 사용 및 세션 스토리지에 저장된 값 사용
   return (
     <div>
-      <p>User ID: {sessionStorage.getItem('userId')}</p>
-      <p>User Email: {sessionStorage.getItem('userEmail')}</p>
-      <p>User Nickname: {sessionStorage.getItem('userNickname')}</p>
-      <p>Platform: {sessionStorage.getItem('platform')}</p>
-      <p>Courses Key: {sessionStorage.getItem('coursesKey')}</p>
-      <p>Is Admin: {sessionStorage.getItem('isAdmin')}</p>
-      <p>UserINFO: {sessionStorage.getItem('userInfo')}</p>
-      <p><img src={sessionStorage.getItem('profile')} alt="Profile Image" style={{width: '100px', height: '100px'}} /></p>
+      <p>User ID: {userId}</p>
+      <p>User Email: {userEmail}</p>
+      <p>User Nickname: {userNickname}</p>
+      <p>Platform: {platform}</p>
+      <p>Courses Key: {coursesKey}</p>
+      <p>Is Admin: {isAdmin}</p>
+      
+      
     </div>
   );
 };

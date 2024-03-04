@@ -1,42 +1,107 @@
 .mypage-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* 화면 높이에 맞게 설정 */
-    background-color: #f0f0f0; /* 배경색 추가 */
-  }
-  
-  .mypage-content {
-    text-align: left; /* 내용을 왼쪽 정렬합니다. */
-    max-width: 600px; /* 내용의 최대 너비 지정 */
-    padding: 20px; /* 내용 주변의 여백 추가 */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
-    background-color: white; /* 내용 배경색 추가 */
-  }
-  
-  .button-container {
-    margin-top: 20px; /* 버튼과 내용 사이의 간격 조정 */
-    text-align: center; /* 버튼 가운데 정렬 */
-  }
-  
-  .edit-button, .delete-button {
-    /* 버튼 공통 스타일링 */
-    padding: 10px 20px;
-    border: none;
-    color: white;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 5px;
-  }
-  
-  .edit-button {
-    background-color: #008CBA;
-  }
-  
-  .delete-button {
-    background-color: #f44336;
-  }
-  
-  .edit-button:hover, .delete-button:hover {
-    background-color: #005f7b; /* 호버 시 배경색 변경 */
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 화면 높이에 맞게 설정 */
+  background-color: #f0f0f0; /* 배경색 추가 */
+
+}
+
+.mypage-content {
+  max-width: 800px; /* 내용의 최대 너비 지정 */
+  padding: 60px; /* 내용 주변의 여백 추가 */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+  background-color: white; /* 내용 배경색 추가 */
+  border-radius: 10px; /* 모서리를 둥글게 만듭니다. */
+}
+
+.profile-image img,
+.key-icon img {
+  width: 100px; /* 프로필 이미지와 열쇠 아이콘의 최대 너비를 지정합니다. */
+  height: 100px; /* 이미지의 비율에 맞게 자동으로 높이를 조정합니다. */
+}
+
+.button-container {
+  margin-top: 30px; /* 버튼과 내용 사이의 간격 조정 */
+  text-align: center; /* 버튼 가운데 정렬 */
+}
+
+.edit-button,
+.delete-button {
+  /* 버튼 공통 스타일링 */
+  padding: 10px 20px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.edit-button {
+  background-color: #008CBA;
+}
+
+.delete-button {
+  background-color: #f44336;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+  background-color: #005f7b; /* 호버 시 배경색 변경 */
+}
+
+/* 모달 */
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 400px;
+  max-width: 80%;
+}
+
+/* 모달 오버레이 */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명한 검은 배경 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 예 버튼 */
+.yes-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-right: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* 아니오 버튼 */
+.no-button {
+  background-color: gray;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.key-icon img {
+  max-width: 50px; /* 열쇠 아이콘의 최대 너비를 지정합니다. */
+  height: auto; /* 이미지의 비율에 맞게 자동으로 높이를 조정합니다. */
+}
+.mypage-title{
+
+  font-size: xx-large;
+  text-align: center;
+}
