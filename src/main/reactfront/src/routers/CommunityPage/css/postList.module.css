@@ -45,10 +45,14 @@
 
 .post-list-textbox-info {
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
   font-size: 14px;
-  width: 20%;
+  width: 100%;
+  margin-top: 5px;
+}
+.post-list-textbox-info div{
+  margin-left: 10px;
 }
 
 .post-list-textbox-info img {

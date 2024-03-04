@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from "react-toastify";
 
 
-const PostDetail = ({ handleScrollToTop, handleSaveScrollPos, handleScrollRestore, prevScrollPos, setPrevScrollPos }) => {
+const PostDetail = ({ handleScrollToTop, handleSaveScrollPos }) => {
   const [isgood, setIsgood] = useState(0);
   const [report, setReport] = useState(0);
   const [post, setPost] = useState([]);
@@ -152,8 +152,6 @@ const PostDetail = ({ handleScrollToTop, handleSaveScrollPos, handleScrollRestor
     }
   }
   useEffect(() => {
-    handleSaveScrollPos();
-    handleScrollToTop();
     const fetchData = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/community/view/${community_pk}`);

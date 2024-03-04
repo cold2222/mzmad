@@ -21,7 +21,7 @@ const Sidebar = ({ onSelectMenu, onBackToList }) => {
               style={({ isActive }) => ({
                 color: isActive ? '#ffd700' : 'white',
               })}
-              onClick={() => { onSelectMenu('#home'); }}>
+              onClick={() => { onSelectMenu('home'); }}>
               #Home
             </NavLink>
           </li>
@@ -31,7 +31,7 @@ const Sidebar = ({ onSelectMenu, onBackToList }) => {
               style={({ isActive }) => ({
                 color: isActive ? '#ffd700' : 'white',
               })}
-              onClick={() => { onSelectMenu('#자유게시판'); }}>
+              onClick={() => { onSelectMenu('free'); }}>
               #자유게시판
             </NavLink>
           </li>
@@ -41,7 +41,7 @@ const Sidebar = ({ onSelectMenu, onBackToList }) => {
               style={({ isActive }) => ({
                 color: isActive ? '#ffd700' : 'white',
               })}
-              onClick={() => { onSelectMenu('#글쓰기Tip공유게시판'); }}>
+              onClick={() => { onSelectMenu('tip'); }}>
               #글쓰기 Tip 공유게시판
             </NavLink>
           </li>
@@ -51,8 +51,18 @@ const Sidebar = ({ onSelectMenu, onBackToList }) => {
               style={({ isActive }) => ({
                 color: isActive ? '#ffd700' : 'white',
               })}
-              onClick={() => { onSelectMenu('#과제게시판'); }}>
+              onClick={() => { onSelectMenu('assignment'); }}>
               #과제게시판
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/community/portfolio"
+              className={({ isActive }) => (isActive ? 'active' : '')}
+              style={({ isActive }) => ({
+                color: isActive ? '#ffd700' : 'white',
+              })}
+              onClick={() => { onSelectMenu('portfolio'); }}>
+              #포트폴리오
             </NavLink>
           </li>
         </ul>
