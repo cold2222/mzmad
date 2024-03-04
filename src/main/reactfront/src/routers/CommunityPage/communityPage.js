@@ -8,10 +8,30 @@ import styles from './css/communityPage.module.css';
 
 const CommunityPage = () => {
     const [selectedMenu, setSelectedMenu] = useState("#home");
+    const [prevScrollPos, setPrevScrollPos] = useState(0);
+
+    const handleScrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth" // 부드러운 스크롤
+        });
+    };
+
+    const handleSaveScrollPos = () => {
+        setPrevScrollPos(window.scrollY);
+    };
+
+    const handleScrollRestore = () => {
+        window.scrollTo({
+            top: prevScrollPos,
+            behavior: "smooth" // 부드러운 스크롤
+        });
+    };
 
     const handleMenuChange = (menu) => {
         setSelectedMenu(menu);
     }
+
 
     return (
         <div className={styles['community-container']}>
@@ -22,8 +42,19 @@ const CommunityPage = () => {
                 <Sidebar onSelectMenu={handleMenuChange} />
                 <div className={styles['community-contentBox']}>
                     <Routes>
-                        <Route path="/:category" element={<PostList selectedMenu={selectedMenu}/>} />
-                        <Route path="/:category/view/:community_pk" element={<PostDetail />} />
+                        <Route path="/:category" element={<PostList selectedMenu={selectedMenu} />} />
+                        <Route
+                            path="/:category/view/:community_pk"
+                            element={
+                                <PostDetail
+                                    handleScrollToTop={handleScrollToTop}
+                                    handleSaveScrollPos={handleSaveScrollPos}
+                                    handleScrollRestore={handleScrollRestore}
+                                    prevScrollPos={prevScrollPos}
+                                    setPrevScrollPos={setPrevScrollPos}
+                                />
+                            }
+                        />
                         <Route path="/update/:community_pk" element={<EditorUpdate />} />
                     </Routes>
                 </div>
