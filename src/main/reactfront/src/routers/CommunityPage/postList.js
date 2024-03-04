@@ -4,88 +4,23 @@ import axios from "axios";
 import styles from './css/postList.module.css';
 import { useInView } from 'react-intersection-observer';
 
-const PostList = () => {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+const PostList = ({ posts, loading, category ,selectedMenu, handleInView}) => {
   const [ref, inView] = useInView();
-  const totalPageCount = useRef(0);
-  const page = useRef(0);
   
-  const { category } = useParams();
-  const [menu, setMenu] = useState(category);
-
+  useEffect(() => {
+    handleInView(inView)
+}, [inView]);
 
   function truncateText(text, maxLength) {
     if (text.length > maxLength) {
-      return text.substring(0, maxLength) + '...';
+        return text.substring(0, maxLength) + '...';
     }
     return text;
-  }
-
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get(`http://localhost:8080/community/selectAll/${category}/${page.current}`);
-      if (page.current === 0) {
-        setPosts(response.data.communityList);
-        page.current += 1;
-      } else {
-        setPosts(prevPosts => [...prevPosts, ...response.data.communityList]);
-      }
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching posts:', error);
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    console.log("category이펙트안 작동");
-
-    const getTotalCount = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/community/getTotalCount/${category}`);
-        totalPageCount.current = response.data.totalPageCount;
-      } catch (error) {
-        console.error('Error fetching posts:', error);
-      }
-    };
-    getTotalCount();
-
-    page.current = 0;
-    setPosts([])
-
-    if (category === "home") {
-      setMenu("#home");
-    } else if (category === "free") {
-      setMenu("#자유게시판");
-    } else if (category === "tip") {
-      setMenu("글쓰기 Tip 공유게시판");
-    } else if (category === "assignment") {
-      setMenu("#과제게시판");
-    }
-    fetchData();
-
-  }, [category]);
-
-  useEffect(() => {
-    if (inView && posts.length < totalPageCount.current) {
-      console.log(inView, '무한 스크롤 요청')
-      fetchData();
-      page.current += 1;
-    }
-  }, [inView, totalPageCount.current]);
-
-
-  if (loading && posts.length === 0) {
-    return <div>
-      Loading...
-    </div>;
-  }
-
+}
+  
   return (
     <div className={styles['post-list-container']}>
-      <h2>{menu}</h2>
+      <h2>{selectedMenu}</h2>
       <ul className={styles['post-list']}>
         {posts.map((post, key) => (
           <li key={key}>
@@ -97,9 +32,13 @@ const PostList = () => {
                   </div>
                 </div>
                 <div className={styles['post-list-textbox-info']}>
-                  {post.community_date}
-                  <img src="/img/eye.png" alt="view" width="15" height="15" />{post.community_view}
-                  <img src="/img/isgood.png" alt="isgood" width="15" height="15" />{post.community_isgood}
+                  <div>{post.community_date}</div>
+                  <div>
+                    <img src="/img/eye.png" alt="view" width="15" height="15" />{post.community_view}
+                    <img src="/img/isgood.png" alt="isgood" width="15" height="15" />{post.community_isgood}
+                  </div>
+                  <div>{post.community_category}</div>
+                  <div>{post.userDTO.user_nickname}</div>
                 </div>
                 <div className={styles['post-list-textbox-content']} dangerouslySetInnerHTML={{
                   __html: posts && posts != null ? truncateText(post.community_content_only, 140) : ''
@@ -110,7 +49,7 @@ const PostList = () => {
           </li>
         ))}
       </ul>
-      {loading? <div>Loading...</div> : <div ref={ref}></div>}
+      {loading ? <div>Loading...</div> : <div ref={ref}></div>}
     </div>
   );
 }

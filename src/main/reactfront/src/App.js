@@ -15,7 +15,7 @@ import useScrollRestoration from './useScrollRestoration';
 import GoogleRedirectPage from './routers/dy/Login/GoogleRedirectPage';
 import MyPage from './routers/dy/MyPage/myPage';
 import DetailPage from './routers/CoursePage/detailCoursePage';
-
+import ScrollToTop from './scrollToTop';
 const App = () => {
   return (
     <BrowserRouter>
@@ -29,6 +29,7 @@ const ScrollRestorationWrapper = () => {
 
   return (
     <>
+      <ScrollToTop />
       <Header />
       <Routes>
         <Route path="/" element={<Home />} exact={true}/>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './css/comment.module.css';
 import axios from "axios";
+import CommentDetail from './commentDetail';
 
 const Comment = (props) => {
     const [comment, setComment] = useState("");
@@ -53,19 +54,7 @@ const Comment = (props) => {
             <h2>코멘트란</h2>
             <textarea className={styles['comment-textarea']} value={comment} onChange={handleCommentChange}></textarea>
             <button className={styles['comment-button']} onClick={commentInsert}>등록</button>
-            {comments.length > 0 && (
-                <ul className={styles.commentList}>
-                    {comments.map(comment => (
-                        <li key={comment.community_comment_pk} className={styles.commentItem}>
-                            <p className={styles.commentContent}>{comment.community_comment_content}</p>
-                            <p className={styles.commentInfo}>
-                                <span className={styles.commentAuthor}>작성자: {comment.userDTO.user_nickname}</span>
-                                <span className={styles.commentDate}>작성일: {comment.community_comment_date}</span>
-                            </p>
-                        </li>
-                    ))}
-                </ul>
-            )}
+            <CommentDetail comments={comments}/>
         </div>
     );
 }
