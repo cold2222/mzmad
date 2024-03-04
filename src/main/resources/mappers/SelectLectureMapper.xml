@@ -9,5 +9,9 @@
 		select * from courses where courses_id = #{number}
 	</select>
 	
+	<select id="getIsAccessGranted" resultType="String">
+		select isaccessgranted from courses_access where user_id= #{userId} and course_id = #{courseId}
+	</select>
+
 </mapper>
 

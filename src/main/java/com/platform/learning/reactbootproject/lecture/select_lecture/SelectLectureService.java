@@ -21,4 +21,9 @@ public class SelectLectureService {
         return selectLectureMapper.getVideoInfo(number);
     }
 
+    public String getIsAccessGranted(String userId, String courseId) {
+        
+        return selectLectureMapper.getIsAccessGranted(userId,courseId);
+    }
+
 }
