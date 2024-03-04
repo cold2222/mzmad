@@ -25,8 +25,12 @@ public class SelectLectureController {
     
         if (userId.equals("null")) {
             System.out.println("여기찍힘");
+            for(SelectLectureDTO s : result){
+                s.setIsAccessGranted("1");
+            }
             return new ResponseEntity<>(result, HttpStatus.OK);
-        } else {
+        } 
+        else {
             for(SelectLectureDTO s : result){
                 s.setIsAccessGranted(selectLectureService.getIsAccessGranted(userId, s.getCourses_id()));
             }
