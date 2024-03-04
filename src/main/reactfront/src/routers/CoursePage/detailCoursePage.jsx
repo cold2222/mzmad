@@ -42,7 +42,7 @@ const DetailCoursePage = () => {
 
   const handleCommentSubmit = async () => {
     if(sessionStorage.getItem('userNickname')===null){
-      toast("로그인 부터 해주세요.");
+      toast("로그인을 해주세요.");
       
     }
     else{
@@ -68,24 +68,30 @@ const DetailCoursePage = () => {
   };
   
   const handleReplySubmit = async () => {
-    try {
-      // 리댓글 등록
-      await axios.post('/submit-reply', {
-        course_recomment_comment_id : replyCommentId,
-        course_recomment_user_id : sessionStorage.getItem('userNickname'),
-        course_recomment_content : replyComment,
-      });
-  
-      // 리댓글 목록 가져오기
-      const repliesResponse = await axios.get(`/get-replies/${replyCommentId}`);
-      setReplies((prevReplies) => ({ ...prevReplies, [replyCommentId]: repliesResponse.data }));
-  
-      setReplyComment('');
-      setReplyCommentId(null);
-  
-      toast("Re:댓글이 등록되었습니다.");
-    } catch (error) {
-      console.error('리댓글을 제출하는 데 실패했습니다:', error.message);
+    if(sessionStorage.getItem('userNickname')===null){
+      toast("로그인을 해주세요.");
+      
+    }
+    else{
+      try {
+        // 리댓글 등록
+        await axios.post('/submit-reply', {
+          course_recomment_comment_id : replyCommentId,
+          course_recomment_user_id : sessionStorage.getItem('userNickname'),
+          course_recomment_content : replyComment,
+        });
+    
+        // 리댓글 목록 가져오기
+        const repliesResponse = await axios.get(`/get-replies/${replyCommentId}`);
+        setReplies((prevReplies) => ({ ...prevReplies, [replyCommentId]: repliesResponse.data }));
+    
+        setReplyComment('');
+        setReplyCommentId(null);
+    
+        toast("Re:댓글이 등록되었습니다.");
+      } catch (error) {
+        console.error('리댓글을 제출하는 데 실패했습니다:', error.message);
+      }
     }
   };
 
