@@ -11,5 +11,7 @@ public interface SelectLectureMapper {
     List<SelectLectureDTO> getAllLectures();
 
     SelectLectureDTO getVideoInfo(@Param("number") String number);
+
+    String getIsAccessGranted(@Param("userId") String userId, @Param("courseId") String courseId);
     
 }
