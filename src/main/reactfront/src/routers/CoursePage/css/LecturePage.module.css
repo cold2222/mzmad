@@ -1,65 +1,77 @@
 /* LecturePage.module.css */
 .container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #000;
-    background-color: #fff;
-    border-radius: 10px;
-  }
-  
-  .label {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  .select {
-    padding: 8px;
-    border: 1px solid #000;
-    border-radius: 5px;
-  }
-  
-  .title {
-    color: #000;
-  }
-  
-  .list {
-    list-style-type: none;
-    display: flex;
-    padding: 0;
-    flex-wrap: wrap;
-  }
-  
-  .item {
-    margin-left: 20px;
-    margin-right : 7%;
-    
-  }
-  
-  /* 선택된 카테고리를 동그라미로 표시 */
-  .select {
-    appearance: none;
-    background: url('data:image/svg+xml;utf8,<svg fill="black" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 18l-1.41-1.41L7 14.17l1.41-1.41L12 15.17l5.59-5.58L17 10z"/></svg>') no-repeat right 8px center/18px 18px;
-    padding-right: 30px;
-  }
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #000;
+  background-color: #fff;
+  border-radius: 10px;
+}
 
-  .videoContainer:hover{
-    cursor: pointer;
-  }
+.label {
+  display: block;
+  margin-bottom: 10px;
+}
 
-  .adminButton{
-    float: right;
-    width: 60px;
-    margin-left: auto;
-    margin-top: 10px;
-    display: inline-block;
-    background-color: #333;
-    color: white;
-    padding: 7px 10px;
-    text-align: center;
-    text-decoration: none;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
+.select {
+  padding: 8px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  appearance: none;
+  background: url('data:image/svg+xml;utf8,<svg fill="black" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 18l-1.41-1.41L7 14.17l1.41-1.41L12 15.17l5.59-5.58L17 10z"/></svg>') no-repeat right 8px center/18px 18px;
+  padding-right: 30px;
+}
+
+.title {
+  color: #000;
+}
+
+.list {
+  list-style-type: none;
+  display: flex;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+.item {
+  margin-left: 20px;
+  margin-right: 7%;
+}
+
+/* 선택된 카테고리를 동그라미로 표시 */
+
+.videoContainer {
+  position: relative;
+  cursor: pointer;
+}
+
+.videoContainer:hover .overlayImage {
+  display: block;
+}
+
+.overlayImage {
+  display: none;
+  position: absolute;
+  bottom : 0;
+  left: 0;
+  width: 100%;
+  height: 80%;
+  border-radius: 10px;
+}
+
+.adminButton {
+  float: right;
+  width: 60px;
+  margin-left: auto;
+  margin-top: 10px;
+  display: inline-block;
+  background-color: #333;
+  color: white;
+  padding: 7px 10px;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
