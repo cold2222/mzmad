@@ -31,6 +31,8 @@ public class CommunityService {
             category ="#글쓰기Tip공유게시판";
         }else if(category.equals("assignment")){
             category = "#과제게시판";
+        }else if(category.equals("portfolio")) {
+        	category = "#포트폴리오게시판";
         }
         int limit = 10;
         int start_row = currentPage * limit;
@@ -53,8 +55,9 @@ public class CommunityService {
             category ="#글쓰기Tip공유게시판";
         }else if(category.equals("assignment")){
             category = "#과제게시판";
+        }else if(category.equals("portfolio")) {
+        	category = "#포트폴리오게시판";
         }
-    	
     	return communityMapper.selectMenuCommunityTotalCount(category);
     	
     }
