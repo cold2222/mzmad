@@ -97,6 +97,7 @@ const Editor = ({ placeholder, value, ...rest }) => {
                         <option value="#자유게시판">#자유게시판</option>
                         <option value="#글쓰기Tip공유게시판">#글쓰기Tip공유게시판</option>
                         <option value="#과제게시판">#과제게시판</option>
+                        <option value="#포트폴리오게시판">#포트폴리오게시판</option>
                     </select>
                     <ReactQuill
                         style={{ width: "800px", height: "600px" }}
