@@ -1,12 +1,14 @@
 import React from 'react';
 import styles from './css/comment.module.css';
 
-const ReCommentDetail = ({reComments}) => {
+const ReCommentDetail = (props) => {
+  const { comment } = props;
+  
   return (
     <div>
-      {reComments.length > 0 && (
-                <ul className={styles.commentList}>
-                    {reComments.map(reComment => (
+    
+                {/* <ul className={styles.commentList}>
+                    {comment.map(reComment => (
                         <li key={reComment.community_comment_pk} className={styles.commentItem}>
                             <p className={styles.commentContent}>{reComment.community_comment_content}</p>
                             <p className={styles.commentInfo}>
@@ -16,7 +18,7 @@ const ReCommentDetail = ({reComments}) => {
                         </li>
                     ))}
                 </ul>
-            )}
+         */}
     </div>
   );
 }

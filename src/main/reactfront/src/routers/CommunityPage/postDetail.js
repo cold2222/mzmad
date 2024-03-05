@@ -201,13 +201,6 @@ const PostDetail = ({ handleScrollToTop, handleSaveScrollPos }) => {
         </div >
         <Comment community_pk={community_pk} />
       </div>
-      <ToastContainer
-        position="top-center"
-        limit={1}
-        closeButton={false}
-        autoClose={3000}
-        hideProgressBar
-      />
     </div>
   );
 }

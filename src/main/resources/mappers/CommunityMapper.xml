@@ -125,8 +125,8 @@ FROM (
 	    <result property="community_comment_user_pk" column="COMMUNITY_COMMENT_USER_PK" />
 	    <result property="community_comment_content" column="COMMUNITY_COMMENT_CONTENT" />
 	    <result property="community_comment_date" column="COMMUNITY_COMMENT_DATE" />
-	    <association property="userDTO" resultMap="commentUser" javaType="com.platform.learning.reactbootproject.dy.login.UserDTO">
-	    </association>
+	    <association property="userDTO" resultMap="commentUser" javaType="com.platform.learning.reactbootproject.dy.login.UserDTO" />
+	    <!-- <collection property="" /> -->
 	</resultMap>
 
 	<resultMap type="com.platform.learning.reactbootproject.dy.login.UserDTO" id="commentUser">
@@ -138,6 +138,10 @@ FROM (
 	    <result property="user_isAdmin" column="USER_ISADMIN" />
 	    <result property="user_profile" column="USER_PROFILE" />
 	</resultMap>
+	
+	<!-- <select id="selectRecomment" resultMap="">
+		select * from community_recomment where community_recomment_community_comment_pk = #{}
+	</select> -->
 	
 	<select id="getCommentsByCommunityId" resultMap="commentWithUserResultMap">
 	    SELECT
@@ -174,6 +178,19 @@ FROM (
 	<insert id="reportUserInsert">
 		INSERT INTO community_report (community_report_community_pk, community_report_user_pk)
 		VALUES (#{community_report_community_pk}, #{community_report_user_pk})
+	</insert>
+	
+	<delete id="deleteComment">
+		delete community_comment where community_comment_pk = #{community_comment_pk}
+	</delete>
+	
+	<update id="updateComment">
+		update community_comment set community_comment_content = #{community_comment_content} where community_comment_pk = #{community_comment_pk}
+	</update>
+	
+	<insert id="insertRecomment">
+		insert into community_recomment values(community_recomment_seq.nextval,#{community_recomment_user_pk}
+		,#{community_recomment_community_comment_pk},#{community_recomment_content},sysdate)
 	</insert>
 </mapper>
 

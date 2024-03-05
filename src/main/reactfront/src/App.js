@@ -16,6 +16,8 @@ import GoogleRedirectPage from './routers/dy/Login/GoogleRedirectPage';
 import MyPage from './routers/dy/MyPage/myPage';
 import DetailPage from './routers/CoursePage/detailCoursePage';
 import ScrollToTop from './scrollToTop';
+import { ToastContainer } from "react-toastify";
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -45,6 +47,13 @@ const ScrollRestorationWrapper = () => {
         <Route path="/login/oauth2/callback/google" element={<GoogleRedirectPage/>}></Route>
         <Route path="/mypage" element={<MyPage/>}></Route>
       </Routes>
+      <ToastContainer
+        position="top-center"
+        limit={1}
+        closeButton={false}
+        autoClose={3000}
+        hideProgressBar
+      />
       <Footer />
     </>
   );

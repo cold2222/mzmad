@@ -1,5 +1,7 @@
 package com.platform.learning.reactbootproject.editor.communitydto;
 
+import java.util.List;
+
 import com.platform.learning.reactbootproject.dy.login.UserDTO;
 
 import lombok.Data;
@@ -13,4 +15,5 @@ public class CommunityCommentDTO {
     private String community_comment_date;
     private int community_comment_isgood;
     private UserDTO userDTO;
+    private List<CommunityReCommentDTO> recommentList;
 }

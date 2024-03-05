@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.platform.learning.reactbootproject.editor.communitydto.CommunityBBSDTO;
 import com.platform.learning.reactbootproject.editor.communitydto.CommunityCommentDTO;
 import com.platform.learning.reactbootproject.editor.communitydto.CommunityIsGoodDTO;
+import com.platform.learning.reactbootproject.editor.communitydto.CommunityReCommentDTO;
 import com.platform.learning.reactbootproject.editor.communitydto.CommunityReportDTO;
 import com.platform.learning.reactbootproject.editor.communitymapper.CommunityMapper;
 
@@ -88,11 +89,15 @@ public class CommunityService {
     }
 
 	public void insertComment(CommunityCommentDTO communityCommentDTO) {
+		String community_comment_content = communityCommentDTO.getCommunity_comment_content();
+		community_comment_content = community_comment_content.replace("\n", "<br>");
+		communityCommentDTO.setCommunity_comment_content(community_comment_content);
 		communityMapper.insertComment(communityCommentDTO);
 		
 	}
 
-	public List<CommunityCommentDTO> getCommentsByCommunityId(int community_pk) {
+	public List<CommunityCommentDTO> getCommentsByCommunityId(int community_pk) {		
+		
 		return communityMapper.getCommentsByCommunityId(community_pk);
 	}
 	
@@ -123,4 +128,21 @@ public class CommunityService {
 		}
 		return "true";
 	}
+
+	public void deleteComment(String community_comment_pk) {
+		communityMapper.deleteComment(community_comment_pk);
+	}
+
+	public void updateComment(CommunityCommentDTO communityCommentDTO) {
+		String community_comment_content = communityCommentDTO.getCommunity_comment_content();
+		community_comment_content = community_comment_content.replace("\n", "<br>");
+		communityCommentDTO.setCommunity_comment_content(community_comment_content);
+		communityMapper.updateComment(communityCommentDTO);
+	}
+
+	public void insertRecomment(CommunityReCommentDTO communityReCommentDTO) {
+		communityMapper.insertRecomment(communityReCommentDTO);
+	}
+	
+	
 }
