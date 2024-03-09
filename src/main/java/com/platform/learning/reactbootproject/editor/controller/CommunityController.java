@@ -150,6 +150,12 @@ public class CommunityController {
 	@GetMapping("/comments/{community_pk}")
 	public List<CommunityCommentDTO> getCommentsByCommunity(@PathVariable int community_pk) {
 		System.out.println("코멘트 셀렉트 요청");
+		List<CommunityCommentDTO> temp = communityservice.getCommentsByCommunityId(community_pk);
+		for (int i = 0; i < temp.size(); i++) {
+			System.out.println(temp.get(i));
+		}
+		
+		System.out.println();
 		return communityservice.getCommentsByCommunityId(community_pk);
 	}
 
@@ -181,4 +187,15 @@ public class CommunityController {
 		System.out.println("등록할 DTO  :"+communityReCommentDTO);
 		communityservice.insertRecomment(communityReCommentDTO);
 	}
+	@PutMapping("/recomment/update")
+	public void updateRecomment(@RequestBody CommunityReCommentDTO communityRecommentDTO) {
+		System.out.println("업데이트할 DTO  :" + communityRecommentDTO);
+		communityservice.updateRecomment(communityRecommentDTO);
+	}
+	@DeleteMapping("/recomment/delete")
+	public void deleteRecomment(@RequestBody String community_recomment_pk) {
+		System.out.println("삭제할 댓글 pk	:" + community_recomment_pk);
+		communityservice.deleteRecomment(community_recomment_pk);
+	}
+	
 }

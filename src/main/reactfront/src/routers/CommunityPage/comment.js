@@ -8,7 +8,8 @@ const Comment = (props) => {
     const [comments, setComments] = useState([]);
     const [commentUpdate, setCommentUpdate] = useState(false);
     const { community_pk } = props;
-    
+    console.log(comments);
+    console.log("코멘트요");
     function loginCheck() {
         if (sessionStorage.getItem('userId') != null) {
           return false;

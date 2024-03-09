@@ -11,7 +11,13 @@ const CommentDetail = ({ comments, handleCommentUpdate }) => {
     
     const [reCommentBox, setReCommentBox] = useState(null);
     const [reCommentContent, setReCommentContent] = useState("");
-
+    function loginCheck() {
+        if (sessionStorage.getItem('userId') != null) {
+          return false;
+        }
+        return true;
+      }
+    
     const handleCommentChange = (event) => {
         setUpdateComment(event.target.value);
     };
@@ -89,13 +95,21 @@ const CommentDetail = ({ comments, handleCommentUpdate }) => {
     }
 
     function insertRecomment(comment){
+        if(loginCheck()){
+            alert("로그인후 이용 가능합니다");
+            return;
+        }
 
         if (window.confirm('등록하시겠습니까?')) {
             let community_recomment_community_comment_pk = comment.community_comment_pk;
-            console.log(reCommentContent);
-            console.log("리코멘트 등록할 내용");
             let community_recomment_user_pk = sessionStorage.getItem('userId');
             let community_recomment_content = reCommentContent;
+
+            if(community_recomment_content.length >= 200){
+                alert("리댓글은 200자를 넘길수 없습니다")
+                return;
+            }
+
             axios.post('http://localhost:8080/community/recomment/insert', { 
                 community_recomment_community_comment_pk,
                 community_recomment_content,
@@ -103,6 +117,7 @@ const CommentDetail = ({ comments, handleCommentUpdate }) => {
             })
                 .then(response => {
                     console.log('리댓글 등록 성공:', response.data);
+                    setReCommentContent("");
                     handleCommentUpdate();
                     toast.error("등록 완료");
                 })
@@ -142,7 +157,7 @@ const CommentDetail = ({ comments, handleCommentUpdate }) => {
                                         </>
                                     ) : (
                                         <>
-                                            <button onClick={() => reComment(comment)}>리댓글 달기</button>
+                                            {reCommentBox == null ? <button onClick={() => reComment(comment)}>리댓글 달기</button> : ""}
                                             <button onClick={() => handleEdit(comment)}>수정</button>
                                             <button onClick={() => communityCommentDelete(comment)}>삭제</button>
                                         </>
@@ -153,16 +168,17 @@ const CommentDetail = ({ comments, handleCommentUpdate }) => {
                                 <div>
                                     <div>리댓글 달기</div>
                                     <textarea 
+                                        className={styles.reCommentBox}
                                         onChange={handleReCommentChange}
                                         value={reCommentContent}
                                     />
-                                    <div>
+                                    <div className={styles.reCommentButtonBox}>
                                         <button onClick={() => insertRecomment(comment)}>등록</button>
                                         <button onClick={() => handlecancel()}>취소</button>
                                     </div>
                                 </div>
                             }
-                            <ReCommentDetail comment={comment}/>
+                            <ReCommentDetail comment={comment} handleCommentUpdate={handleCommentUpdate}/>
                         </li>
                     ))}
                 </ul>

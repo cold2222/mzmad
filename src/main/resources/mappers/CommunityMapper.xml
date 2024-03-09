@@ -114,21 +114,26 @@ FROM (
 		, community_content = #{community_content} where community_pk =
 		#{community_pk}
 	</update>
-	<insert id="insertComment">
-		insert into community_comment values(community_comment_seq.nextVal,#{community_comment_user_pk}
-		,#{community_comment_community_pk},#{community_comment_content},sysdate,0)
-	</insert>
 	
-	<resultMap id="commentWithUserResultMap" type="com.platform.learning.reactbootproject.editor.communitydto.CommunityCommentDTO">
-	    <result property="community_comment_pk" column="COMMUNITY_COMMENT_PK" />
-	    <result property="community_comment_community_pk" column="COMMUNITY_COMMENT_COMMUNITY_PK" />
-	    <result property="community_comment_user_pk" column="COMMUNITY_COMMENT_USER_PK" />
-	    <result property="community_comment_content" column="COMMUNITY_COMMENT_CONTENT" />
-	    <result property="community_comment_date" column="COMMUNITY_COMMENT_DATE" />
-	    <association property="userDTO" resultMap="commentUser" javaType="com.platform.learning.reactbootproject.dy.login.UserDTO" />
-	    <!-- <collection property="" /> -->
+	<resultMap type="com.platform.learning.reactbootproject.dy.login.UserDTO" id="recommentUser">
+	    <id property="user_pk" column="recomment_user_pk" />
+	    <result property="user_nickname" column="recomment_user_nickname" />
+	    <result property="user_email" column="recomment_user_email" />
+	    <result property="user_platform" column="recomment_user_platform" />
+	    <result property="user_courses_key" column="recomment_user_courses_key" />
+	    <result property="user_isAdmin" column="recomment_user_isAdmin" />
+	    <result property="user_profile" column="recomment_user_profile" />
 	</resultMap>
-
+	
+	<resultMap type="com.platform.learning.reactbootproject.editor.communitydto.CommunityReCommentDTO" id="recomment">
+	    <id property="community_recomment_pk" column="community_recomment_pk" />
+	    <result property="community_recomment_community_comment_pk" column="community_recomment_community_comment_pk" />
+	    <result property="community_recomment_user_pk" column="community_recomment_user_pk" />
+	    <result property="community_recomment_content" column="community_recomment_content" />
+	    <result property="community_recomment_date" column="community_recomment_date" />
+	    <association property="userDTO" resultMap="recommentUser" javaType="com.platform.learning.reactbootproject.dy.login.UserDTO" />
+	</resultMap>
+	
 	<resultMap type="com.platform.learning.reactbootproject.dy.login.UserDTO" id="commentUser">
 	    <id property="user_pk" column="USER_PK" />
 	    <result property="user_nickname" column="USER_NICKNAME" />
@@ -139,9 +144,15 @@ FROM (
 	    <result property="user_profile" column="USER_PROFILE" />
 	</resultMap>
 	
-	<!-- <select id="selectRecomment" resultMap="">
-		select * from community_recomment where community_recomment_community_comment_pk = #{}
-	</select> -->
+	<resultMap id="commentWithUserResultMap" type="com.platform.learning.reactbootproject.editor.communitydto.CommunityCommentDTO">
+	    <result property="community_comment_pk" column="COMMUNITY_COMMENT_PK" />
+	    <result property="community_comment_community_pk" column="COMMUNITY_COMMENT_COMMUNITY_PK" />
+	    <result property="community_comment_user_pk" column="COMMUNITY_COMMENT_USER_PK" />
+	    <result property="community_comment_content" column="COMMUNITY_COMMENT_CONTENT" />
+	    <result property="community_comment_date" column="COMMUNITY_COMMENT_DATE" />
+	    <association property="userDTO" resultMap="commentUser" javaType="com.platform.learning.reactbootproject.dy.login.UserDTO" />
+	    <collection property="recommentList" resultMap="recomment" javaType="List" />
+	</resultMap>
 	
 	<select id="getCommentsByCommunityId" resultMap="commentWithUserResultMap">
 	    SELECT
@@ -150,14 +161,27 @@ FROM (
 	        cc.COMMUNITY_COMMENT_USER_PK,
 	        cc.COMMUNITY_COMMENT_CONTENT,
 	        to_char(cc.COMMUNITY_COMMENT_DATE,'yyyy-mm-dd') as COMMUNITY_COMMENT_DATE,
-	        u.*
+            u.*,
+            crc.*,
+            ru.user_pk as recomment_user_pk,
+            ru.user_nickname as recomment_user_nickname,
+            ru.USER_PK as recomment_user_email,
+            ru.user_email as recomment_user_platform,
+            ru.user_courses_key as recomment_user_courses_key,
+            ru.user_isadmin as recomment_user_isadmin,
+            ru.user_profile as recomment_user_profile
 	    FROM
 	        COMMUNITY_COMMENT cc
-	        JOIN USERS u ON cc.COMMUNITY_COMMENT_USER_PK = u.USER_PK
+            left join users u on 
+            cc.community_comment_user_pk = u.user_pk
+            left JOIN community_recomment crc ON 
+            cc.COMMUNITY_COMMENT_pk = crc.community_recomment_community_comment_pk
+            left JOIN users ru on
+            crc.community_recomment_user_pk = ru.user_pk
 	    WHERE
 	        cc.COMMUNITY_COMMENT_COMMUNITY_PK = #{community_pk}
 	    ORDER BY
-	        cc.COMMUNITY_COMMENT_PK desc
+	        cc.COMMUNITY_COMMENT_PK , crc.community_recomment_pk
 	</select>
 
 	<select id="isGoodCheck">
@@ -180,17 +204,28 @@ FROM (
 		VALUES (#{community_report_community_pk}, #{community_report_user_pk})
 	</insert>
 	
+	<insert id="insertComment">
+		insert into community_comment values(community_comment_seq.nextVal,#{community_comment_user_pk}
+		,#{community_comment_community_pk},#{community_comment_content},sysdate,0)
+	</insert>
+	<update id="updateComment">
+		update community_comment set community_comment_content = #{community_comment_content} where community_comment_pk = #{community_comment_pk}
+	</update>
 	<delete id="deleteComment">
 		delete community_comment where community_comment_pk = #{community_comment_pk}
 	</delete>
 	
-	<update id="updateComment">
-		update community_comment set community_comment_content = #{community_comment_content} where community_comment_pk = #{community_comment_pk}
-	</update>
 	
 	<insert id="insertRecomment">
 		insert into community_recomment values(community_recomment_seq.nextval,#{community_recomment_user_pk}
 		,#{community_recomment_community_comment_pk},#{community_recomment_content},sysdate)
 	</insert>
+	<update id="updateRecomment">
+		update community_recomment set community_recomment_content = #{community_recomment_content} 
+		where community_recomment_pk = #{community_recomment_pk}
+	</update>
+	<delete id="deleteRecomment">
+		delete community_recomment where community_recomment_pk = #{community_recomment_pk}
+	</delete>
 </mapper>
 

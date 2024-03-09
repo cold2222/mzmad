@@ -48,6 +48,9 @@ public interface CommunityMapper {
 	public void updateComment(CommunityCommentDTO communityCommentDTO);
 
 	public void insertRecomment(CommunityReCommentDTO communityReCommentDTO);
+
+	public void deleteRecomment(String community_recomment_pk);
+
+	public void updateRecomment(CommunityReCommentDTO communityRecommentDTO);
 	
-	/* public void selectRecomment(int community_pk); */
 }

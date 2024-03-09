@@ -143,6 +143,19 @@ public class CommunityService {
 	public void insertRecomment(CommunityReCommentDTO communityReCommentDTO) {
 		communityMapper.insertRecomment(communityReCommentDTO);
 	}
+
+	public void deleteRecomment(String community_recomment_pk) {
+		communityMapper.deleteRecomment(community_recomment_pk);
+		
+	}
+
+	public void updateRecomment(CommunityReCommentDTO communityRecommentDTO) {
+		String community_recomment_content = communityRecommentDTO.getCommunity_recomment_content();
+		community_recomment_content = community_recomment_content.replace("\n", "<br>");
+		communityRecommentDTO.setCommunity_recomment_content(community_recomment_content);
+		communityMapper.updateRecomment(communityRecommentDTO);
+		
+	}
 	
 	
 }
