@@ -1,0 +1,37 @@
+.commentList{
+    display: flex;
+    flex-direction: column;
+    width: 650px;
+    word-wrap: break-word;
+    margin-top: 5px;
+    margin-left: 70px;
+}
+.commentContent{
+    margin-bottom: 25px;
+}
+.commentItem{
+    border-top: 1px solid black;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+.commentItem span{
+    margin-left: 10px;
+}
+.reCommentContent{
+    resize: none;
+}
+.reCommentButton button{
+    margin-right: 10px;
+    margin-top: 5px;
+    padding: 1px 3px;
+    display: inline-block;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}

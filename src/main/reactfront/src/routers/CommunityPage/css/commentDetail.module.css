@@ -51,3 +51,25 @@
   .commentContentButton p button:hover{
     background-color: #555;
   }
+
+  .commentContent{
+    resize: none;
+  }
+  .reCommentBox{
+    resize: none;
+    height: 100px;
+    width: 80%;
+  }
+  .reCommentButtonBox button{
+    margin-right: 10px;
+    padding: 1px 3px;
+    display: inline-block;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }

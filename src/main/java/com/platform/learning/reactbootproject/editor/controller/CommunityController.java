@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.platform.learning.reactbootproject.editor.communitydto.CommunityBBSDTO;
 import com.platform.learning.reactbootproject.editor.communitydto.CommunityCommentDTO;
 import com.platform.learning.reactbootproject.editor.communitydto.CommunityIsGoodDTO;
+import com.platform.learning.reactbootproject.editor.communitydto.CommunityReCommentDTO;
 import com.platform.learning.reactbootproject.editor.communitydto.CommunityReportDTO;
 import com.platform.learning.reactbootproject.editor.communityservice.CommunityService;
 
@@ -42,7 +43,7 @@ public class CommunityController {
 		if (bbsDTO.getCommunity_user_pk() == null) {
 			bbsDTO.setCommunity_user_pk("비회원");
 		}
-
+		System.out.println("게시글 등록요청");
 		communityservice.insertCommunity(bbsDTO);
 	}
 
@@ -140,25 +141,61 @@ public class CommunityController {
 
 	@PostMapping("/insertComment")
 	public void insertComment(@RequestBody CommunityCommentDTO communityCommentDTO) {
+		System.out.println(communityCommentDTO);
+		System.out.println("코멘트 값");
 		communityservice.insertComment(communityCommentDTO);
 		System.out.println("코멘트 저장 성공");
 	}
 
 	@GetMapping("/comments/{community_pk}")
 	public List<CommunityCommentDTO> getCommentsByCommunity(@PathVariable int community_pk) {
+		System.out.println("코멘트 셀렉트 요청");
+		List<CommunityCommentDTO> temp = communityservice.getCommentsByCommunityId(community_pk);
+		for (int i = 0; i < temp.size(); i++) {
+			System.out.println(temp.get(i));
+		}
+		
+		System.out.println();
 		return communityservice.getCommentsByCommunityId(community_pk);
 	}
 
 	@PostMapping("/isGoodCheck")
 	public String isGoodCheck(@RequestBody CommunityIsGoodDTO communityIsGood) {
-
+		System.out.println("좋아요 누르기");
 		return communityservice.isGoodCheck(communityIsGood);
 	}
 
 	@PostMapping("/reportCheck")
 	public String reportCheck(@RequestBody CommunityReportDTO communityReportDTO) {
-		System.out.println(communityReportDTO);
+		System.out.println("신고하기");
 		return communityservice.reportCheck(communityReportDTO);
 	}
-
+	
+	@DeleteMapping("/comment/delete")
+	public void deleteComment(@RequestBody String community_comment_pk) {
+		System.out.println("삭제할 댓글 pk	:" + community_comment_pk);
+		communityservice.deleteComment(community_comment_pk);
+	}
+	
+	@PutMapping("/comment/update")
+	public void updateComment(@RequestBody CommunityCommentDTO communityCommentDTO) {
+		System.out.println("업데이트할 DTO  :" + communityCommentDTO);
+		communityservice.updateComment(communityCommentDTO);
+	}
+	@PostMapping("/recomment/insert")
+	public void insertRecomment(@RequestBody CommunityReCommentDTO communityReCommentDTO) {
+		System.out.println("등록할 DTO  :"+communityReCommentDTO);
+		communityservice.insertRecomment(communityReCommentDTO);
+	}
+	@PutMapping("/recomment/update")
+	public void updateRecomment(@RequestBody CommunityReCommentDTO communityRecommentDTO) {
+		System.out.println("업데이트할 DTO  :" + communityRecommentDTO);
+		communityservice.updateRecomment(communityRecommentDTO);
+	}
+	@DeleteMapping("/recomment/delete")
+	public void deleteRecomment(@RequestBody String community_recomment_pk) {
+		System.out.println("삭제할 댓글 pk	:" + community_recomment_pk);
+		communityservice.deleteRecomment(community_recomment_pk);
+	}
+	
 }
