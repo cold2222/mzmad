@@ -9,4 +9,5 @@ public class SelectLectureDTO {
     private String courses_category;
     private String courses_video;
     private String courses_date;
+    private String isAccessGranted;
 }

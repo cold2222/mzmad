@@ -18,12 +18,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class SelectLectureController {
     private final SelectLectureService selectLectureService;
 
-    @GetMapping("/get-course-data")
-    public ResponseEntity<List<SelectLectureDTO>> getAllLectures() {
-        
+    @GetMapping("/get-course-data/{userId}")
+    public ResponseEntity<List<SelectLectureDTO>> getAllLectures(@PathVariable("userId") String userId) {
+        System.out.println("userId test " + userId);
         List<SelectLectureDTO> result = selectLectureService.getAllLectures();
-        return new ResponseEntity<>(result, HttpStatus.OK);
+    
+        if (userId.equals("null")) {
+            System.out.println("여기찍힘");
+            for(SelectLectureDTO s : result){
+                s.setIsAccessGranted("1");
+            }
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } 
+        else {
+            for(SelectLectureDTO s : result){
+                s.setIsAccessGranted(selectLectureService.getIsAccessGranted(userId, s.getCourses_id()));
+            }
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
     }
+    
     
     @GetMapping("/get-video-info/{number}")
     public ResponseEntity<SelectLectureDTO> getLecture(@PathVariable("number") String number) {
