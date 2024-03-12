@@ -25,7 +25,7 @@ public class CommunityService {
         communityMapper.communityInsert(bbsDTO);
     }
 
-    public List<CommunityBBSDTO> selectAllCommunity(String category, int currentPage) {
+    public List<CommunityBBSDTO> selectAllCommunity(String category, int currentPage, String search, String searchCondition) {
         if(category.equals("free")){
             category = "#자유게시판";
         }else if(category.equals("tip")){
@@ -39,7 +39,7 @@ public class CommunityService {
         int start_row = currentPage * limit;
         int end_row = start_row + limit;
         
-        List<CommunityBBSDTO> bbsList = communityMapper.SelectMenuCommunity(category ,start_row, end_row);
+        List<CommunityBBSDTO> bbsList = communityMapper.SelectMenuCommunity(category ,start_row, end_row, search, searchCondition);
         for (int i = 0; i < bbsList.size(); i++) {
 			String content = bbsList.get(i).getCommunity_content();
 			content = removeImgTags(content);
@@ -49,7 +49,7 @@ public class CommunityService {
         return bbsList;
     }
     
-    public int selectMenuCommunityTotalCount(String category) {
+    public int selectMenuCommunityTotalCount(String category, String search, String searchCondition) {
     	if(category.equals("free")){
             category = "#자유게시판";
         }else if(category.equals("tip")){
@@ -59,7 +59,7 @@ public class CommunityService {
         }else if(category.equals("portfolio")) {
         	category = "#포트폴리오게시판";
         }
-    	return communityMapper.selectMenuCommunityTotalCount(category);
+    	return communityMapper.selectMenuCommunityTotalCount(category,search,searchCondition);
     	
     }
 

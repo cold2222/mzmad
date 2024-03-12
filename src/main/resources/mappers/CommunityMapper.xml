@@ -58,18 +58,39 @@ FROM (
             <if test="category != 'home'">
             and c.community_category = #{category}
             </if>
+            <if test="searchCondition == 'c.community_title' and search != 'null'">
+            and c.community_title LIKE '%'||#{search}||'%'
+	        </if>
+			<if test="searchCondition == 'c.community_content' and search != 'null'">
+	            and c.community_content LIKE '%'||#{search}||'%'
+	        </if>
+			<if test="searchCondition == 'u.user_nickname' and search != 'null'">
+	            and u.user_nickname LIKE '%'||#{search}||'%'
+	        </if>
         ORDER BY
             c.COMMUNITY_PK DESC
     ) c
     WHERE ROWNUM &lt;= #{end_row}
-) WHERE rn > #{start_row}
+) WHERE rn &gt; #{start_row}
 	</select>
 
 	<select id="selectMenuCommunityTotalCount">
-		SELECT COUNT(*) AS total_count FROM community
+		SELECT COUNT(*) AS total_count FROM community c
+        JOIN
+            users u ON c.community_user_pk = u.user_pk
+		where 1 = 1
 		<if test="category !='home'">
-			where community_category = #{category}
+			and community_category = #{category}
 		</if>
+		<if test="searchCondition == 'c.community_title' and search != 'null'">
+            and community_title LIKE '%'||#{search}||'%'
+        </if>
+		<if test="searchCondition == 'c.community_content' and search != 'null'">
+            and community_content LIKE '%'||#{search}||'%'
+        </if>
+		<if test="searchCondition == 'u.user_nickname' and search != 'null'">
+            and user_nickname LIKE '%'||#{search}||'%'
+        </if>
 	</select>
 
 	<select id="communitySelectView" resultMap="communityWithUserResultMap">
