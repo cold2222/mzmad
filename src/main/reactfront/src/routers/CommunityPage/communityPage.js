@@ -9,13 +9,23 @@ import React, { useEffect, useState, useRef } from "react";
 
 const CommunityPage = () => {
     const [loading, setLoading] = useState(true);
-    const [category, setCategory] = useState("home");
+    const [category, setCategory] = useState("");
     const [inView, setInView] = useState(false);
     const [selectedMenu, setSelectedMenu] = useState("#home");
-    
+    const [search , setSearch] = useState("null");
+    const [searchCondition, setSearchCondition] = useState("null");
     const [posts, setPosts] = useState([]);
+
     const totalPageCount = useRef(0);
     const page = useRef(0);
+    
+    const handleSearch = (searchInput) => {
+        setSearch(searchInput);
+    }
+
+    const handleSearchCondition = (searchSelect) => {
+        setSearchCondition(searchSelect);
+    }
 
     const handleInView = (inView) => {
         setInView(inView);
@@ -27,7 +37,7 @@ const CommunityPage = () => {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const response = await axios.get(`http://localhost:8080/community/selectAll/${category}/${page.current}`);
+            const response = await axios.get(`http://localhost:8080/community/selectAll/${category}/${page.current}/${search}/${searchCondition}`);
             if (page.current === 0) {
                 setPosts(response.data.communityList);
                 page.current += 1;
@@ -41,34 +51,46 @@ const CommunityPage = () => {
         }
     };
 
-    useEffect(() => {
-        console.log("category이펙트안 작동");
-
-        const getTotalCount = async () => {
-            try {
-                const response = await axios.get(`http://localhost:8080/community/getTotalCount/${category}`);
-                totalPageCount.current = response.data.totalPageCount;
-            } catch (error) {
-                console.error('Error fetching posts:', error);
-            }
-        };
-        getTotalCount();
-
+    const searchStart = () => {
         page.current = 0;
-        setPosts([])
+        setPosts([]);
+      };
 
-        if (category === "home") {
-            setSelectedMenu("#Home");
-        } else if (category === "free") {
-            setSelectedMenu("#자유게시판");
-        } else if (category === "tip") {
-            setSelectedMenu("#글쓰기 Tip 공유게시판");
-        } else if (category === "assignment") {
-            setSelectedMenu("#과제게시판");
-        }else if (category === "portfolio") {
-            setSelectedMenu("#포트폴리오");
+    useEffect(() => {
+        if(category !== ""){
+            console.log("category이펙트안 작동");
+    
+            const getTotalCount = async () => {
+                try {
+                    const response = await axios.get(`http://localhost:8080/community/getTotalCount/${category}/${search}/${searchCondition}`);
+                    totalPageCount.current = response.data.totalPageCount;
+                } catch (error) {
+                    console.error('Error fetching posts:', error);
+                }
+            };
+            getTotalCount();
+    
+            page.current = 0;
+            setPosts([])
+    
+            if (category === "home") {
+                setSelectedMenu("#Home");
+            } else if (category === "free") {
+                setSelectedMenu("#자유게시판");
+            } else if (category === "tip") {
+                setSelectedMenu("#글쓰기 Tip 공유게시판");
+            } else if (category === "assignment") {
+                setSelectedMenu("#과제게시판");
+            }else if (category === "portfolio") {
+                setSelectedMenu("#포트폴리오");
+            }
+            fetchData();
         }
-        fetchData();
+    }, [category,search]);
+
+    useEffect(() => {
+        handleSearch("null")
+        handleSearchCondition("null");
     }, [category]);
 
     useEffect(() => {
@@ -77,7 +99,7 @@ const CommunityPage = () => {
             fetchData();
             page.current += 1;
         }
-    }, [inView, totalPageCount.current]);
+    }, [inView]);
 
     return (
         <div className={styles['community-container']}>
@@ -88,9 +110,11 @@ const CommunityPage = () => {
                 <Sidebar onSelectMenu={handleMenuChange} />
                 <div className={styles['community-contentBox']}>
                     <Routes>
-                        <Route path="/:category" element={<PostList selectedMenu={selectedMenu} posts={posts} loading={loading} category={category} handleInView={handleInView} >
-                            </PostList>} />
-                        <Route path="/:category/view/:community_pk" element={<PostDetail />} />
+                        <Route path="/:categoryName" element={<PostList 
+                        selectedMenu={selectedMenu} posts={posts} loading={loading} category={category}
+                         handleMenuChange={handleMenuChange} handleSearch={handleSearch} handleInView={handleInView} 
+                         handleSearchCondition={handleSearchCondition} searchStart={searchStart} />} />
+                        <Route path="/:categoryName/view/:community_pk" element={<PostDetail />} />
                         <Route path="/update/:community_pk" element={<EditorUpdate />} />
                     </Routes>
                 </div>

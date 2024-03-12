@@ -47,28 +47,35 @@ public class CommunityController {
 		communityservice.insertCommunity(bbsDTO);
 	}
 
-	@GetMapping("/selectAll/{category}/{currentPage}")
-	public ResponseEntity<Map<String, Object>> communitySelectAll(@PathVariable String category, @PathVariable int currentPage) {
+	@GetMapping("/selectAll/{category}/{currentPage}/{search}/{searchCondition}")
+	public ResponseEntity<Map<String, Object>> communitySelectAll(@PathVariable String category, @PathVariable int currentPage
+			,@PathVariable String search,@PathVariable String searchCondition) {
 		System.out.println("검색한 목록 :" + category);
 		System.out.println("현재 페이지 :" + currentPage);
-
-		List<CommunityBBSDTO> communityList = communityservice.selectAllCommunity(category, currentPage);
-		int totalPageCount = communityservice.selectMenuCommunityTotalCount(category);
+		System.out.println("검색명 :" + search);
+		System.out.println("검색조건 :" + searchCondition);
 		
-		for (int i = 0; i < communityList.size(); i++) {
-			System.out.println(communityList.get(i).getCommunity_title());
-		}
+		List<CommunityBBSDTO> communityList = communityservice.selectAllCommunity(category, currentPage, search, searchCondition);
+		int totalPageCount = communityservice.selectMenuCommunityTotalCount(category,search,searchCondition);
+		
+//		for (int i = 0; i < communityList.size(); i++) {
+//			System.out.println(communityList.get(i).getCommunity_title());
+//		}
 		
 		Map<String, Object> response = new HashMap<>();
 		response.put("totalPageCount", totalPageCount);
 		response.put("communityList", communityList);
 		return ResponseEntity.ok(response);
 	}
-	@GetMapping("/getTotalCount/{category}")
-	public ResponseEntity<Map<String, Object>> communitygetTotalCount(@PathVariable String category) {
-		int totalPageCount = communityservice.selectMenuCommunityTotalCount(category);
-		System.out.println("검색한 토탈카운트 목록		:"+category);
+	
+	@GetMapping("/getTotalCount/{category}/{search}/{searchCondition}")
+	public ResponseEntity<Map<String, Object>> communitygetTotalCount
+	(@PathVariable String category, @PathVariable String search, @PathVariable String searchCondition) {
+		int totalPageCount = communityservice.selectMenuCommunityTotalCount(category,search,searchCondition);
+		System.out.println("검색한 토탈카운트 목록	:"+category);
 		System.out.println("토탈카운트		:"+totalPageCount);
+		System.out.println("검색명 :" + search);
+		System.out.println("검색조건 :" + searchCondition);
 		Map<String, Object> response = new HashMap<>();
 		response.put("totalPageCount", totalPageCount);
 		return ResponseEntity.ok(response);

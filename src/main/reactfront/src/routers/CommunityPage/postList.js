@@ -3,10 +3,16 @@ import { NavLink, useParams } from 'react-router-dom';
 import axios from "axios";
 import styles from './css/postList.module.css';
 import { useInView } from 'react-intersection-observer';
+import Search from './search';
 
-const PostList = ({ posts, loading, category ,selectedMenu, handleInView}) => {
+const PostList = ({ posts, loading, category ,selectedMenu, handleInView, handleMenuChange, handleSearch, handleSearchCondition, searchStart}) => {
   const [ref, inView] = useInView();
-  
+  const {categoryName} = useParams();
+
+  useEffect(() => {
+    handleMenuChange(categoryName)
+}, [categoryName]);
+
   useEffect(() => {
     handleInView(inView)
 }, [inView]);
@@ -20,6 +26,7 @@ const PostList = ({ posts, loading, category ,selectedMenu, handleInView}) => {
   
   return (
     <div className={styles['post-list-container']}>
+      <Search handleSearch={handleSearch} handleSearchCondition={handleSearchCondition} searchStart={searchStart}/>
       <h2>{selectedMenu}</h2>
       <ul className={styles['post-list']}>
         {posts.map((post, key) => (

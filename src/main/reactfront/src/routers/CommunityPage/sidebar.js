@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './css/sidebar.module.css';
 
-const Sidebar = ({ onSelectMenu, onBackToList }) => {
+const Sidebar = ({ onBackToList }) => {
+  
+  
   return (
     <div className={styles['sidebar-container']}>
       <div className={styles['sidebar-container-box']}>
@@ -20,8 +22,7 @@ const Sidebar = ({ onSelectMenu, onBackToList }) => {
               className={({ isActive }) => (isActive ? 'active' : '')}
               style={({ isActive }) => ({
                 color: isActive ? '#ffd700' : 'white',
-              })}
-              onClick={() => { onSelectMenu('home'); }}>
+              })}>
               #Home
             </NavLink>
           </li>
@@ -30,8 +31,7 @@ const Sidebar = ({ onSelectMenu, onBackToList }) => {
               className={({ isActive }) => (isActive ? 'active' : '')}
               style={({ isActive }) => ({
                 color: isActive ? '#ffd700' : 'white',
-              })}
-              onClick={() => { onSelectMenu('free'); }}>
+              })}>
               #자유게시판
             </NavLink>
           </li>
@@ -40,8 +40,7 @@ const Sidebar = ({ onSelectMenu, onBackToList }) => {
               className={({ isActive }) => (isActive ? 'active' : '')}
               style={({ isActive }) => ({
                 color: isActive ? '#ffd700' : 'white',
-              })}
-              onClick={() => { onSelectMenu('tip'); }}>
+              })}>
               #글쓰기 Tip 공유게시판
             </NavLink>
           </li>
@@ -50,8 +49,7 @@ const Sidebar = ({ onSelectMenu, onBackToList }) => {
               className={({ isActive }) => (isActive ? 'active' : '')}
               style={({ isActive }) => ({
                 color: isActive ? '#ffd700' : 'white',
-              })}
-              onClick={() => { onSelectMenu('assignment'); }}>
+              })}>
               #과제게시판
             </NavLink>
           </li>
@@ -60,8 +58,7 @@ const Sidebar = ({ onSelectMenu, onBackToList }) => {
               className={({ isActive }) => (isActive ? 'active' : '')}
               style={({ isActive }) => ({
                 color: isActive ? '#ffd700' : 'white',
-              })}
-              onClick={() => { onSelectMenu('portfolio'); }}>
+              })}>
               #포트폴리오
             </NavLink>
           </li>
